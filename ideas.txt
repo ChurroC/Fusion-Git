@@ -1,0 +1,5 @@
+Either recreate timeline
+- Basically convert timeline into readable text
+- Then convert the text back into the extrudes and the proper files
+
+Other idea is for every extrude or feature I find everythign associated kindaaaa
