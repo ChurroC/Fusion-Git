@@ -39,71 +39,187 @@ def format_value(value_input):
         return str(value_input)
 
 
+def get_point_data(point):
+    """Get coordinates from a point"""
+    try:
+        return {
+            "x": format_value(point.x),
+            "y": format_value(point.y),
+            "z": format_value(getattr(point, "z", 0)),
+        }
+    except Exception as e:
+        print(f"Error getting point data: {str(e)}")
+        return None
+
+
 def get_sketch_data(sketch):
-    """Get details about a sketch feature"""
+    """Get detailed sketch data with error logging"""
     try:
         data = {}
-        data["profiles_count"] = sketch.profiles.count
-        data["curves_count"] = sketch.sketchCurves.count
 
-        # Count curve types
-        lines_count = 0
-        circles_count = 0
-        arcs_count = 0
+        # Basic sketch info
+        try:
+            data["profiles_count"] = sketch.profiles.count
+            data["curves_count"] = sketch.sketchCurves.count
 
-        for curve in sketch.sketchCurves:
-            if isinstance(curve, adsk.fusion.SketchLine):
-                lines_count += 1
-            elif isinstance(curve, adsk.fusion.SketchCircle):
-                circles_count += 1
-            elif isinstance(curve, adsk.fusion.SketchArc):
-                arcs_count += 1
+            # Get sketch plane data
+            plane = sketch.referencePlane or sketch.constructionPlane
+            if plane:
+                data["plane"] = {
+                    "origin": get_point_data(plane.origin),
+                    "normal": get_point_data(plane.normal),
+                    "xAxis": get_point_data(plane.xDirection),
+                    "yAxis": get_point_data(plane.yDirection),
+                }
+        except Exception as e:
+            print(f"Error getting basic sketch info: {str(e)}")
 
-        if lines_count > 0:
-            data["SketchLines"] = lines_count
-        if circles_count > 0:
-            data["SketchCircles"] = circles_count
-        if arcs_count > 0:
-            data["SketchArcs"] = arcs_count
+        # Get curves data with full geometry
+        try:
+            data["curves"] = []
+            for curve in sketch.sketchCurves:
+                curve_data = {
+                    "type": curve.objectType,
+                    "isConstruction": curve.isConstruction,
+                }
+
+                if isinstance(curve, adsk.fusion.SketchLine):
+                    start_point = get_point_data(curve.startSketchPoint.geometry)
+                    end_point = get_point_data(curve.endSketchPoint.geometry)
+                    if start_point and end_point:
+                        curve_data.update(
+                            {
+                                "startPoint": start_point,
+                                "endPoint": end_point,
+                                "constraints": [],
+                            }
+                        )
+                        data["curves"].append(curve_data)
+
+                elif isinstance(curve, adsk.fusion.SketchCircle):
+                    center_point = get_point_data(curve.centerSketchPoint.geometry)
+                    if center_point:
+                        curve_data.update(
+                            {
+                                "centerPoint": center_point,
+                                "radius": format_value(curve.radius),
+                                "constraints": [],
+                            }
+                        )
+                        data["curves"].append(curve_data)
+        except Exception as e:
+            print(f"Error processing curves: {str(e)}")
+
+        # Get sketch plane data
+        try:
+            plane = sketch.referencePlane or sketch.constructionPlane
+            if plane:
+                data["plane"] = {
+                    "origin": get_point_data(plane.origin),
+                    "normal": get_point_data(plane.normal),
+                }
+        except Exception as e:
+            print(f"Error getting sketch plane: {str(e)}")
 
         return data
-    except:
-        return {"error": "Failed to get sketch details"}
+
+    except Exception as e:
+        error_msg = f"Failed to get sketch details: {str(e)}\n{traceback.format_exc()}"
+        print(error_msg)
+        return {"error": error_msg}
 
 
 def get_extrude_data(extrude):
-    """Get details about an extrude feature"""
+    """Get detailed extrude data with error logging"""
     try:
         data = {}
 
-        # Get faces created by extrude
-        if hasattr(extrude, "faces"):
-            faces = extrude.faces
-            data["faces_count"] = faces.count
+        # Basic extrude info and operation type
+        try:
+            if hasattr(extrude, "operation"):
+                data["operation"] = str(extrude.operation)
 
-        # Try to get extrude properties
-        if hasattr(extrude, "extentOne"):
-            extent = extrude.extentOne
-            if extent and hasattr(extent, "distance"):
-                data["distance"] = format_value(extent.distance.value)
+            if hasattr(extrude, "faces"):
+                data["faces_count"] = extrude.faces.count
+        except Exception as e:
+            print(f"Error getting basic extrude info: {str(e)}")
 
-        # Get operation type
-        if hasattr(extrude, "operation"):
-            operation_types = {
-                adsk.fusion.FeatureOperations.CutFeatureOperation: "Cut",
-                adsk.fusion.FeatureOperations.JoinFeatureOperation: "Join",
-                adsk.fusion.FeatureOperations.IntersectFeatureOperation: "Intersect",
-                adsk.fusion.FeatureOperations.NewBodyFeatureOperation: "New Body",
-            }
-            data["operation"] = operation_types.get(extrude.operation, "Unknown")
+        # Get extent details with full parameters
+        try:
+            if hasattr(extrude, "extentOne"):
+                extent = extrude.extentOne
+                if extent:
+                    data["extent"] = {
+                        "type": str(extent.extentType),
+                        "distance": (
+                            format_value(extent.distance.value)
+                            if hasattr(extent, "distance")
+                            else None
+                        ),
+                        "direction": (
+                            get_point_data(extrude.direction)
+                            if hasattr(extrude, "direction")
+                            else None
+                        ),
+                    }
+        except Exception as e:
+            print(f"Error getting extrude extent: {str(e)}")
+
+        # Get detailed profile information
+        try:
+            if hasattr(extrude, "profile"):
+                profile = extrude.profile
+                if profile:
+                    # Get profile loops for complete geometry
+                    profile_data = {"area": format_value(profile.area), "loops": []}
+
+                    for loop in profile.profileLoops:
+                        loop_data = {"isOuter": loop.isOuter, "vertices": []}
+
+                        for vertex in loop.profileCurves:
+                            # Get geometry for each curve in the profile
+                            if hasattr(vertex, "geometry"):
+                                if isinstance(vertex.geometry, adsk.core.Line3D):
+                                    loop_data["vertices"].append(
+                                        {
+                                            "type": "line",
+                                            "startPoint": get_point_data(
+                                                vertex.geometry.startPoint
+                                            ),
+                                            "endPoint": get_point_data(
+                                                vertex.geometry.endPoint
+                                            ),
+                                        }
+                                    )
+                                elif isinstance(vertex.geometry, adsk.core.Circle3D):
+                                    loop_data["vertices"].append(
+                                        {
+                                            "type": "circle",
+                                            "center": get_point_data(
+                                                vertex.geometry.center
+                                            ),
+                                            "radius": format_value(
+                                                vertex.geometry.radius
+                                            ),
+                                        }
+                                    )
+
+                        profile_data["loops"].append(loop_data)
+
+                    data["profile"] = profile_data
+        except Exception as e:
+            print(f"Error getting profile info: {str(e)}")
 
         return data
-    except:
-        return {"error": "Failed to get extrude details"}
+
+    except Exception as e:
+        error_msg = f"Failed to get extrude details: {str(e)}\n{traceback.format_exc()}"
+        print(error_msg)
+        return {"error": error_msg}
 
 
 def export_timeline(save_path):
-    """Export timeline to JSON file"""
+    """Export timeline to JSON file with detailed error logging"""
     try:
         if not design:
             raise Exception("No active design")
@@ -123,6 +239,7 @@ def export_timeline(save_path):
                 feature = timeline.item(i)
 
                 if not feature.entity:
+                    print(f"No entity for feature {i + 1}")
                     continue
 
                 entity = feature.entity
@@ -144,14 +261,18 @@ def export_timeline(save_path):
 
                 # Get feature-specific details
                 if "Sketch" in feature_type:
+                    print(f"Processing sketch: {entity.name}")
                     feature_data["details"] = get_sketch_data(entity)
                 elif "ExtrudeFeature" in feature_type:
+                    print(f"Processing extrude: {entity.name}")
                     feature_data["details"] = get_extrude_data(entity)
 
                 export_data["features"].append(feature_data)
 
-            except:
-                print(f"Error processing feature {i + 1}")
+            except Exception as e:
+                print(
+                    f"Error processing feature {i + 1}: {str(e)}\n{traceback.format_exc()}"
+                )
                 continue
 
         # Write to JSON file
@@ -160,8 +281,8 @@ def export_timeline(save_path):
 
         return True, "Timeline successfully exported"
 
-    except:
-        return False, f"Failed to export timeline:\n{traceback.format_exc()}"
+    except Exception as e:
+        return False, f"Failed to export timeline: {str(e)}\n{traceback.format_exc()}"
 
 
 def stop(context):

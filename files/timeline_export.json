@@ -1,7 +1,7 @@
 {
   "documentName": "Test API v6",
   "units": "in",
-  "date": "2024-12-10T16:11:59.991865",
+  "date": "2024-12-10T16:19:29.080302",
   "featureCount": 5,
   "features": [
     {
@@ -12,7 +12,19 @@
       "details": {
         "profiles_count": 1,
         "curves_count": 1,
-        "SketchCircles": 1
+        "curves": [
+          {
+            "type": "adsk::fusion::SketchCircle",
+            "isConstruction": false,
+            "centerPoint": {
+              "x": "0.00 in",
+              "y": "0.00 in",
+              "z": "0.00 in"
+            },
+            "radius": "1.50 in",
+            "constraints": []
+          }
+        ]
       }
     },
     {
@@ -21,9 +33,8 @@
       "name": "Extrude4",
       "isRolledBack": false,
       "details": {
-        "faces_count": 3,
-        "distance": "-2.00 in",
-        "operation": "New Body"
+        "operation": "3",
+        "faces_count": 3
       }
     },
     {
@@ -34,7 +45,68 @@
       "details": {
         "profiles_count": 1,
         "curves_count": 4,
-        "SketchLines": 4
+        "curves": [
+          {
+            "type": "adsk::fusion::SketchLine",
+            "isConstruction": false,
+            "startPoint": {
+              "x": "0.00 in",
+              "y": "0.00 in",
+              "z": "0.00 in"
+            },
+            "endPoint": {
+              "x": "1.9685039 in",
+              "y": "0.00 in",
+              "z": "0.00 in"
+            },
+            "constraints": []
+          },
+          {
+            "type": "adsk::fusion::SketchLine",
+            "isConstruction": false,
+            "startPoint": {
+              "x": "1.9685039 in",
+              "y": "0.00 in",
+              "z": "0.00 in"
+            },
+            "endPoint": {
+              "x": "1.9685039 in",
+              "y": "1.1811024 in",
+              "z": "0.00 in"
+            },
+            "constraints": []
+          },
+          {
+            "type": "adsk::fusion::SketchLine",
+            "isConstruction": false,
+            "startPoint": {
+              "x": "1.9685039 in",
+              "y": "1.1811024 in",
+              "z": "0.00 in"
+            },
+            "endPoint": {
+              "x": "0.00 in",
+              "y": "1.1811024 in",
+              "z": "0.00 in"
+            },
+            "constraints": []
+          },
+          {
+            "type": "adsk::fusion::SketchLine",
+            "isConstruction": false,
+            "startPoint": {
+              "x": "0.00 in",
+              "y": "1.1811024 in",
+              "z": "0.00 in"
+            },
+            "endPoint": {
+              "x": "0.00 in",
+              "y": "0.00 in",
+              "z": "0.00 in"
+            },
+            "constraints": []
+          }
+        ]
       }
     },
     {
@@ -43,9 +115,8 @@
       "name": "Extrude1",
       "isRolledBack": false,
       "details": {
-        "faces_count": 6,
-        "distance": "0.7874016 in",
-        "operation": "New Body"
+        "operation": "3",
+        "faces_count": 6
       }
     },
     {
@@ -56,7 +127,19 @@
       "details": {
         "profiles_count": 1,
         "curves_count": 1,
-        "SketchCircles": 1
+        "curves": [
+          {
+            "type": "adsk::fusion::SketchCircle",
+            "isConstruction": false,
+            "centerPoint": {
+              "x": "-7.4999999 in",
+              "y": "7.4999999 in",
+              "z": "0.00 in"
+            },
+            "radius": "2.2388771 in",
+            "constraints": []
+          }
+        ]
       }
     }
   ]
