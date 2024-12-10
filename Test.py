@@ -5,79 +5,46 @@ import os
 from datetime import datetime
 
 
-def convert_to_inch(value, from_unit):
-    """Convert any unit to inches"""
+def format_value(value_input, units_manager):
+    """Format value using the design's default units"""
     try:
-        # If the value is already in inches, return it
-        if from_unit == "in":
-            return round(value, 3)
-
-        # Convert from centimeters to inches
-        if from_unit == "cm":
-            return round(value / 2.54, 3)
-
-        # Convert from millimeters to inches
-        if from_unit == "mm":
-            return round(value / 25.4, 3)
-
-        # For any other unit, try using the units manager
-        units_manager = adsk.core.Application.get().activeProduct.unitsManager
-        return round(units_manager.convert(value, from_unit, "in"), 3)
+        return units_manager.formatInternalValue(
+            value_input, units_manager.defaultLengthUnits, True
+        )
     except:
-        return value
+        return str(value_input)
 
 
-def format_measurement(value, unit="in"):
-    """Format a measurement value with unit"""
-    try:
-        return f"{round(float(value), 3)} {unit}"
-    except:
-        return f"{value} {unit}"
-
-
-def get_sketch_details(sketch):
+def get_sketch_details(sketch, units_manager):
     """Get details about a sketch feature"""
     try:
         details = []
         details.append(f"Profiles count: {sketch.profiles.count}")
         details.append(f"Curves count: {sketch.sketchCurves.count}")
 
-        # Get sketch curves details
+        # Count curve types
         curve_types = {"SketchLines": 0, "SketchCircles": 0, "SketchArcs": 0}
 
         # Get curve dimensions
-        total_length = 0
         for curve in sketch.sketchCurves:
             if isinstance(curve, adsk.fusion.SketchLine):
                 curve_types["SketchLines"] += 1
-                total_length += curve.length
             elif isinstance(curve, adsk.fusion.SketchCircle):
                 curve_types["SketchCircles"] += 1
-                total_length += curve.length
             elif isinstance(curve, adsk.fusion.SketchArc):
                 curve_types["SketchArcs"] += 1
-                total_length += curve.length
 
         for curve_type, count in curve_types.items():
             if count > 0:
                 details.append(f"{curve_type}: {count}")
-
-        if total_length > 0:
-            length_in_inches = convert_to_inch(total_length, "cm")
-            details.append(
-                f"Total curve length: {format_measurement(length_in_inches)}"
-            )
 
         return details
     except Exception as e:
         return [f"Error getting sketch details: {str(e)}"]
 
 
-def get_extrude_details(extrude):
+def get_extrude_details(extrude, units_manager):
     """Get details about an extrude feature"""
-    app = adsk.core.Application.get()
-    ui = app.userInterface
-    ui.messageBox("distance_in_inches")
     try:
         details = []
 
@@ -88,19 +55,10 @@ def get_extrude_details(extrude):
 
         # Try to get extrude properties
         if hasattr(extrude, "extentOne"):
-            ui.messageBox("distance_in_inches1")
             extent = extrude.extentOne
             if extent and hasattr(extent, "distance"):
-                ui.messageBox("distance_in_inches2")
-                # Get the value in the current unit system
-                distance_value = extent.distance.value
-                distance_unit = extent.distance.unit
-                distance_in_inches = convert_to_inch(distance_value, distance_unit)
-                ui.messageBox("distance_in_inches3")
-                ui.messageBox(distance_in_inches)
-                details.append(
-                    f"Distance: {format_measurement(distance_in_inches)} (Original: {distance_value} {distance_unit})"
-                )
+                distance = format_value(extent.distance.value, units_manager)
+                details.append(f"Distance: {distance}")
 
         # Get operation type
         if hasattr(extrude, "operation"):
@@ -118,15 +76,15 @@ def get_extrude_details(extrude):
         return [f"Error getting extrude details: {str(e)}"]
 
 
-def get_revolve_details(revolve):
+def get_revolve_details(revolve, units_manager):
     """Get details about a revolve feature"""
     try:
         details = []
 
         # Get angle if available
         if hasattr(revolve, "angle"):
-            angle_value = revolve.angle.value
-            details.append(f"Angle: {format_measurement(angle_value, 'deg')}")
+            angle = format_value(revolve.angle.value, units_manager)
+            details.append(f"Angle: {angle}")
 
         # Get operation type
         if hasattr(revolve, "operation"):
@@ -144,7 +102,7 @@ def get_revolve_details(revolve):
         return [f"Error getting revolve details: {str(e)}"]
 
 
-def get_primitive_details(primitive):
+def get_primitive_details(primitive, units_manager):
     """Get details about primitive features (Box, Cylinder)"""
     try:
         details = []
@@ -152,33 +110,23 @@ def get_primitive_details(primitive):
         # For Box Feature
         if isinstance(primitive, adsk.fusion.BoxFeature):
             if hasattr(primitive, "length"):
-                length_in_inches = convert_to_inch(
-                    primitive.length.value, primitive.length.unit
-                )
-                details.append(f"Length: {format_measurement(length_in_inches)}")
+                length = format_value(primitive.length.value, units_manager)
+                details.append(f"Length: {length}")
             if hasattr(primitive, "width"):
-                width_in_inches = convert_to_inch(
-                    primitive.width.value, primitive.width.unit
-                )
-                details.append(f"Width: {format_measurement(width_in_inches)}")
+                width = format_value(primitive.width.value, units_manager)
+                details.append(f"Width: {width}")
             if hasattr(primitive, "height"):
-                height_in_inches = convert_to_inch(
-                    primitive.height.value, primitive.height.unit
-                )
-                details.append(f"Height: {format_measurement(height_in_inches)}")
+                height = format_value(primitive.height.value, units_manager)
+                details.append(f"Height: {height}")
 
         # For Cylinder Feature
         elif isinstance(primitive, adsk.fusion.CylinderFeature):
             if hasattr(primitive, "diameter"):
-                diameter_in_inches = convert_to_inch(
-                    primitive.diameter.value, primitive.diameter.unit
-                )
-                details.append(f"Diameter: {format_measurement(diameter_in_inches)}")
+                diameter = format_value(primitive.diameter.value, units_manager)
+                details.append(f"Diameter: {diameter}")
             if hasattr(primitive, "height"):
-                height_in_inches = convert_to_inch(
-                    primitive.height.value, primitive.height.unit
-                )
-                details.append(f"Height: {format_measurement(height_in_inches)}")
+                height = format_value(primitive.height.value, units_manager)
+                details.append(f"Height: {height}")
 
         return details
     except Exception as e:
@@ -190,6 +138,7 @@ def export_timeline(save_path):
     try:
         app = adsk.core.Application.get()
         design = app.activeProduct
+        units_manager = design.unitsManager
 
         if not design:
             raise Exception("No active design")
@@ -201,7 +150,7 @@ def export_timeline(save_path):
             f.write(f"Fusion 360 Timeline Export\n")
             f.write(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
             f.write(f"Document: {app.activeDocument.name}\n")
-            f.write(f"Units: Inches\n")
+            f.write(f"Default Units: {units_manager.defaultLengthUnits}\n")
             f.write(f"Total Features: {timeline.count}\n")
             f.write("-" * 50 + "\n\n")
 
@@ -219,16 +168,16 @@ def export_timeline(save_path):
 
                         # Get feature-specific details
                         if "Sketch" in feature_type:
-                            details = get_sketch_details(entity)
+                            details = get_sketch_details(entity, units_manager)
                         elif "ExtrudeFeature" in feature_type:
-                            details = get_extrude_details(entity)
+                            details = get_extrude_details(entity, units_manager)
                         elif "RevolveFeature" in feature_type:
-                            details = get_revolve_details(entity)
+                            details = get_revolve_details(entity, units_manager)
                         elif (
                             "BoxFeature" in feature_type
                             or "CylinderFeature" in feature_type
                         ):
-                            details = get_primitive_details(entity)
+                            details = get_primitive_details(entity, units_manager)
                         else:
                             details = []
 
