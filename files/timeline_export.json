@@ -1,0 +1,63 @@
+{
+  "documentName": "Test API v6",
+  "units": "in",
+  "date": "2024-12-10T16:11:59.991865",
+  "featureCount": 5,
+  "features": [
+    {
+      "index": 1,
+      "type": "adsk::fusion::Sketch",
+      "name": "Sketch7",
+      "isRolledBack": false,
+      "details": {
+        "profiles_count": 1,
+        "curves_count": 1,
+        "SketchCircles": 1
+      }
+    },
+    {
+      "index": 2,
+      "type": "adsk::fusion::ExtrudeFeature",
+      "name": "Extrude4",
+      "isRolledBack": false,
+      "details": {
+        "faces_count": 3,
+        "distance": "-2.00 in",
+        "operation": "New Body"
+      }
+    },
+    {
+      "index": 3,
+      "type": "adsk::fusion::Sketch",
+      "name": "Sketch3",
+      "isRolledBack": false,
+      "details": {
+        "profiles_count": 1,
+        "curves_count": 4,
+        "SketchLines": 4
+      }
+    },
+    {
+      "index": 4,
+      "type": "adsk::fusion::ExtrudeFeature",
+      "name": "Extrude1",
+      "isRolledBack": false,
+      "details": {
+        "faces_count": 6,
+        "distance": "0.7874016 in",
+        "operation": "New Body"
+      }
+    },
+    {
+      "index": 5,
+      "type": "adsk::fusion::Sketch",
+      "name": "Sketch8",
+      "isRolledBack": false,
+      "details": {
+        "profiles_count": 1,
+        "curves_count": 1,
+        "SketchCircles": 1
+      }
+    }
+  ]
+}

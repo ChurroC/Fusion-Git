@@ -4,17 +4,51 @@ import traceback
 from datetime import datetime
 
 
+def run(context):
+    try:
+        global app, ui, design, units_manager
+        app = adsk.core.Application.get()
+        ui = app.userInterface
+        design = app.activeProduct
+        units_manager = design.unitsManager
+
+        fileDialog = ui.createFileDialog()
+        fileDialog.title = "Save Timeline Export"
+        fileDialog.filter = "Text files (*.txt)"
+        fileDialog.initialFilename = "timeline_export.txt"
+
+        if fileDialog.showSave() != adsk.core.DialogResults.DialogOK:
+            return
+
+        success, message = export_timeline(fileDialog.filename)
+        ui.messageBox(message)
+
+    except:
+        if ui:
+            ui.messageBox(f"Failed:\n{traceback.format_exc()}")
+
+
+def format_value(value_input):
+    """Format value using the design's default units"""
+    try:
+        return units_manager.formatInternalValue(
+            value_input, units_manager.defaultLengthUnits, True
+        )
+    except:
+        return str(value_input)
+
+
 def get_sketch_details(sketch):
     """Get details about a sketch feature"""
     try:
         details = []
-        # Access sketch directly
         details.append(f"Profiles count: {sketch.profiles.count}")
         details.append(f"Curves count: {sketch.sketchCurves.count}")
 
-        # Get sketch curves details
+        # Count curve types
         curve_types = {"SketchLines": 0, "SketchCircles": 0, "SketchArcs": 0}
 
+        # Get curve dimensions
         for curve in sketch.sketchCurves:
             if isinstance(curve, adsk.fusion.SketchLine):
                 curve_types["SketchLines"] += 1
@@ -26,12 +60,6 @@ def get_sketch_details(sketch):
         for curve_type, count in curve_types.items():
             if count > 0:
                 details.append(f"{curve_type}: {count}")
-
-        # Get the sketch plane if possible
-        if hasattr(sketch, "sketchPlane"):
-            plane = sketch.sketchPlane
-            if plane:
-                details.append(f"Sketch plane type: {plane.objectType}")
 
         return details
     except Exception as e:
@@ -51,9 +79,9 @@ def get_extrude_details(extrude):
         # Try to get extrude properties
         if hasattr(extrude, "extentOne"):
             extent = extrude.extentOne
-            if extent:
-                if hasattr(extent, "distance"):
-                    details.append(f"Distance: {extent.distance.value} cm")
+            if extent and hasattr(extent, "distance"):
+                distance = format_value(extent.distance.value)
+                details.append(f"Distance: {distance}")
 
         # Get operation type
         if hasattr(extrude, "operation"):
@@ -78,7 +106,8 @@ def get_revolve_details(revolve):
 
         # Get angle if available
         if hasattr(revolve, "angle"):
-            details.append(f"Angle: {revolve.angle.value} degrees")
+            angle = format_value(revolve.angle.value)
+            details.append(f"Angle: {angle}")
 
         # Get operation type
         if hasattr(revolve, "operation"):
@@ -104,18 +133,23 @@ def get_primitive_details(primitive):
         # For Box Feature
         if isinstance(primitive, adsk.fusion.BoxFeature):
             if hasattr(primitive, "length"):
-                details.append(f"Length: {primitive.length.value} cm")
+                length = format_value(primitive.length.value)
+                details.append(f"Length: {length}")
             if hasattr(primitive, "width"):
-                details.append(f"Width: {primitive.width.value} cm")
+                width = format_value(primitive.width.value)
+                details.append(f"Width: {width}")
             if hasattr(primitive, "height"):
-                details.append(f"Height: {primitive.height.value} cm")
+                height = format_value(primitive.height.value)
+                details.append(f"Height: {height}")
 
         # For Cylinder Feature
         elif isinstance(primitive, adsk.fusion.CylinderFeature):
             if hasattr(primitive, "diameter"):
-                details.append(f"Diameter: {primitive.diameter.value} cm")
+                diameter = format_value(primitive.diameter.value)
+                details.append(f"Diameter: {diameter}")
             if hasattr(primitive, "height"):
-                details.append(f"Height: {primitive.height.value} cm")
+                height = format_value(primitive.height.value)
+                details.append(f"Height: {height}")
 
         return details
     except Exception as e:
@@ -125,9 +159,6 @@ def get_primitive_details(primitive):
 def export_timeline(save_path):
     """Export timeline to text file"""
     try:
-        app = adsk.core.Application.get()
-        design = app.activeProduct
-
         if not design:
             raise Exception("No active design")
 
@@ -138,6 +169,7 @@ def export_timeline(save_path):
             f.write(f"Fusion 360 Timeline Export\n")
             f.write(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
             f.write(f"Document: {app.activeDocument.name}\n")
+            f.write(f"Default Units: {units_manager.defaultLengthUnits}\n")
             f.write(f"Total Features: {timeline.count}\n")
             f.write("-" * 50 + "\n\n")
 
@@ -187,27 +219,6 @@ def export_timeline(save_path):
 
     except:
         return False, f"Failed to export timeline:\n{traceback.format_exc()}"
-
-
-def run(context):
-    try:
-        app = adsk.core.Application.get()
-        ui = app.userInterface
-
-        fileDialog = ui.createFileDialog()
-        fileDialog.title = "Save Timeline Export"
-        fileDialog.filter = "Text files (*.txt)"
-        fileDialog.initialFilename = "timeline_export.txt"
-
-        if fileDialog.showSave() != adsk.core.DialogResults.DialogOK:
-            return
-
-        success, message = export_timeline(fileDialog.filename)
-        ui.messageBox(message)
-
-    except:
-        if ui:
-            ui.messageBox(f"Failed:\n{traceback.format_exc()}")
 
 
 def stop(context):

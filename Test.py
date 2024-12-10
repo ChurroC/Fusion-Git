@@ -1,6 +1,7 @@
 import adsk.core
 import adsk.fusion
 import traceback
+import json
 from datetime import datetime
 
 
@@ -14,8 +15,8 @@ def run(context):
 
         fileDialog = ui.createFileDialog()
         fileDialog.title = "Save Timeline Export"
-        fileDialog.filter = "Text files (*.txt)"
-        fileDialog.initialFilename = "timeline_export.txt"
+        fileDialog.filter = "JSON files (*.json)"
+        fileDialog.initialFilename = "timeline_export.json"
 
         if fileDialog.showSave() != adsk.core.DialogResults.DialogOK:
             return
@@ -38,50 +39,53 @@ def format_value(value_input):
         return str(value_input)
 
 
-def get_sketch_details(sketch):
+def get_sketch_data(sketch):
     """Get details about a sketch feature"""
     try:
-        details = []
-        details.append(f"Profiles count: {sketch.profiles.count}")
-        details.append(f"Curves count: {sketch.sketchCurves.count}")
+        data = {}
+        data["profiles_count"] = sketch.profiles.count
+        data["curves_count"] = sketch.sketchCurves.count
 
         # Count curve types
-        curve_types = {"SketchLines": 0, "SketchCircles": 0, "SketchArcs": 0}
+        lines_count = 0
+        circles_count = 0
+        arcs_count = 0
 
-        # Get curve dimensions
         for curve in sketch.sketchCurves:
             if isinstance(curve, adsk.fusion.SketchLine):
-                curve_types["SketchLines"] += 1
+                lines_count += 1
             elif isinstance(curve, adsk.fusion.SketchCircle):
-                curve_types["SketchCircles"] += 1
+                circles_count += 1
             elif isinstance(curve, adsk.fusion.SketchArc):
-                curve_types["SketchArcs"] += 1
+                arcs_count += 1
 
-        for curve_type, count in curve_types.items():
-            if count > 0:
-                details.append(f"{curve_type}: {count}")
+        if lines_count > 0:
+            data["SketchLines"] = lines_count
+        if circles_count > 0:
+            data["SketchCircles"] = circles_count
+        if arcs_count > 0:
+            data["SketchArcs"] = arcs_count
 
-        return details
-    except Exception as e:
-        return [f"Error getting sketch details: {str(e)}"]
+        return data
+    except:
+        return {"error": "Failed to get sketch details"}
 
 
-def get_extrude_details(extrude):
+def get_extrude_data(extrude):
     """Get details about an extrude feature"""
     try:
-        details = []
+        data = {}
 
         # Get faces created by extrude
         if hasattr(extrude, "faces"):
             faces = extrude.faces
-            details.append(f"Number of faces: {faces.count}")
+            data["faces_count"] = faces.count
 
         # Try to get extrude properties
         if hasattr(extrude, "extentOne"):
             extent = extrude.extentOne
             if extent and hasattr(extent, "distance"):
-                distance = format_value(extent.distance.value)
-                details.append(f"Distance: {distance}")
+                data["distance"] = format_value(extent.distance.value)
 
         # Get operation type
         if hasattr(extrude, "operation"):
@@ -91,129 +95,68 @@ def get_extrude_details(extrude):
                 adsk.fusion.FeatureOperations.IntersectFeatureOperation: "Intersect",
                 adsk.fusion.FeatureOperations.NewBodyFeatureOperation: "New Body",
             }
-            operation = operation_types.get(extrude.operation, "Unknown")
-            details.append(f"Operation: {operation}")
+            data["operation"] = operation_types.get(extrude.operation, "Unknown")
 
-        return details
-    except Exception as e:
-        return [f"Error getting extrude details: {str(e)}"]
-
-
-def get_revolve_details(revolve):
-    """Get details about a revolve feature"""
-    try:
-        details = []
-
-        # Get angle if available
-        if hasattr(revolve, "angle"):
-            angle = format_value(revolve.angle.value)
-            details.append(f"Angle: {angle}")
-
-        # Get operation type
-        if hasattr(revolve, "operation"):
-            operation_types = {
-                adsk.fusion.FeatureOperations.CutFeatureOperation: "Cut",
-                adsk.fusion.FeatureOperations.JoinFeatureOperation: "Join",
-                adsk.fusion.FeatureOperations.IntersectFeatureOperation: "Intersect",
-                adsk.fusion.FeatureOperations.NewBodyFeatureOperation: "New Body",
-            }
-            operation = operation_types.get(revolve.operation, "Unknown")
-            details.append(f"Operation: {operation}")
-
-        return details
-    except Exception as e:
-        return [f"Error getting revolve details: {str(e)}"]
-
-
-def get_primitive_details(primitive):
-    """Get details about primitive features (Box, Cylinder)"""
-    try:
-        details = []
-
-        # For Box Feature
-        if isinstance(primitive, adsk.fusion.BoxFeature):
-            if hasattr(primitive, "length"):
-                length = format_value(primitive.length.value)
-                details.append(f"Length: {length}")
-            if hasattr(primitive, "width"):
-                width = format_value(primitive.width.value)
-                details.append(f"Width: {width}")
-            if hasattr(primitive, "height"):
-                height = format_value(primitive.height.value)
-                details.append(f"Height: {height}")
-
-        # For Cylinder Feature
-        elif isinstance(primitive, adsk.fusion.CylinderFeature):
-            if hasattr(primitive, "diameter"):
-                diameter = format_value(primitive.diameter.value)
-                details.append(f"Diameter: {diameter}")
-            if hasattr(primitive, "height"):
-                height = format_value(primitive.height.value)
-                details.append(f"Height: {height}")
-
-        return details
-    except Exception as e:
-        return [f"Error getting primitive details: {str(e)}"]
+        return data
+    except:
+        return {"error": "Failed to get extrude details"}
 
 
 def export_timeline(save_path):
-    """Export timeline to text file"""
+    """Export timeline to JSON file"""
     try:
         if not design:
             raise Exception("No active design")
 
         timeline = design.timeline
 
-        with open(save_path, "w", encoding="utf-8") as f:
-            # Write header
-            f.write(f"Fusion 360 Timeline Export\n")
-            f.write(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-            f.write(f"Document: {app.activeDocument.name}\n")
-            f.write(f"Default Units: {units_manager.defaultLengthUnits}\n")
-            f.write(f"Total Features: {timeline.count}\n")
-            f.write("-" * 50 + "\n\n")
+        export_data = {
+            "documentName": app.activeDocument.name,
+            "units": units_manager.defaultLengthUnits,
+            "date": datetime.now().isoformat(),
+            "featureCount": timeline.count,
+            "features": [],
+        }
 
-            # Process each feature
-            for i in range(timeline.count):
-                try:
-                    feature = timeline.item(i)
-                    f.write(f"Feature {i + 1}:\n")
+        for i in range(timeline.count):
+            try:
+                feature = timeline.item(i)
 
-                    if feature.entity:
-                        entity = feature.entity
-                        feature_type = entity.classType()
-                        f.write(f"Type: {feature_type}\n")
-                        f.write(f"Name: {entity.name}\n")
-
-                        # Get feature-specific details
-                        if "Sketch" in feature_type:
-                            details = get_sketch_details(entity)
-                        elif "ExtrudeFeature" in feature_type:
-                            details = get_extrude_details(entity)
-                        elif "RevolveFeature" in feature_type:
-                            details = get_revolve_details(entity)
-                        elif (
-                            "BoxFeature" in feature_type
-                            or "CylinderFeature" in feature_type
-                        ):
-                            details = get_primitive_details(entity)
-                        else:
-                            details = []
-
-                        if details:
-                            f.write("Details:\n")
-                            for detail in details:
-                                f.write(f"  - {detail}\n")
-
-                    f.write(
-                        f"State: {'Rolled Back' if feature.isRolledBack else 'Active'}\n"
-                    )
-                    f.write("-" * 50 + "\n")
-
-                except Exception as e:
-                    f.write(f"Error processing feature {i + 1}: {str(e)}\n")
-                    f.write("-" * 50 + "\n")
+                if not feature.entity:
                     continue
+
+                entity = feature.entity
+                feature_type = entity.classType()
+
+                # Only process Sketch and Extrude features
+                if (
+                    "Sketch" not in feature_type
+                    and "ExtrudeFeature" not in feature_type
+                ):
+                    continue
+
+                feature_data = {
+                    "index": i + 1,
+                    "type": feature_type,
+                    "name": entity.name,
+                    "isRolledBack": feature.isRolledBack,
+                }
+
+                # Get feature-specific details
+                if "Sketch" in feature_type:
+                    feature_data["details"] = get_sketch_data(entity)
+                elif "ExtrudeFeature" in feature_type:
+                    feature_data["details"] = get_extrude_data(entity)
+
+                export_data["features"].append(feature_data)
+
+            except:
+                print(f"Error processing feature {i + 1}")
+                continue
+
+        # Write to JSON file
+        with open(save_path, "w", encoding="utf-8") as f:
+            json.dump(export_data, f, indent=2)
 
         return True, "Timeline successfully exported"
 
