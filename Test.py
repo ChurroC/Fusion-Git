@@ -1,11 +1,34 @@
 import adsk.core
 import adsk.fusion
 import traceback
-import os
 from datetime import datetime
 
 
-def format_value(value_input, units_manager):
+def run(context):
+    try:
+        global app, ui, design, units_manager
+        app = adsk.core.Application.get()
+        ui = app.userInterface
+        design = app.activeProduct
+        units_manager = design.unitsManager
+
+        fileDialog = ui.createFileDialog()
+        fileDialog.title = "Save Timeline Export"
+        fileDialog.filter = "Text files (*.txt)"
+        fileDialog.initialFilename = "timeline_export.txt"
+
+        if fileDialog.showSave() != adsk.core.DialogResults.DialogOK:
+            return
+
+        success, message = export_timeline(fileDialog.filename)
+        ui.messageBox(message)
+
+    except:
+        if ui:
+            ui.messageBox(f"Failed:\n{traceback.format_exc()}")
+
+
+def format_value(value_input):
     """Format value using the design's default units"""
     try:
         return units_manager.formatInternalValue(
@@ -15,7 +38,7 @@ def format_value(value_input, units_manager):
         return str(value_input)
 
 
-def get_sketch_details(sketch, units_manager):
+def get_sketch_details(sketch):
     """Get details about a sketch feature"""
     try:
         details = []
@@ -43,7 +66,7 @@ def get_sketch_details(sketch, units_manager):
         return [f"Error getting sketch details: {str(e)}"]
 
 
-def get_extrude_details(extrude, units_manager):
+def get_extrude_details(extrude):
     """Get details about an extrude feature"""
     try:
         details = []
@@ -57,7 +80,7 @@ def get_extrude_details(extrude, units_manager):
         if hasattr(extrude, "extentOne"):
             extent = extrude.extentOne
             if extent and hasattr(extent, "distance"):
-                distance = format_value(extent.distance.value, units_manager)
+                distance = format_value(extent.distance.value)
                 details.append(f"Distance: {distance}")
 
         # Get operation type
@@ -76,14 +99,14 @@ def get_extrude_details(extrude, units_manager):
         return [f"Error getting extrude details: {str(e)}"]
 
 
-def get_revolve_details(revolve, units_manager):
+def get_revolve_details(revolve):
     """Get details about a revolve feature"""
     try:
         details = []
 
         # Get angle if available
         if hasattr(revolve, "angle"):
-            angle = format_value(revolve.angle.value, units_manager)
+            angle = format_value(revolve.angle.value)
             details.append(f"Angle: {angle}")
 
         # Get operation type
@@ -102,7 +125,7 @@ def get_revolve_details(revolve, units_manager):
         return [f"Error getting revolve details: {str(e)}"]
 
 
-def get_primitive_details(primitive, units_manager):
+def get_primitive_details(primitive):
     """Get details about primitive features (Box, Cylinder)"""
     try:
         details = []
@@ -110,22 +133,22 @@ def get_primitive_details(primitive, units_manager):
         # For Box Feature
         if isinstance(primitive, adsk.fusion.BoxFeature):
             if hasattr(primitive, "length"):
-                length = format_value(primitive.length.value, units_manager)
+                length = format_value(primitive.length.value)
                 details.append(f"Length: {length}")
             if hasattr(primitive, "width"):
-                width = format_value(primitive.width.value, units_manager)
+                width = format_value(primitive.width.value)
                 details.append(f"Width: {width}")
             if hasattr(primitive, "height"):
-                height = format_value(primitive.height.value, units_manager)
+                height = format_value(primitive.height.value)
                 details.append(f"Height: {height}")
 
         # For Cylinder Feature
         elif isinstance(primitive, adsk.fusion.CylinderFeature):
             if hasattr(primitive, "diameter"):
-                diameter = format_value(primitive.diameter.value, units_manager)
+                diameter = format_value(primitive.diameter.value)
                 details.append(f"Diameter: {diameter}")
             if hasattr(primitive, "height"):
-                height = format_value(primitive.height.value, units_manager)
+                height = format_value(primitive.height.value)
                 details.append(f"Height: {height}")
 
         return details
@@ -136,10 +159,6 @@ def get_primitive_details(primitive, units_manager):
 def export_timeline(save_path):
     """Export timeline to text file"""
     try:
-        app = adsk.core.Application.get()
-        design = app.activeProduct
-        units_manager = design.unitsManager
-
         if not design:
             raise Exception("No active design")
 
@@ -168,16 +187,16 @@ def export_timeline(save_path):
 
                         # Get feature-specific details
                         if "Sketch" in feature_type:
-                            details = get_sketch_details(entity, units_manager)
+                            details = get_sketch_details(entity)
                         elif "ExtrudeFeature" in feature_type:
-                            details = get_extrude_details(entity, units_manager)
+                            details = get_extrude_details(entity)
                         elif "RevolveFeature" in feature_type:
-                            details = get_revolve_details(entity, units_manager)
+                            details = get_revolve_details(entity)
                         elif (
                             "BoxFeature" in feature_type
                             or "CylinderFeature" in feature_type
                         ):
-                            details = get_primitive_details(entity, units_manager)
+                            details = get_primitive_details(entity)
                         else:
                             details = []
 
@@ -200,27 +219,6 @@ def export_timeline(save_path):
 
     except:
         return False, f"Failed to export timeline:\n{traceback.format_exc()}"
-
-
-def run(context):
-    try:
-        app = adsk.core.Application.get()
-        ui = app.userInterface
-
-        fileDialog = ui.createFileDialog()
-        fileDialog.title = "Save Timeline Export"
-        fileDialog.filter = "Text files (*.txt)"
-        fileDialog.initialFilename = "timeline_export.txt"
-
-        if fileDialog.showSave() != adsk.core.DialogResults.DialogOK:
-            return
-
-        success, message = export_timeline(fileDialog.filename)
-        ui.messageBox(message)
-
-    except:
-        if ui:
-            ui.messageBox(f"Failed:\n{traceback.format_exc()}")
 
 
 def stop(context):
