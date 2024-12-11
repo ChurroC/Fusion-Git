@@ -1,13 +1,13 @@
 {
-  "documentName": "Test API v6",
+  "documentName": "Test API v8",
   "units": "in",
-  "date": "2024-12-10T16:19:29.080302",
-  "featureCount": 5,
+  "date": "2024-12-10T20:44:39.009886",
+  "featureCount": 2,
   "features": [
     {
       "index": 1,
       "type": "adsk::fusion::Sketch",
-      "name": "Sketch7",
+      "name": "Sketch9",
       "isRolledBack": false,
       "details": {
         "profiles_count": 1,
@@ -17,129 +17,58 @@
             "type": "adsk::fusion::SketchCircle",
             "isConstruction": false,
             "centerPoint": {
-              "x": "0.00 in",
-              "y": "0.00 in",
+              "x": "2.50 in",
+              "y": "2.50 in",
               "z": "0.00 in"
             },
-            "radius": "1.50 in",
+            "radius": "0.50 in",
             "constraints": []
           }
-        ]
+        ],
+        "plane": {
+          "origin": {
+            "x": "0.00 in",
+            "y": "0.00 in",
+            "z": "0.00 in"
+          },
+          "normal": {
+            "x": "0.00 in",
+            "y": "0.00 in",
+            "z": "0.394 in"
+          },
+          "uVector": {
+            "x": "0.394 in",
+            "y": "0.00 in",
+            "z": "0.00 in"
+          },
+          "vVector": {
+            "x": "0.00 in",
+            "y": "0.394 in",
+            "z": "0.00 in"
+          }
+        }
       }
     },
     {
       "index": 2,
       "type": "adsk::fusion::ExtrudeFeature",
-      "name": "Extrude4",
+      "name": "Extrude5",
       "isRolledBack": false,
       "details": {
         "operation": "3",
-        "faces_count": 3
-      }
-    },
-    {
-      "index": 3,
-      "type": "adsk::fusion::Sketch",
-      "name": "Sketch3",
-      "isRolledBack": false,
-      "details": {
-        "profiles_count": 1,
-        "curves_count": 4,
-        "curves": [
-          {
-            "type": "adsk::fusion::SketchLine",
-            "isConstruction": false,
-            "startPoint": {
-              "x": "0.00 in",
-              "y": "0.00 in",
-              "z": "0.00 in"
-            },
-            "endPoint": {
-              "x": "1.9685039 in",
-              "y": "0.00 in",
-              "z": "0.00 in"
-            },
-            "constraints": []
+        "faces_count": 3,
+        "extent": {
+          "type": {
+            "value": 2,
+            "name": "SymmetricFeatureExtentType"
           },
-          {
-            "type": "adsk::fusion::SketchLine",
-            "isConstruction": false,
-            "startPoint": {
-              "x": "1.9685039 in",
-              "y": "0.00 in",
-              "z": "0.00 in"
-            },
-            "endPoint": {
-              "x": "1.9685039 in",
-              "y": "1.1811024 in",
-              "z": "0.00 in"
-            },
-            "constraints": []
-          },
-          {
-            "type": "adsk::fusion::SketchLine",
-            "isConstruction": false,
-            "startPoint": {
-              "x": "1.9685039 in",
-              "y": "1.1811024 in",
-              "z": "0.00 in"
-            },
-            "endPoint": {
-              "x": "0.00 in",
-              "y": "1.1811024 in",
-              "z": "0.00 in"
-            },
-            "constraints": []
-          },
-          {
-            "type": "adsk::fusion::SketchLine",
-            "isConstruction": false,
-            "startPoint": {
-              "x": "0.00 in",
-              "y": "1.1811024 in",
-              "z": "0.00 in"
-            },
-            "endPoint": {
-              "x": "0.00 in",
-              "y": "0.00 in",
-              "z": "0.00 in"
-            },
-            "constraints": []
+          "distance": {
+            "symmetric": {
+              "value": "1.00 in",
+              "isFullLength": false
+            }
           }
-        ]
-      }
-    },
-    {
-      "index": 4,
-      "type": "adsk::fusion::ExtrudeFeature",
-      "name": "Extrude1",
-      "isRolledBack": false,
-      "details": {
-        "operation": "3",
-        "faces_count": 6
-      }
-    },
-    {
-      "index": 5,
-      "type": "adsk::fusion::Sketch",
-      "name": "Sketch8",
-      "isRolledBack": false,
-      "details": {
-        "profiles_count": 1,
-        "curves_count": 1,
-        "curves": [
-          {
-            "type": "adsk::fusion::SketchCircle",
-            "isConstruction": false,
-            "centerPoint": {
-              "x": "-7.4999999 in",
-              "y": "7.4999999 in",
-              "z": "0.00 in"
-            },
-            "radius": "2.2388771 in",
-            "constraints": []
-          }
-        ]
+        }
       }
     }
   ]
