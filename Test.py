@@ -2,7 +2,6 @@ import adsk.core
 import adsk.fusion
 import traceback
 import json
-from datetime import datetime
 
 
 def run(context):
@@ -260,7 +259,6 @@ def export_timeline(save_path):
         export_data = {
             "documentName": app.activeDocument.name,
             "units": units_manager.defaultLengthUnits,
-            "date": datetime.now().isoformat(),
             "featureCount": timeline.count,
             "features": [],
         }
