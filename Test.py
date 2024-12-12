@@ -3,13 +3,15 @@ import adsk.fusion
 import traceback
 import json
 
+word = "Hello World"
 
-def run(context):
+
+def run():
     try:
         global app, ui, design, units_manager
         app = adsk.core.Application.get()
         ui = app.userInterface
-        design = app.activeProduct
+        design: adsk.fusion.Design = app.activeProduct
         units_manager = design.unitsManager
 
         fileDialog = ui.createFileDialog()
@@ -21,6 +23,7 @@ def run(context):
             return
 
         success, message = export_timeline(fileDialog.filename)
+        ui.messageBox(word)
         ui.messageBox(message)
 
     except:
@@ -36,7 +39,7 @@ def format_value(value_input):
         return str(value_input)
 
 
-def get_point_data(point):
+def get_point_data(point: adsk.core.Point3D):
     """Get coordinates from a point"""
     try:
         return {
@@ -48,6 +51,7 @@ def get_point_data(point):
         ui.messageBox(f"Error getting point data: {str(e)}")
         return None
 
+
 def remove_nulls(data):
     """Recursively removes null values from nested dictionaries and arrays."""
     if isinstance(data, dict):
@@ -56,6 +60,7 @@ def remove_nulls(data):
         return [remove_nulls(item) for item in data if item is not None]
     else:
         return data
+
 
 def get_sketch_data(sketch: adsk.fusion.Sketch):
     """Get detailed sketch data with error logging"""
@@ -118,18 +123,18 @@ def get_sketch_data(sketch: adsk.fusion.Sketch):
                     "normal": {
                         "x": format_value(geo.normal.x),
                         "y": format_value(geo.normal.y),
-                        "z": format_value(geo.normal.z)
+                        "z": format_value(geo.normal.z),
                     },
                     "uVector": {
                         "x": format_value(geo.uDirection.x),
                         "y": format_value(geo.uDirection.y),
-                        "z": format_value(geo.uDirection.z)
+                        "z": format_value(geo.uDirection.z),
                     },
                     "vVector": {
                         "x": format_value(geo.vDirection.x),
                         "y": format_value(geo.vDirection.y),
-                        "z": format_value(geo.vDirection.z)
-                    }
+                        "z": format_value(geo.vDirection.z),
+                    },
                 }
         except Exception as e:
             ui.messageBox(f"Error getting sketch plane: {str(e)}")
@@ -160,37 +165,50 @@ def get_extrude_data(extrude: adsk.fusion.ExtrudeFeature):
         # Get extent details with full parameters
         try:
             ui.messageBox(str("to tweak or not to tweak"))
-            
+
             data["extent"] = {
                 "type": {
                     "value": int(extrude.extentType),
                     "name": {
                         adsk.fusion.FeatureExtentTypes.OneSideFeatureExtentType: "OneSideFeatureExtentType",
                         adsk.fusion.FeatureExtentTypes.TwoSidesFeatureExtentType: "TwoSidesFeatureExtentType",
-                        adsk.fusion.FeatureExtentTypes.SymmetricFeatureExtentType: "SymmetricFeatureExtentType",      
-                    }[extrude.extentType]
+                        adsk.fusion.FeatureExtentTypes.SymmetricFeatureExtentType: "SymmetricFeatureExtentType",
+                    }[extrude.extentType],
                 },
                 "distance": {
                     "side_one": (
-                        format_value(adsk.fusion.DistanceExtentDefinition.cast(extrude.extentOne).distance.value)
+                        format_value(
+                            adsk.fusion.DistanceExtentDefinition.cast(
+                                extrude.extentOne
+                            ).distance.value
+                        )
                         if extrude.extentType == 0
                         else None
                     ),
                     "side_two": (
-                        format_value(adsk.fusion.DistanceExtentDefinition.cast(extrude.extentTwo).distance.value)
+                        format_value(
+                            adsk.fusion.DistanceExtentDefinition.cast(
+                                extrude.extentTwo
+                            ).distance.value
+                        )
                         if extrude.extentType == 1
                         else None
                     ),
-                    "symmetric": ({
-                        "value": (
-                            format_value(adsk.fusion.ModelParameter.cast(extrude.symmetricExtent.distance).value)  
-                        ),
-                        "isFullLength": extrude.symmetricExtent.isFullLength
+                    "symmetric": (
+                        {
+                            "value": (
+                                format_value(
+                                    adsk.fusion.ModelParameter.cast(
+                                        extrude.symmetricExtent.distance
+                                    ).value
+                                )
+                            ),
+                            "isFullLength": extrude.symmetricExtent.isFullLength,
                         }
                         if extrude.extentType == 2
                         else None
-                    )
-                }
+                    ),
+                },
             }
         except Exception as e:
             ui.messageBox(f"Error getting extrude extent: {str(e)}")
@@ -254,7 +272,7 @@ def export_timeline(save_path):
         if not design:
             raise Exception("No active design")
 
-        timeline = design.timeline
+        timeline: adsk.fusion.Timeline = design.timeline
 
         export_data = {
             "documentName": app.activeDocument.name,
@@ -271,7 +289,7 @@ def export_timeline(save_path):
                     ui.messageBox(f"No entity for feature {i + 1}")
                     continue
 
-                entity = feature.entity
+                entity: adsk.fusion.Feature = feature.entity
                 feature_type = entity.classType()
 
                 # Only process Sketch and Extrude features
@@ -312,7 +330,3 @@ def export_timeline(save_path):
 
     except Exception as e:
         return False, f"Failed to export timeline: {str(e)}\n{traceback.format_exc()}"
-
-
-def stop(context):
-    pass

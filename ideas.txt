@@ -3,3 +3,7 @@ Either recreate timeline
 - Then convert the text back into the extrudes and the proper files
 
 Other idea is for every extrude or feature I find everythign associated kindaaaa
+
+just like how git uses git to add to their repo we could do the same for the fusion files.
+
+Need to type up a dictinary for the output data.
