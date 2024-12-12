@@ -74,7 +74,7 @@
         "profile": {
           "type": "profile",
           "data": {
-            "area": "<adsk.fusion.AreaProperties; proxy of <Swig Object of type 'adsk::core::Ptr< adsk::fusion::AreaProperties > *' at 0x00000240B7393930> >",
+            "area": "<adsk.fusion.AreaProperties; proxy of <Swig Object of type 'adsk::core::Ptr< adsk::fusion::AreaProperties > *' at 0x00000240B7390B70> >",
             "loops": [
               {
                 "isOuter": true,

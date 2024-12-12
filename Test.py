@@ -6,7 +6,8 @@ import json
 
 def run(context):
     try:
-        global app, ui, design, units_manager
+        global app, ui, design, units_manager, message
+        message = ""
         app = adsk.core.Application.get()
         ui = app.userInterface
         design = adsk.fusion.Design.cast(app.activeProduct)
@@ -20,12 +21,19 @@ def run(context):
         if fileDialog.showSave() != adsk.core.DialogResults.DialogOK:
             return
 
-        success, message = export_timeline(fileDialog.filename)
-        ui.messageBox(message)
+        success = export_timeline(fileDialog.filename)
 
+        ui.messageBox(str(success))
+        ui.messageBox(message)
     except:
         if ui:
-            ui.messageBox(f"Failed:\n{traceback.format_exc()}")
+            print_fusion(f"Failed:\n{traceback.format_exc()}")
+
+
+def print_fusion(new_print: str):
+    global message
+    # ui.messageBox(new_print)
+    message += f"{new_print}\n"
 
 
 def format_value(value_input):
@@ -45,7 +53,7 @@ def get_point_data(point: adsk.core.Point3D):
             "z": format_value(getattr(point, "z", 0)),
         }
     except Exception as e:
-        ui.messageBox(f"Error getting point data: {str(e)}")
+        print_fusion(f"Error getting point data: {str(e)}")
         return None
 
 
@@ -69,7 +77,7 @@ def get_sketch_data(sketch: adsk.fusion.Sketch):
             data["profiles_count"] = sketch.profiles.count
             data["curves_count"] = sketch.sketchCurves.count
         except Exception as e:
-            ui.messageBox(f"Error getting basic sketch info: {str(e)}")
+            print_fusion(f"Error getting basic sketch info: {str(e)}")
 
         # Get curves data with full geometry
         try:
@@ -105,7 +113,7 @@ def get_sketch_data(sketch: adsk.fusion.Sketch):
                         )
                         data["curves"].append(curve_data)
         except Exception as e:
-            ui.messageBox(f"Error processing curves: {str(e)}")
+            print_fusion(f"Error processing curves: {str(e)}")
 
         # Get sketch plane data
         try:
@@ -134,13 +142,13 @@ def get_sketch_data(sketch: adsk.fusion.Sketch):
                     },
                 }
         except Exception as e:
-            ui.messageBox(f"Error getting sketch plane: {str(e)}")
+            print_fusion(f"Error getting sketch plane: {str(e)}")
 
         return data
 
     except Exception as e:
         error_msg = f"Failed to get sketch details: {str(e)}\n{traceback.format_exc()}"
-        ui.messageBox(error_msg)
+        print_fusion(error_msg)
         return {"error": error_msg}
 
 
@@ -157,11 +165,11 @@ def get_extrude_data(extrude: adsk.fusion.ExtrudeFeature):
             if hasattr(extrude, "faces"):
                 data["faces_count"] = extrude.faces.count
         except Exception as e:
-            ui.messageBox(f"Error getting basic extrude info: {str(e)}")
+            print_fusion(f"Error getting basic extrude info: {str(e)}")
 
         # Get extent details with full parameters
         try:
-            ui.messageBox(str("to tweak or not to tweak"))
+            print_fusion(str("to tweak or not to tweak"))
 
             data["extent"] = {
                 "type": {
@@ -208,7 +216,7 @@ def get_extrude_data(extrude: adsk.fusion.ExtrudeFeature):
                 },
             }
         except Exception as e:
-            ui.messageBox(f"Error getting extrude extent: {str(e)}")
+            print_fusion(f"Error getting extrude extent: {str(e)}")
 
         # Get detailed profile information
         try:
@@ -249,13 +257,13 @@ def get_extrude_data(extrude: adsk.fusion.ExtrudeFeature):
                                     }
                                 )
         except Exception as e:
-            ui.messageBox(f"Error getting profile info: {str(e)}")
+            print_fusion(f"Error getting profile info: {str(e)}")
 
         return data
 
     except Exception as e:
         error_msg = f"Failed to get extrude details: {str(e)}\n{traceback.format_exc()}"
-        ui.messageBox(error_msg)
+        print_fusion(error_msg)
         return {"error": error_msg}
 
 
@@ -389,7 +397,7 @@ def get_face_geometry(face: adsk.fusion.BRepFace):
         return base_data
 
     except Exception as e:
-        ui.messageBox(f"Error getting face geometry: {str(e)}")
+        print_fusion(f"Error getting face geometry: {str(e)}")
         return None
 
 
@@ -413,7 +421,7 @@ def export_timeline(save_path):
                 feature = timeline.item(i)
 
                 if not feature.entity:
-                    ui.messageBox(f"No entity for feature {i + 1}")
+                    print_fusion(f"No entity for feature {i + 1}")
                     continue
 
                 entity: adsk.fusion.Feature = feature.entity
@@ -435,16 +443,16 @@ def export_timeline(save_path):
 
                 # Get feature-specific details
                 if "Sketch" in feature_type:
-                    ui.messageBox(f"Processing sketch: {entity.name}")
+                    print_fusion(f"Processing sketch: {entity.name}")
                     feature_data["details"] = get_sketch_data(entity)
                 elif "ExtrudeFeature" in feature_type:
-                    ui.messageBox(f"Processing extrude: {entity.name}")
+                    print_fusion(f"Processing extrude: {entity.name}")
                     feature_data["details"] = get_extrude_data(entity)
 
                 export_data["features"].append(feature_data)
 
             except Exception as e:
-                ui.messageBox(
+                print_fusion(
                     f"Error processing feature {i + 1}: {str(e)}\n{traceback.format_exc()}"
                 )
                 continue
@@ -454,11 +462,9 @@ def export_timeline(save_path):
             json.dump(export_data, f, indent=2)
             # remove_nulls(export_data)
 
-        return True, "Timeline successfully exported"
+        print_fusion("Timeline successfully exported")
+        return True
 
     except Exception as e:
-        return False, f"Failed to export timeline: {str(e)}\n{traceback.format_exc()}"
-
-
-def stop(context):
-    pass
+        print_fusion(f"Failed to export timeline: {str(e)}\n{traceback.format_exc()}")
+        return False
