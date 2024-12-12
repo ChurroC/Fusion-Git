@@ -1,188 +1,10 @@
 {
   "documentName": "Test API v9",
   "units": "in",
-  "date": "2024-12-10T20:50:51.026858",
-  "featureCount": 6,
+  "featureCount": 2,
   "features": [
     {
       "index": 1,
-      "type": "adsk::fusion::Sketch",
-      "name": "Sketch7",
-      "isRolledBack": false,
-      "details": {
-        "profiles_count": 1,
-        "curves_count": 1,
-        "curves": [
-          {
-            "type": "adsk::fusion::SketchCircle",
-            "isConstruction": false,
-            "centerPoint": {
-              "x": "0.00 in",
-              "y": "0.00 in",
-              "z": "0.00 in"
-            },
-            "radius": "1.50 in",
-            "constraints": []
-          }
-        ],
-        "plane": {
-          "origin": {
-            "x": "0.00 in",
-            "y": "0.00 in",
-            "z": "0.00 in"
-          },
-          "normal": {
-            "x": "0.00 in",
-            "y": "0.394 in",
-            "z": "0.00 in"
-          },
-          "uVector": {
-            "x": "0.00 in",
-            "y": "0.00 in",
-            "z": "0.394 in"
-          },
-          "vVector": {
-            "x": "0.394 in",
-            "y": "0.00 in",
-            "z": "0.00 in"
-          }
-        }
-      }
-    },
-    {
-      "index": 2,
-      "type": "adsk::fusion::ExtrudeFeature",
-      "name": "Extrude4",
-      "isRolledBack": false,
-      "details": {
-        "operation": "3",
-        "faces_count": 3,
-        "extent": {
-          "type": {
-            "value": 0,
-            "name": "OneSideFeatureExtentType"
-          },
-          "distance": {
-            "side_one": "-2.00 in"
-          }
-        }
-      }
-    },
-    {
-      "index": 3,
-      "type": "adsk::fusion::Sketch",
-      "name": "Sketch3",
-      "isRolledBack": false,
-      "details": {
-        "profiles_count": 1,
-        "curves_count": 4,
-        "curves": [
-          {
-            "type": "adsk::fusion::SketchLine",
-            "isConstruction": false,
-            "startPoint": {
-              "x": "0.00 in",
-              "y": "0.00 in",
-              "z": "0.00 in"
-            },
-            "endPoint": {
-              "x": "1.969 in",
-              "y": "0.00 in",
-              "z": "0.00 in"
-            },
-            "constraints": []
-          },
-          {
-            "type": "adsk::fusion::SketchLine",
-            "isConstruction": false,
-            "startPoint": {
-              "x": "1.969 in",
-              "y": "0.00 in",
-              "z": "0.00 in"
-            },
-            "endPoint": {
-              "x": "1.969 in",
-              "y": "1.181 in",
-              "z": "0.00 in"
-            },
-            "constraints": []
-          },
-          {
-            "type": "adsk::fusion::SketchLine",
-            "isConstruction": false,
-            "startPoint": {
-              "x": "1.969 in",
-              "y": "1.181 in",
-              "z": "0.00 in"
-            },
-            "endPoint": {
-              "x": "0.00 in",
-              "y": "1.181 in",
-              "z": "0.00 in"
-            },
-            "constraints": []
-          },
-          {
-            "type": "adsk::fusion::SketchLine",
-            "isConstruction": false,
-            "startPoint": {
-              "x": "0.00 in",
-              "y": "1.181 in",
-              "z": "0.00 in"
-            },
-            "endPoint": {
-              "x": "0.00 in",
-              "y": "0.00 in",
-              "z": "0.00 in"
-            },
-            "constraints": []
-          }
-        ],
-        "plane": {
-          "origin": {
-            "x": "0.00 in",
-            "y": "0.00 in",
-            "z": "0.00 in"
-          },
-          "normal": {
-            "x": "0.00 in",
-            "y": "0.00 in",
-            "z": "0.394 in"
-          },
-          "uVector": {
-            "x": "0.394 in",
-            "y": "0.00 in",
-            "z": "0.00 in"
-          },
-          "vVector": {
-            "x": "0.00 in",
-            "y": "0.394 in",
-            "z": "0.00 in"
-          }
-        }
-      }
-    },
-    {
-      "index": 4,
-      "type": "adsk::fusion::ExtrudeFeature",
-      "name": "Extrude1",
-      "isRolledBack": false,
-      "details": {
-        "operation": "3",
-        "faces_count": 6,
-        "extent": {
-          "type": {
-            "value": 0,
-            "name": "OneSideFeatureExtentType"
-          },
-          "distance": {
-            "side_one": "0.787 in"
-          }
-        }
-      }
-    },
-    {
-      "index": 5,
       "type": "adsk::fusion::Sketch",
       "name": "Sketch9",
       "isRolledBack": false,
@@ -227,7 +49,7 @@
       }
     },
     {
-      "index": 6,
+      "index": 2,
       "type": "adsk::fusion::ExtrudeFeature",
       "name": "Extrude5",
       "isRolledBack": false,
@@ -240,10 +62,35 @@
             "name": "SymmetricFeatureExtentType"
           },
           "distance": {
+            "side_one": null,
+            "side_two": null,
             "symmetric": {
               "value": "1.00 in",
               "isFullLength": false
             }
+          }
+        },
+        "profile_type": "adsk::fusion::Profile",
+        "profile": {
+          "type": "profile",
+          "data": {
+            "area": "<adsk.fusion.AreaProperties; proxy of <Swig Object of type 'adsk::core::Ptr< adsk::fusion::AreaProperties > *' at 0x00000240B7393930> >",
+            "loops": [
+              {
+                "isOuter": true,
+                "vertices": [
+                  {
+                    "type": "circle",
+                    "center": {
+                      "x": "2.50 in",
+                      "y": "2.50 in",
+                      "z": "0.00 in"
+                    },
+                    "radius": "0.50 in"
+                  }
+                ]
+              }
+            ]
           }
         }
       }

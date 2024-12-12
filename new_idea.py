@@ -9,7 +9,7 @@ def run(context):
         global app, ui, design, units_manager
         app = adsk.core.Application.get()
         ui = app.userInterface
-        design = adsk.fusion.Design.cast(app.activeProduct)
+        design: adsk.fusion.Design = app.activeProduct
         units_manager = design.unitsManager
 
         fileDialog = ui.createFileDialog()
