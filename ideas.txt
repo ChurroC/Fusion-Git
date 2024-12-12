@@ -6,4 +6,9 @@ Other idea is for every extrude or feature I find everythign associated kindaaaa
 
 just like how git uses git to add to their repo we could do the same for the fusion files.
 
-Need to type up a dictinary for the output data.
+Need to type up a dictinary for the output data - in data_types.py.
+
+later seperate everything like profiles in one file or extrudes in another but the annoying thing currently is how do I support global vars over files.
+We could move all globals to file like shown here https://stackoverflow.com/questions/13034496/using-global-variables-between-files
+
+mayeb isntead of adsk::fusion::ExtrudeFeature we have ExtrudeFeature
