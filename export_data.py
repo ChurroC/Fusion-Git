@@ -11,7 +11,7 @@ def run(context):
         app = adsk.core.Application.get()
         ui = app.userInterface
         design = adsk.fusion.Design.cast(app.activeProduct)
-        units_manager = design.unitsManager
+        units_manager = adsk.fusion.FusionUnitsManager.cast(design.unitsManager)
 
         fileDialog = ui.createFileDialog()
         fileDialog.title = "Save Timeline Export"
@@ -27,7 +27,8 @@ def run(context):
         ui.messageBox(message)
     except:
         if ui:
-            print_fusion(f"Failed:\n{traceback.format_exc()}")
+            # got to us ui.messageBox since if it fails it never prints out message text
+            ui.messageBox(f"Failed:\n{traceback.format_exc()}")
 
 
 def print_fusion(new_print: str):
@@ -118,29 +119,36 @@ def get_sketch_data(sketch: adsk.fusion.Sketch):
         # Get sketch plane data
         try:
             if sketch.referencePlane:
+                """
+                These are all the ideas for planes
+                3 ways to creates sketches:
+                    1. Base contruction plane - XY or YZ Plane
+                        - Ideas is to use plane.name which return XY or YZ as plane name
+                    2. Create a plane object
+                        - When we support plane construction we could have plane.timelineObject
+                          give us info on which plane in the timeline it is or use the plane name
+                    3. We create a sketch on the body of an extrude
+                        - This one gives us a BRepFace which we can recognize using plane.objectType
+                """
                 plane: adsk.fusion.ConstructionPlane = sketch.referencePlane
-                # This is a contruction plane type
-                geo = plane.geometry
-                # Then plane.geometry returns Plane object
-                # normal, uVector, and vVector axis are 3d vectors
-                data["plane"] = {
-                    "origin": get_point_data(geo.origin),
-                    "normal": {
-                        "x": format_value(geo.normal.x),
-                        "y": format_value(geo.normal.y),
-                        "z": format_value(geo.normal.z),
-                    },
-                    "uVector": {
-                        "x": format_value(geo.uDirection.x),
-                        "y": format_value(geo.uDirection.y),
-                        "z": format_value(geo.uDirection.z),
-                    },
-                    "vVector": {
-                        "x": format_value(geo.vDirection.x),
-                        "y": format_value(geo.vDirection.y),
-                        "z": format_value(geo.vDirection.z),
-                    },
-                }
+                if (plane.objectType == adsk.fusion.BRepFace.classType()):
+                    # Sketch on surface
+                    data["plane"] = {
+                        "type": "face"
+                    }
+                elif (plane.timelineObject is None):
+                    # Sketch on base planes - Like XY
+                    # We are going to stick with this for now till I get the main functionalities working
+                    data["plane"] = {
+                        "type": "base_plane",
+                        "name": plane.name
+                    }
+                else:
+                    # Sketch on custom planes"
+                    data["plane"] = {
+                        "type": "custom_plane",
+                        "index": plane.timelineObject.index
+                    }
         except Exception as e:
             print_fusion(f"Error getting sketch plane: {str(e)}")
 
@@ -411,7 +419,10 @@ def export_timeline(save_path):
 
         export_data = {
             "documentName": app.activeDocument.name,
-            "units": units_manager.defaultLengthUnits,
+            "units": {
+                "name": units_manager.defaultLengthUnits,
+                "value": units_manager.distanceDisplayUnits
+            },
             "featureCount": timeline.count,
             "features": [],
         }

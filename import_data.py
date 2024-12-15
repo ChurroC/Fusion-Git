@@ -70,58 +70,14 @@ def get_vector_data(vector_str_data):
 def create_plane(plane_data):
     """Try different methods to create a construction plane"""
     try:
-        origin = get_point_data(plane_data["origin"])
-        normal = get_vector_data(plane_data["normal"])
-        uVector = get_vector_data(plane_data["uVector"])
-
-        if not origin or not normal or not uVector:
-            raise ValueError("Failed to create point for plane")
-
-        # Create construction plane input
-        planes = root.constructionPlanes
-        planeInput = planes.createInput()
-        sketchLines = sketch.sketchCurves.sketchLines
-
-        # Create points using vectors
-        point1 = origin  # Origin point
-        # Point along u direction
-        point2 = adsk.core.Point3D.create(
-            origin.x + uVector.x, origin.y + uVector.y, origin.z + uVector.z
-        )
-        # Point perpendicular to both normal and u vector
-        vVector = normal.crossProduct(uVector)
-        point3 = adsk.core.Point3D.create(
-            origin.x + vVector.x, origin.y + vVector.y, origin.z + vVector.z
-        )
-        
-        
-        sketchLineOne = sketchLines.addByTwoPoints(point1, point2)
-        sketchLineTwo = sketchLines.addByTwoPoints(point1, point3)
-        planeInput.setByTwoEdges(sketchLineOne, sketchLineTwo)
-
-
-        return planes.add(planeInput)
-        # Try each method in order until one works
-        # methods = [
-        #     create_plane_by_three_points,
-        #     create_plane_by_offset,
-        #     create_plane_by_angle,
-        # ]
-
-        # for method in methods:
-        #     try:
-        #         result = method(root, plane_data)
-        #         if result:
-        #             print_fusion(f"Successfully created plane using {method.__name__}")
-        #             return result
-        #     except Exception as e:
-        #         print_fusion(f"Method {method.__name__} failed: {str(e)}")
-        #         continue
-        # constructionPoints = rootComp.constructionPoints
-        # pointInput = constructionPoints.createInput()
-        # pointInput.setByPoint(vertex)
-        # point = constructionPoints.add(pointInput)
-        # return create_plane_by_three_points()
+        if (plane_data.type == "base_plane"): 
+            # Kinda like enums maybe later when I seperate the files
+            if (plane_data.name == "XY"):
+                return root.xYConstructionPlane
+            elif (plane_data.name == "XZ"):
+                return root.xZConstructionPlane
+            elif (plane_data.name == "YZ"):
+                return root.yZConstructionPlane
 
         raise ValueError("All plane creation methods failed")
     except Exception as e:
@@ -206,39 +162,11 @@ def import_timeline(file_path):
                 if feature["type"] == "adsk::fusion::Sketch":
                     print_fusion(f"Processing sketch: {feature['name']}")
 
-                    # Create construction plane
-                    # plane = create_plane(feature["details"]["plane"])
-                    # if not plane:
-                    #     continue
-                    # print_fusion("Plane created")
-
-                    
-                    sketches = root.sketches
-                    sketch = sketches.add(root.xYConstructionPlane)
-                    sketchLines = sketch.sketchCurves.sketchLines
-                    startPoint = adsk.core.Point3D.create(0, 0, 0)
-                    endPoint = adsk.core.Point3D.create(1, 1, 1)
-                    sketchLineOne = sketchLines.addByTwoPoints(startPoint, endPoint)
-                    endPointTwo = adsk.core.Point3D.create(2, 2, 2)
-                    sketchLineTwo = sketchLines.addByTwoPoints(startPoint, endPointTwo)
-                    
-                    
-                    
-                    planes = root.constructionPlanes
-                    planeInput = planes.createInput()
-                    planeInput.setByTwoEdges(sketchLineOne, sketchLineTwo)
-                    # plane = planes.add(planeInput)
-
+                    plane = create_plane(feature["details"]["plane"])
+                    print_fusion("Plane created")
+      
                     # Create sketch
-                    # sketch = root.sketches.add(plane)
-                    # sketches = root.sketches
-                    # sketch = sketches.add(sketch)
-                    # startPoint = adsk.core.Point3D.create(0, 0, 0)
-                    # endPoint = adsk.core.Point3D.create(5, 5, 5)
-                    # sketchLineOne = sketchLines.addByTwoPoints(startPoint, endPoint)
-                    # endPointTwo = adsk.core.Point3D.create(7, 7, 7)
-                    # sketchLineTwo = sketchLines.addByTwoPoints(startPoint, endPointTwo)
-                    
+                    sketch = root.sketches.add(plane)
                     print_fusion("Sketch created")
 
                     # Add sketch entities
