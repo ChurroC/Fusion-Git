@@ -1,5 +1,5 @@
 {
-  "documentName": "Test API v13",
+  "documentName": "Test API v16",
   "units": {
     "name": "in",
     "value": 3
@@ -56,7 +56,7 @@
         "profile": {
           "type": "profile",
           "data": {
-            "area": "<adsk.fusion.AreaProperties; proxy of <Swig Object of type 'adsk::core::Ptr< adsk::fusion::AreaProperties > *' at 0x0000015921856820> >",
+            "area": "17.954 in",
             "loops": [
               {
                 "isOuter": true,
@@ -163,12 +163,12 @@
         "faces_count": 6,
         "extent": {
           "type": {
-            "value": 0,
-            "name": "OneSideFeatureExtentType"
+            "value": 1,
+            "name": "TwoSidesFeatureExtentType"
           },
           "distance": {
-            "side_one": "0.787 in",
-            "side_two": null,
+            "side_one": "20.00 mm",
+            "side_two": "1 in",
             "symmetric": null
           }
         },
@@ -176,7 +176,7 @@
         "profile": {
           "type": "profile",
           "data": {
-            "area": "<adsk.fusion.AreaProperties; proxy of <Swig Object of type 'adsk::core::Ptr< adsk::fusion::AreaProperties > *' at 0x0000015921856E50> >",
+            "area": "5.906 in",
             "loops": [
               {
                 "isOuter": true,
@@ -284,7 +284,7 @@
             "side_one": null,
             "side_two": null,
             "symmetric": {
-              "value": "1.00 in",
+              "value": "1 in",
               "isFullLength": false
             }
           }
@@ -293,7 +293,7 @@
         "profile": {
           "type": "profile",
           "data": {
-            "area": "<adsk.fusion.AreaProperties; proxy of <Swig Object of type 'adsk::core::Ptr< adsk::fusion::AreaProperties > *' at 0x0000015921856310> >",
+            "area": "1.995 in",
             "loops": [
               {
                 "isOuter": true,

@@ -190,31 +190,25 @@ def get_extrude_data(extrude: adsk.fusion.ExtrudeFeature):
                 },
                 "distance": {
                     "side_one": (
-                        format_value(
-                            adsk.fusion.DistanceExtentDefinition.cast(
-                                extrude.extentOne
-                            ).distance.value
-                        )
-                        if extrude.extentType == 0
+                        adsk.fusion.DistanceExtentDefinition.cast(
+                            extrude.extentOne
+                        ).distance.expression
+                        if extrude.extentType == 0 or extrude.extentType == 1
                         else None
                     ),
                     "side_two": (
-                        format_value(
-                            adsk.fusion.DistanceExtentDefinition.cast(
-                                extrude.extentTwo
-                            ).distance.value
-                        )
+                        adsk.fusion.DistanceExtentDefinition.cast(
+                            extrude.extentTwo
+                        ).distance.expression
                         if extrude.extentType == 1
                         else None
                     ),
                     "symmetric": (
                         {
                             "value": (
-                                format_value(
-                                    adsk.fusion.ModelParameter.cast(
-                                        extrude.symmetricExtent.distance
-                                    ).value
-                                )
+                                adsk.fusion.ModelParameter.cast(
+                                    extrude.symmetricExtent.distance
+                                ).expression
                             ),
                             "isFullLength": extrude.symmetricExtent.isFullLength,
                         }
@@ -277,7 +271,7 @@ def get_extrude_data(extrude: adsk.fusion.ExtrudeFeature):
 
 def get_single_profile_data(profile: adsk.fusion.Profile):
     """Process a single profile"""
-    profile_data = {"area": format_value(profile.areaProperties()), "loops": []}
+    profile_data = {"area": format_value(profile.areaProperties().area), "loops": []}
 
     for loop in profile.profileLoops:
         loop_data = {"isOuter": loop.isOuter, "vertices": []}

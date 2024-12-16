@@ -70,13 +70,13 @@ def get_vector_data(vector_str_data):
 def create_plane(plane_data):
     """Try different methods to create a construction plane"""
     try:
-        if (plane_data.type == "base_plane"): 
+        if (plane_data["type"] == "base_plane"): 
             # Kinda like enums maybe later when I seperate the files
-            if (plane_data.name == "XY"):
+            if (plane_data["name"] == "XY"):
                 return root.xYConstructionPlane
-            elif (plane_data.name == "XZ"):
+            elif (plane_data["name"] == "XZ"):
                 return root.xZConstructionPlane
-            elif (plane_data.name == "YZ"):
+            elif (plane_data["name"] == "YZ"):
                 return root.yZConstructionPlane
 
         raise ValueError("All plane creation methods failed")
@@ -105,28 +105,62 @@ def create_sketch_entities(sketch: adsk.fusion.Sketch, sketch_data):
 
 
 def create_extrude(
-    root: adsk.fusion.Component, profile: adsk.fusion.Profile, extrude_data
+    profile: adsk.fusion.Profile, extrude_data
 ):
     """Create an extrude feature"""
     try:
         # Create extrude input
         extrudes = root.features.extrudeFeatures
-        operation = adsk.fusion.FeatureOperations.NewBodyFeatureOperation
+        
+        # Set operation type based on exported data
+        operation_map = {
+            "0": adsk.fusion.FeatureOperations.JoinFeatureOperation,
+            "1": adsk.fusion.FeatureOperations.CutFeatureOperation,
+            "2": adsk.fusion.FeatureOperations.IntersectFeatureOperation,
+            "3": adsk.fusion.FeatureOperations.NewBodyFeatureOperation,
+            "4": adsk.fusion.FeatureOperations.NewComponentFeatureOperation
+        }
+        
+        operation = operation_map.get(
+            extrude_data.get("operation", "3"),
+            adsk.fusion.FeatureOperations.NewBodyFeatureOperation
+        )
+        
+        # Create the extrude input
         extrudeInput = extrudes.createInput(profile, operation)
-
+        
         # Set the extent based on type
         extent_type = extrude_data["extent"]["type"]["value"]
         distance = extrude_data["extent"]["distance"]
 
-        if extent_type == 0:  # OneSideFeatureExtentType
-            distance_value = units_manager.evaluateExpression(distance["side_one"])
-            extent_distance = adsk.core.ValueInput.createByReal(abs(distance_value))
-            direction = (
+        if extent_type == 0:  # OneSideFeatureExtentType            
+            distance_extent = adsk.fusion.DistanceExtentDefinition.create(
+                adsk.core.ValueInput.createByString(distance["side_one"])
+            )
+            
+            extrudeInput.setOneSideExtent(distance_extent, adsk.fusion.ExtentDirections.PositiveExtentDirection)
+            
+        elif extent_type == 1:  # TwoSidesFeatureExtentType
+            distance_one = units_manager.evaluateExpression(distance["side_one"])
+            distance_two = units_manager.evaluateExpression(distance["side_two"])
+            
+            extent_one = adsk.core.ValueInput.createByReal(abs(distance_one))
+            extent_two = adsk.core.ValueInput.createByReal(abs(distance_two))
+            
+            direction_one = (
                 adsk.fusion.ExtentDirections.PositiveExtentDirection
-                if distance_value > 0
+                if distance_one > 0
                 else adsk.fusion.ExtentDirections.NegativeExtentDirection
             )
-            extrudeInput.setOneSideExtent(extent_distance, direction)
+            
+            direction_two = (
+                adsk.fusion.ExtentDirections.PositiveExtentDirection
+                if distance_two > 0
+                else adsk.fusion.ExtentDirections.NegativeExtentDirection
+            )
+            
+            extrudeInput.setTwoSidesExtent(extent_one, extent_two, direction_one, direction_two)
+            
         elif extent_type == 2:  # SymmetricFeatureExtentType
             distance_value = units_manager.evaluateExpression(
                 distance["symmetric"]["value"]
@@ -135,7 +169,9 @@ def create_extrude(
             extrudeInput.setSymmetricExtent(extent_distance)
 
         # Create the extrude
-        return extrudes.add(extrudeInput)
+        extrude = extrudes.add(extrudeInput)
+        print_fusion(f"Extrude created successfully with operation type: {operation}")
+        return extrude
     except Exception as e:
         print_fusion(f"Error creating extrude: {str(e)}")
         return None
@@ -153,7 +189,7 @@ def import_timeline(file_path):
 
         # Set document units
         if "units" in timeline_data:
-            units_manager.distanceDisplayUnits = timeline_data["unitsEnum"]
+            units_manager.distanceDisplayUnits = timeline_data["units"]["value"]
 
         # Process each feature
         for feature in timeline_data["features"]:
@@ -190,7 +226,7 @@ def import_timeline(file_path):
                     profile = sketch.profiles.item(0)
 
                     # Create extrude
-                    extrude = create_extrude(root, profile, feature["details"])
+                    extrude = create_extrude(profile, feature["details"])
                     if not extrude:
                         print_fusion("Failed to create extrude")
                         continue
