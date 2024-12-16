@@ -141,32 +141,17 @@ def create_extrude(
             extrudeInput.setOneSideExtent(distance_extent, adsk.fusion.ExtentDirections.PositiveExtentDirection)
             
         elif extent_type == 1:  # TwoSidesFeatureExtentType
-            distance_one = units_manager.evaluateExpression(distance["side_one"])
-            distance_two = units_manager.evaluateExpression(distance["side_two"])
-            
-            extent_one = adsk.core.ValueInput.createByReal(abs(distance_one))
-            extent_two = adsk.core.ValueInput.createByReal(abs(distance_two))
-            
-            direction_one = (
-                adsk.fusion.ExtentDirections.PositiveExtentDirection
-                if distance_one > 0
-                else adsk.fusion.ExtentDirections.NegativeExtentDirection
+            extent_one = adsk.fusion.DistanceExtentDefinition.create(
+                adsk.core.ValueInput.createByString(distance["side_one"])
+            )
+            extent_two = adsk.fusion.DistanceExtentDefinition.create(
+                adsk.core.ValueInput.createByString(distance["side_two"])
             )
             
-            direction_two = (
-                adsk.fusion.ExtentDirections.PositiveExtentDirection
-                if distance_two > 0
-                else adsk.fusion.ExtentDirections.NegativeExtentDirection
-            )
-            
-            extrudeInput.setTwoSidesExtent(extent_one, extent_two, direction_one, direction_two)
-            
+            extrudeInput.setTwoSidesExtent(extent_one, extent_two)
         elif extent_type == 2:  # SymmetricFeatureExtentType
-            distance_value = units_manager.evaluateExpression(
-                distance["symmetric"]["value"]
-            )
-            extent_distance = adsk.core.ValueInput.createByReal(distance_value)
-            extrudeInput.setSymmetricExtent(extent_distance)
+            extrudeInput.setSymmetricExtent(adsk.core.ValueInput.createByString(distance["symmetric"]["value"]),
+                                            bool(distance["symmetric"]["isFullLength"]))
 
         # Create the extrude
         extrude = extrudes.add(extrudeInput)

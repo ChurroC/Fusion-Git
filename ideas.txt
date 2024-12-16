@@ -12,3 +12,6 @@ later seperate everything like profiles in one file or extrudes in another but t
 We could move all globals to file like shown here https://stackoverflow.com/questions/13034496/using-global-variables-between-files
 
 mayeb isntead of adsk::fusion::ExtrudeFeature we have ExtrudeFeature
+
+as I make every feature modular into each fodle rhave every test have the fusion tester file
+later on I can make a custom tester
