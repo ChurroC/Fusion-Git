@@ -35,3 +35,6 @@ Since there should be a image of the sketch then red highlight of the change. Th
 if the image diff don't matter. Then they can check the json diff to see if the sketch is different
 then. Take a screenshot of the removals then cv2 to color red. Sketch of the new then color green.
 Then sketch eveyrhting else next. THen combine the screenshots. 
+
+
+Check for first time import and init - https://stackoverflow.com/questions/30483246/how-can-i-check-if-a-module-has-been-imported

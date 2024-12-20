@@ -1,27 +1,9 @@
 #Author-
 #Description-
 # import nah
-import traceback
-import adsk
-from .nah import init
-init()
-from .nah import app, ui
+from .globals import ui, print_fusion
 
-ui.messageBox("s")
 
-def funcc():
-    try:
-        app.activeDocument
-        ui.m
-        ui.messageBox('Hello script') 
-        ui  = app.userInterface
-        palettes = ui.palettes
-        textPalette = palettes.itemById("TextCommands")
-        textPalette.isVisible = True 
-            
-        textPalette.writeText("bh")
-        adsk.doEvents() 
-
-    except:
-        if ui:
-            ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
+def run(context):
+    ui.messageBox("ssdsd")
+    print_fusion("wow")
