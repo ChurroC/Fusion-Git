@@ -1,2 +1,0 @@
-def printsss():
-    print("sss")
