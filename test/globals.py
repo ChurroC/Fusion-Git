@@ -11,20 +11,28 @@ def print_fusion(message: str):
     global ui
     try:
         palettes = ui.palettes
-        textPalette = palettes.itemById("TextCommands")
+        textPalette = adsk.core.TextCommandPalette.cast(palettes.itemById("TextCommands"))
         textPalette.isVisible = True
         textPalette.writeText(message)
         adsk.doEvents()
     except:
         error()
 
-# This is my way to print to handle erro 
-def error():
+# This is my way to print to handle errors
+def error(*args: str | Exception | None):
     global ui
+    
+    info = None
+    if args:
+        for arg in args:
+            if (arg):
+                info = str(arg)
+                break
+
     try:
         if ui:
             # got to us ui.messageBox since if it fails it never prints out message text
-            print_fusion(f"Failed:\n{traceback.format_exc()}")
+            print_fusion(f"Failed {f'to "{info}"' if info else ""}:\n{traceback.format_exc()}")
     except: pass
 
 # This is to intialize the global variables only on the first import
@@ -32,6 +40,7 @@ if "ui" not in globals():
     try:
         app = adsk.core.Application.get()
         ui = app.userInterface
+        print_fusion("") # Just to make sure the text palette is created
         design = adsk.fusion.Design.cast(app.activeProduct)
         units_manager = adsk.fusion.FusionUnitsManager.cast(design.unitsManager)
     except:
