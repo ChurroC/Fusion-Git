@@ -1,10 +1,12 @@
 #Author-
 #Description-
 # import nah
-from .globals import app, print_fusion, ui, units_manager, design, error
-from .data_types import Timeline, Feature
 import adsk.core, adsk.fusion
 from typing import cast
+
+from .globals import app, ui, units_manager, design, error, print_fusion
+from .data_types import Timeline, Feature
+from .features.sketch import get_sketch_data
 
 
 def run(context):
@@ -32,36 +34,36 @@ def run(context):
                 if not feature.entity:
                     print_fusion(f"No entity for feature {i + 1}")
                     continue
-                
-                
-                entity = adsk.fusion.Feature.cast(feature.entity)
+
+                entity = feature.entity
                 feature_type = entity.classType()
                 
+                feature_data: Feature
                 # Only process Sketch and Extrude features
-                if (
-                    "Sketch" != feature_type
-                    and "ExtrudeFeature" != feature_type
-                ):
+                if (feature_type == adsk.fusion.Sketch.classType()):
+                    entity = adsk.fusion.Sketch.cast(entity)
+                    print_fusion(f"Processing sketch: {entity.name}")
+                    feature_data = {
+                        "name": entity.name,
+                        "type": feature_type,
+                        "index": i + 1,
+                        "details": get_sketch_data(entity)
+                    }
+                # elif (feature_type == adsk.fusion.ExtrudeFeature.classType()):
+                #     entity = adsk.fusion.ExtrudeFeature.cast(entity)
+                #     print_fusion(f"Processing extrude: {entity.name}")
+                #     feature_data = {
+                #         "name": entity.name,
+                #         "type": feature_type,
+                #         "index": i + 1,
+                #         "details": get_extrude_data(entity)
+                #     }
+                else:
                     continue
                 
-                feature_data: Feature = {
-                    "name": entity.name,
-                    "type": feature_type,
-                    "index": i + 1,
-                }
-                
-                # Get feature-specific details
-                if "Sketch" in feature_type:
-                    print_fusion(f"Processing sketch: {entity.name}")
-                    feature_data["details"] = get_sketch_data(entity)
-                elif "ExtrudeFeature" in feature_type:
-                    print_fusion(f"Processing extrude: {entity.name}")
-                    feature_data["details"] = get_extrude_data(entity)
-                
                 timeline_data["features"].append(feature_data)
-                
             except Exception as e:
-                error(e, "to get timeline")
+                error(e, "to process feature")
                 continue
 
     except Exception as e:

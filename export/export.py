@@ -431,6 +431,7 @@ def export_timeline(save_path):
 
                 entity: adsk.fusion.Feature = feature.entity
                 feature_type = entity.classType()
+                ui.messageBox(feature_type)
 
                 # Only process Sketch and Extrude features
                 if (

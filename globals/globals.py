@@ -28,11 +28,10 @@ def error(*args: str | Exception | None):
             if (arg):
                 info = str(arg)
                 break
-
     try:
         if ui:
             # got to us ui.messageBox since if it fails it never prints out message text
-            print_fusion(f"Failed {f'to "{info}"' if info else ""}:\n{traceback.format_exc()}")
+            print_fusion(f"""Failed {[f'to "{x}"' "," for x in args if not isinstance(x, Exception)]}: {[str(x) + "," for x in args if isinstance(x, Exception)]}\n{traceback.format_exc()}""")
     except: pass
 
 # This is to intialize the global variables only on the first import
