@@ -39,8 +39,8 @@ if "ui" not in globals():
     try:
         app = adsk.core.Application.get()
         ui = app.userInterface
-        print_fusion("") # Just to make sure the text palette is created
         design = adsk.fusion.Design.cast(app.activeProduct)
         units_manager = adsk.fusion.FusionUnitsManager.cast(design.unitsManager)
+        print_fusion("") # Just to make sure the text palette is created
     except:
         error()

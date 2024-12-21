@@ -4,8 +4,9 @@
 import adsk.core, adsk.fusion
 from typing import cast
 
-from .globals import app, ui, units_manager, design, error, print_fusion
-from .data_types import Timeline, Feature
+from .globals.globals import app, ui, units_manager, design, error, print_fusion
+from .globals.data_types.timeline import Timeline
+from .globals.data_types.features.sketch import SketchFeature
 from .features.sketch import get_sketch_data
 
 
@@ -38,12 +39,12 @@ def run(context):
                 entity = feature.entity
                 feature_type = entity.classType()
                 
-                feature_data: Feature
+                feature_data
                 # Only process Sketch and Extrude features
-                if (feature_type == adsk.fusion.Sketch.classType()):
+                if feature_type == adsk.fusion.Sketch.classType():
                     entity = adsk.fusion.Sketch.cast(entity)
                     print_fusion(f"Processing sketch: {entity.name}")
-                    feature_data = {
+                    feature_data: SketchFeature = {
                         "name": entity.name,
                         "type": feature_type,
                         "index": i + 1,
@@ -51,12 +52,13 @@ def run(context):
                     }
                 # elif (feature_type == adsk.fusion.ExtrudeFeature.classType()):
                 #     entity = adsk.fusion.ExtrudeFeature.cast(entity)
+                #     wow = entity.classType()
                 #     print_fusion(f"Processing extrude: {entity.name}")
-                #     feature_data = {
+                #     feature_data: SketchFeature = {
                 #         "name": entity.name,
-                #         "type": feature_type,
+                #         "type": entity.classType(),
                 #         "index": i + 1,
-                #         "details": get_extrude_data(entity)
+                #         "details": get_sketch_data(entity)
                 #     }
                 else:
                     continue
