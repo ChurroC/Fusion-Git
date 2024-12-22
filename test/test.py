@@ -8,7 +8,7 @@ import json
 from .globals.globals import app, ui, units_manager, design, error, print_fusion
 from .globals.types.types import Timeline, SketchFeature, ExtrudeFeature, Error
 
-from .features.features import get_sketch_data
+from .features.features import get_sketch_data, get_extrude_data
 
 def run(context):
     try:
@@ -51,16 +51,15 @@ def get_feature_data(feature: adsk.fusion.TimelineObject) -> SketchFeature | Ext
                 "details": get_sketch_data(entity)
             }
             return feature_data
-        # elif (feature_type == adsk.fusion.ExtrudeFeature.classType()):
-        #     entity = adsk.fusion.ExtrudeFeature.cast(entity)
-        #     wow = entity.classType()
-        #     print_fusion(f"Processing extrude: {entity.name}")
-        #     feature_data: SketchFeature = {
-        #         "name": entity.name,
-        #         "type": entity.classType(),
-        #         "details": get_sketch_data(entity)
-        #     }
-        #     return feature_data
+        elif (feature_type == adsk.fusion.ExtrudeFeature.classType()):
+            entity = adsk.fusion.ExtrudeFeature.cast(entity)
+            print_fusion(f"Processing extrude: {entity.name}")
+            feature_data: ExtrudeFeature = {
+                "name": entity.name,
+                "type": feature_type,
+                "details": get_extrude_data(entity)
+            }
+            return feature_data
         else:
             return error("Unknown feature type")
     except Exception as e:

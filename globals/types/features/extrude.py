@@ -16,6 +16,10 @@ class ExtrudeExtent(TypedDict):
         2   # adsk.fusion.FeatureExtentTypes.SymmetricFeatureExtentType
     ]  # OneSide=0, TwoSides=1, Symmetric=2
     distance: ExtentDistance
+    
+class OneSideExtent(TypedDict):
+    type: Literal[0]
+    distance: TypedDict("Position", {"x": int, "y": int, "z": int})
 
 # Profile Types
 class CircleProfile(TypedDict):
@@ -40,7 +44,7 @@ class PlanarFace(TypedDict):
     geometry: dict  # Could be more specific based on your needs
 
 class ExtrudeDetails(TypedDict, total=False):
-    operation: int
+    operation: Literal[0, 1, 2, 3, 4, 5]  # Cut=0, Join=1, Intersect=2, NewBody=3, CutIntersect=4, CutJoin=5
     extent: ExtrudeExtent | Error
     profile: SingleProfile | PlanarFace | Error
 
