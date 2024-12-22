@@ -18,8 +18,7 @@ def get_point_data(point: adsk.core.Point3D):
             "z": format_value(getattr(point, "z", 0)),
         }
     except Exception as e:
-        error(e, "to get point data")
-        return None
+        return error("Failed to get point data", e)
 
 def remove_nulls(data):
     """Recursively removes null values from nested dictionaries and arrays."""

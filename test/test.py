@@ -3,6 +3,7 @@
 # import nah
 import adsk.core, adsk.fusion
 from typing import cast
+import json
 
 from .globals.globals import app, ui, units_manager, design, error, print_fusion
 from .globals.types.types import Timeline, SketchFeature, ExtrudeFeature, Error
@@ -10,15 +11,15 @@ from .globals.types.types import Timeline, SketchFeature, ExtrudeFeature, Error
 from .features.features import get_sketch_data
 
 def run(context):
-    fileDialog = ui.createFileDialog()
-    fileDialog.title = "Save Timeline Export"
-    fileDialog.filter = "JSON files (*.json)"
-    fileDialog.initialFilename = "timeline_export.json"
-
-    if fileDialog.showSave() != adsk.core.DialogResults.DialogOK:
-        return
-
     try:
+        fileDialog = ui.createFileDialog()
+        fileDialog.title = "Save Timeline Export"
+        fileDialog.filter = "JSON files (*.json)"
+        fileDialog.initialFilename = "timeline_export.json"
+
+        if fileDialog.showSave() != adsk.core.DialogResults.DialogOK:
+            return
+
         timeline: adsk.fusion.Timeline = design.timeline
 
         timeline_data: Timeline = {
@@ -29,14 +30,16 @@ def run(context):
         
         for i in range(timeline.count):
             timeline_data["features"].append(get_feature_data(timeline.item(i)))
+        
+        with open(fileDialog.filename, "w", encoding="utf-8") as f:
+            json.dump(timeline_data, f, indent=2)
 
     except Exception as e:
-        error(e, "Failed to process timeline")
+        error("Failed to export timeline", e)
 
 def get_feature_data(feature: adsk.fusion.TimelineObject) -> SketchFeature | ExtrudeFeature | Error:
     try:
         entity = feature.entity
-        index = feature.index
         feature_type = entity.classType()
         
         if feature_type == adsk.fusion.Sketch.classType():
@@ -45,7 +48,6 @@ def get_feature_data(feature: adsk.fusion.TimelineObject) -> SketchFeature | Ext
             feature_data: SketchFeature = {
                 "name": entity.name,
                 "type": feature_type,
-                "index": index,
                 "details": get_sketch_data(entity)
             }
             return feature_data
@@ -56,21 +58,10 @@ def get_feature_data(feature: adsk.fusion.TimelineObject) -> SketchFeature | Ext
         #     feature_data: SketchFeature = {
         #         "name": entity.name,
         #         "type": entity.classType(),
-        #         "index": i + 1,
         #         "details": get_sketch_data(entity)
         #     }
         #     return feature_data
         else:
-            error_info = "Unknown feature type"
-            error_data: Error = {
-                "error": error_info
-            }
-            error(error_info)
-            return error_data
+            return error("Unknown feature type")
     except Exception as e:
-        error_info = "Failed to process feature"
-        error(e, error_info)
-        error_data: Error = {
-            "error": error_info
-        }
-        return error_data
+        return error("Failed to process feature")

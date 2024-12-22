@@ -38,3 +38,6 @@ Then sketch eveyrhting else next. THen combine the screenshots.
 
 
 Check for first time import and init - https://stackoverflow.com/questions/30483246/how-can-i-check-if-a-module-has-been-imported
+
+
+also to get to text command do Option + CMD + C on Mac OS or ALT + CTRL + C on Windows OS

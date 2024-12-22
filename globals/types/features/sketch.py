@@ -1,5 +1,5 @@
 from typing import Literal, TypedDict
-from ..types import Error, Point3D
+from ..utils import Error, Point3D
 
 class CircleCurve(TypedDict):
     type: Literal["adsk::fusion::SketchCircle"]
@@ -26,5 +26,4 @@ class SketchDetails(TypedDict, total=False):
 class SketchFeature(TypedDict):
     name: str
     type: Literal["adsk::fusion::Sketch"]
-    index: int
     details: SketchDetails | Error

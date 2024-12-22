@@ -1,7 +1,9 @@
 from typing import TypedDict
-from .types import SketchFeature, ExtrudeFeature
+from .features.sketch import SketchFeature
+from .features.extrude import ExtrudeFeature
+from .utils import Error
 
 class Timeline(TypedDict):
     documentName: str
     units: int
-    features: list[SketchFeature | ExtrudeFeature]
+    features: list[SketchFeature | ExtrudeFeature | Error]

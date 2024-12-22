@@ -13,11 +13,11 @@ def get_sketch_data(sketch: adsk.fusion.Sketch) -> SketchDetails | Error:
         
         for curve in sketch.sketchCurves:
             data["curves"].append(get_curve_data(curve))
+        
+        return data
 
     except Exception as e:
-        error(e, "Failed to process sketches")
-    
-    return data
+        return error("Failed to process sketches", e)
 
 
 def get_curve_data(curve: adsk.fusion.SketchCurve) -> LineCurve | CircleCurve | Error:
@@ -41,19 +41,9 @@ def get_curve_data(curve: adsk.fusion.SketchCurve) -> LineCurve | CircleCurve | 
             }
             return circle_curve_data
         else:
-            error_info = "Unknown curve type"
-            error_data: Error = {
-                "error": error_info
-            }
-            error(error_info)
-            return error_data
+            return error("Unknown curve type")
     except Exception as e:
-        error_info = "Failed to process curves"
-        error(e, error_info)
-        error_data: Error = {
-            "error": error_info
-        }
-        return error_data
+        return error("Failed to process curves", e)
 
 def get_plane_data(plane: adsk.fusion.ConstructionPlane) -> PlaneFace | PlaneCustom | PlaneBase | Error:
     try:
@@ -79,16 +69,6 @@ def get_plane_data(plane: adsk.fusion.ConstructionPlane) -> PlaneFace | PlaneCus
             }
             return custom_plane_data
         else:
-            error_info = "Unknown plane type"
-            error_data: Error = {
-                "error": error_info
-            }
-            error(error_info)
-            return error_data
+            return error("Unknown plane type")
     except Exception as e:
-        error_info = "Failed to process plane"
-        error(e, error_info)
-        error_data: Error = {
-            "error": error_info
-        }
-        return error_data
+        return error("Failed to process plane", e)
