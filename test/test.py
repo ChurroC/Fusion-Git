@@ -29,12 +29,14 @@ def run(context):
         
         for i in range(timeline.count):
             timeline_data["features"].append(get_feature_data(timeline.item(i)))
+
     except Exception as e:
-        error(e, "to get timeline")
+        error(e, "Failed to process timeline")
 
 def get_feature_data(feature: adsk.fusion.TimelineObject) -> SketchFeature | ExtrudeFeature | Error:
     try:
         entity = feature.entity
+        index = feature.index
         feature_type = entity.classType()
         
         if feature_type == adsk.fusion.Sketch.classType():
@@ -43,7 +45,7 @@ def get_feature_data(feature: adsk.fusion.TimelineObject) -> SketchFeature | Ext
             feature_data: SketchFeature = {
                 "name": entity.name,
                 "type": feature_type,
-                "index": i + 1,
+                "index": index,
                 "details": get_sketch_data(entity)
             }
             return feature_data

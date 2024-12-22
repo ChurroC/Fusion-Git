@@ -1,10 +1,6 @@
 from typing import Literal, TypedDict
-from ..types import Error
+from ..types import Error, Point3D
 
-class Point3D(TypedDict):
-    x: str
-    y: str
-    z: str
 class CircleCurve(TypedDict):
     type: Literal["adsk::fusion::SketchCircle"]
     centerPoint: Point3D
