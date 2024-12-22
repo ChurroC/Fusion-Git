@@ -23,7 +23,7 @@ def run(context):
         timeline: adsk.fusion.Timeline = design.timeline
 
         timeline_data: Timeline = {
-            "documentName": app.activeDocument.name,
+            "document_name": app.activeDocument.name,
             "units": cast(int, units_manager.distanceDisplayUnits),
             "features": [],
         }

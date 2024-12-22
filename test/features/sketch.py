@@ -1,6 +1,6 @@
 import adsk.fusion
 from ..globals.utils import get_point_data, format_value
-from ..globals.types.types import Error, SketchDetails, LineCurve, CircleCurve, PlaneFace, PlaneCustom, PlaneBase
+from ..globals.types.types import Error, SketchDetails, Curve, LineCurve, CircleCurve, Plane, PlaneFace, PlaneCustom, PlaneBase
 from ..globals.globals import error
 
 
@@ -20,7 +20,7 @@ def get_sketch_data(sketch: adsk.fusion.Sketch) -> SketchDetails | Error:
         return error("Failed to process sketches", e)
 
 
-def get_curve_data(curve: adsk.fusion.SketchCurve) -> LineCurve | CircleCurve | Error:
+def get_curve_data(curve: adsk.fusion.SketchCurve) -> Curve | Error:
     try:
         curve_type = curve.objectType
         
@@ -28,15 +28,15 @@ def get_curve_data(curve: adsk.fusion.SketchCurve) -> LineCurve | CircleCurve | 
             curve = adsk.fusion.SketchLine.cast(curve)
             line_curve_data: LineCurve = {
                 "type": curve_type,
-                "startPoint": get_point_data(curve.startSketchPoint.geometry),
-                "endPoint": get_point_data(curve.endSketchPoint.geometry),
+                "start_point": get_point_data(curve.startSketchPoint.geometry),
+                "end_point": get_point_data(curve.endSketchPoint.geometry),
             }
             return line_curve_data
         elif curve_type == adsk.fusion.SketchCircle.classType():
             curve = adsk.fusion.SketchCircle.cast(curve)
             circle_curve_data: CircleCurve = {
                 "type": curve_type,
-                "centerPoint": get_point_data(curve.centerSketchPoint.geometry),
+                "center_point": get_point_data(curve.centerSketchPoint.geometry),
                 "radius": format_value(curve.radius),
             }
             return circle_curve_data
@@ -45,7 +45,7 @@ def get_curve_data(curve: adsk.fusion.SketchCurve) -> LineCurve | CircleCurve | 
     except Exception as e:
         return error("Failed to process curves", e)
 
-def get_plane_data(plane: adsk.fusion.ConstructionPlane) -> PlaneFace | PlaneCustom | PlaneBase | Error:
+def get_plane_data(plane: adsk.fusion.ConstructionPlane) -> Plane | Error:
     try:
         if (plane.objectType == adsk.fusion.BRepFace.classType()):
             # Sketch on surface

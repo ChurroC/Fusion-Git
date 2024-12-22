@@ -3,12 +3,13 @@ from ..utils import Error, Point3D
 
 class CircleCurve(TypedDict):
     type: Literal["adsk::fusion::SketchCircle"]
-    centerPoint: Point3D
+    center_point: Point3D
     radius: str
 class LineCurve(TypedDict):
     type: Literal["adsk::fusion::SketchLine"]
-    startPoint: Point3D
-    endPoint: Point3D
+    start_point: Point3D
+    end_point: Point3D
+Curve = LineCurve | CircleCurve
 
 class PlaneFace(TypedDict):
     type: Literal["face"]
@@ -18,10 +19,11 @@ class PlaneCustom(TypedDict):
 class PlaneBase(TypedDict):
     type: Literal["base_plane"]
     name: int
+Plane = PlaneFace | PlaneCustom | PlaneBase
 
 class SketchDetails(TypedDict, total=False):
-    curves: list[LineCurve | CircleCurve | Error]
-    plane: PlaneFace | PlaneCustom | PlaneBase | Error
+    curves: list[Curve | Error]
+    plane: Plane | Error
 
 class SketchFeature(TypedDict):
     name: str

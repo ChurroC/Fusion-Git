@@ -1,7 +1,7 @@
 import adsk.fusion
-from globals.utils import get_point_data, format_value
-from globals.types.types import Error, ExtrudeDetails, OneSideExtent
-from globals.globals import error
+from ..globals.utils import get_point_data, format_value
+from ..globals.types.types import Error, ExtrudeExtent, ExtrudeDetails, OneSideExtent, TwoSidesExtent, SymmetricExtent
+from ..globals.globals import error
 
 
 def get_extrude_data(extrude: adsk.fusion.ExtrudeFeature) -> ExtrudeDetails | Error:
@@ -18,55 +18,31 @@ def get_extrude_data(extrude: adsk.fusion.ExtrudeFeature) -> ExtrudeDetails | Er
     return data
 
 
-def get_extent_data(extrude: adsk.fusion.ExtrudeFeature) -> dict:
+def get_extent_data(extrude: adsk.fusion.ExtrudeFeature) -> ExtrudeExtent | Error:
     try:
         extent_type = extrude.extentType
         
         if extent_type == adsk.fusion.FeatureExtentTypes.OneSideFeatureExtentType:
             data: OneSideExtent = {
                 "type": extent_type,
-                "distance": {
-                    "side_one": adsk.fusion.DistanceExtentDefinition.cast(extrude.extentOne).distance.expression
-                }
+                "side_one": adsk.fusion.DistanceExtentDefinition.cast(extrude.extentOne).distance.expression
             }
             return data
-        
-        
-        extrude.extentOne
-        extent = extrude.endFaces[0].body.extents
-        extent_type = extent.extentType
-        data = {}
-        if extent_type == adsk.fusion.FeatureExtentTypes.OneSideFeatureExtentType:
-            data = {
-                "type": extent_type,
-                "distance": {
-                    "side_one": format_value(extent.distanceOne),
-                    "side_two": None,
-                    "symmetric": None
-                }
-            }
         elif extent_type == adsk.fusion.FeatureExtentTypes.TwoSidesFeatureExtentType:
-            data = {
+            data: TwoSidesExtent = {
                 "type": extent_type,
-                "distance": {
-                    "side_one": format_value(extent.distanceOne),
-                    "side_two": format_value(extent.distanceTwo),
-                    "symmetric": None
-                }
+                "side_one": adsk.fusion.DistanceExtentDefinition.cast(extrude.extentOne).distance.expression,
+                "side_two": adsk.fusion.DistanceExtentDefinition.cast(extrude.extentTwo).distance.expression
             }
+            return data
         elif extent_type == adsk.fusion.FeatureExtentTypes.SymmetricFeatureExtentType:
-            data = {
+            data: SymmetricExtent = {
                 "type": extent_type,
-                "distance": {
-                    "side_one": None,
-                    "side_two": None,
-                    "symmetric": {
-                        "value": format_value(extent.distanceOne),
-                        "isFullLength": extent.isSymmetric
-                    }
-                }
+                "distance": adsk.fusion.ModelParameter.cast(extrude.symmetricExtent.distance).expression,
+                "isFullLength": extrude.symmetricExtent.isFullLength
             }
-        return data
+            return data
+        else:
+            return error("Unknown extent type")
     except Exception as e:
-        error(e, "Failed to process extrude extent data")
-        return {}
+        return error("Failed to process extrude extent data", e)

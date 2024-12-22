@@ -1,16 +1,15 @@
 {
-  "documentName": "Test API v17",
+  "document_name": "Test API v17",
   "units": 3,
   "features": [
     {
       "name": "Sketch7",
       "type": "adsk::fusion::Sketch",
-      "index": 0,
       "details": {
         "curves": [
           {
             "type": "adsk::fusion::SketchCircle",
-            "centerPoint": {
+            "center_point": {
               "x": "0.00 in",
               "y": "0.00 in",
               "z": "0.00 in"
@@ -25,22 +24,29 @@
       }
     },
     {
-      "error": "Unknown feature type: "
+      "name": "Extrude4",
+      "type": "adsk::fusion::ExtrudeFeature",
+      "details": {
+        "operation": 3,
+        "extent": {
+          "type": 0,
+          "side_one": "-2.00 in"
+        }
+      }
     },
     {
       "name": "Sketch3",
       "type": "adsk::fusion::Sketch",
-      "index": 2,
       "details": {
         "curves": [
           {
             "type": "adsk::fusion::SketchLine",
-            "startPoint": {
+            "start_point": {
               "x": "0.00 in",
               "y": "0.00 in",
               "z": "0.00 in"
             },
-            "endPoint": {
+            "end_point": {
               "x": "1.969 in",
               "y": "0.00 in",
               "z": "0.00 in"
@@ -48,12 +54,12 @@
           },
           {
             "type": "adsk::fusion::SketchLine",
-            "startPoint": {
+            "start_point": {
               "x": "1.969 in",
               "y": "0.00 in",
               "z": "0.00 in"
             },
-            "endPoint": {
+            "end_point": {
               "x": "1.969 in",
               "y": "1.181 in",
               "z": "0.00 in"
@@ -61,12 +67,12 @@
           },
           {
             "type": "adsk::fusion::SketchLine",
-            "startPoint": {
+            "start_point": {
               "x": "1.969 in",
               "y": "1.181 in",
               "z": "0.00 in"
             },
-            "endPoint": {
+            "end_point": {
               "x": "0.00 in",
               "y": "1.181 in",
               "z": "0.00 in"
@@ -74,12 +80,12 @@
           },
           {
             "type": "adsk::fusion::SketchLine",
-            "startPoint": {
+            "start_point": {
               "x": "0.00 in",
               "y": "1.181 in",
               "z": "0.00 in"
             },
-            "endPoint": {
+            "end_point": {
               "x": "0.00 in",
               "y": "0.00 in",
               "z": "0.00 in"
@@ -93,17 +99,25 @@
       }
     },
     {
-      "error": "Unknown feature type: "
+      "name": "Extrude1",
+      "type": "adsk::fusion::ExtrudeFeature",
+      "details": {
+        "operation": 3,
+        "extent": {
+          "type": 1,
+          "side_one": "20.00 mm",
+          "side_two": "1 in"
+        }
+      }
     },
     {
       "name": "Sketch9",
       "type": "adsk::fusion::Sketch",
-      "index": 4,
       "details": {
         "curves": [
           {
             "type": "adsk::fusion::SketchCircle",
-            "centerPoint": {
+            "center_point": {
               "x": "2.50 in",
               "y": "2.50 in",
               "z": "0.00 in"
@@ -118,7 +132,16 @@
       }
     },
     {
-      "error": "Unknown feature type: "
+      "name": "Extrude5",
+      "type": "adsk::fusion::ExtrudeFeature",
+      "details": {
+        "operation": 3,
+        "extent": {
+          "type": 2,
+          "distance": "1 in",
+          "isFullLength": false
+        }
+      }
     }
   ]
 }

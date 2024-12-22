@@ -4,6 +4,6 @@ from .features.extrude import ExtrudeFeature
 from .utils import Error
 
 class Timeline(TypedDict):
-    documentName: str
+    document_name: str
     units: int
     features: list[SketchFeature | ExtrudeFeature | Error]
