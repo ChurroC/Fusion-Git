@@ -5,10 +5,9 @@ import adsk.core, adsk.fusion
 from typing import cast
 
 from .globals.globals import app, ui, units_manager, design, error, print_fusion
-from .globals.data_types.timeline import Timeline
-from .globals.data_types.features.sketch import SketchFeature
-from .features.sketch import get_sketch_data
+from .globals.types.types import Timeline, SketchFeature, ExtrudeFeature, Error
 
+from .features.features import get_sketch_data
 
 def run(context):
     fileDialog = ui.createFileDialog()
@@ -29,44 +28,47 @@ def run(context):
         }
         
         for i in range(timeline.count):
-            try:
-                feature = timeline.item(i)
-
-                if not feature.entity:
-                    print_fusion(f"No entity for feature {i + 1}")
-                    continue
-
-                entity = feature.entity
-                feature_type = entity.classType()
-                
-                feature_data
-                # Only process Sketch and Extrude features
-                if feature_type == adsk.fusion.Sketch.classType():
-                    entity = adsk.fusion.Sketch.cast(entity)
-                    print_fusion(f"Processing sketch: {entity.name}")
-                    feature_data: SketchFeature = {
-                        "name": entity.name,
-                        "type": feature_type,
-                        "index": i + 1,
-                        "details": get_sketch_data(entity)
-                    }
-                # elif (feature_type == adsk.fusion.ExtrudeFeature.classType()):
-                #     entity = adsk.fusion.ExtrudeFeature.cast(entity)
-                #     wow = entity.classType()
-                #     print_fusion(f"Processing extrude: {entity.name}")
-                #     feature_data: SketchFeature = {
-                #         "name": entity.name,
-                #         "type": entity.classType(),
-                #         "index": i + 1,
-                #         "details": get_sketch_data(entity)
-                #     }
-                else:
-                    continue
-                
-                timeline_data["features"].append(feature_data)
-            except Exception as e:
-                error(e, "to process feature")
-                continue
-
+            timeline_data["features"].append(get_feature_data(timeline.item(i)))
     except Exception as e:
         error(e, "to get timeline")
+
+def get_feature_data(feature: adsk.fusion.TimelineObject) -> SketchFeature | ExtrudeFeature | Error:
+    try:
+        entity = feature.entity
+        feature_type = entity.classType()
+        
+        if feature_type == adsk.fusion.Sketch.classType():
+            entity = adsk.fusion.Sketch.cast(entity)
+            print_fusion(f"Processing sketch: {entity.name}")
+            feature_data: SketchFeature = {
+                "name": entity.name,
+                "type": feature_type,
+                "index": i + 1,
+                "details": get_sketch_data(entity)
+            }
+            return feature_data
+        # elif (feature_type == adsk.fusion.ExtrudeFeature.classType()):
+        #     entity = adsk.fusion.ExtrudeFeature.cast(entity)
+        #     wow = entity.classType()
+        #     print_fusion(f"Processing extrude: {entity.name}")
+        #     feature_data: SketchFeature = {
+        #         "name": entity.name,
+        #         "type": entity.classType(),
+        #         "index": i + 1,
+        #         "details": get_sketch_data(entity)
+        #     }
+        #     return feature_data
+        else:
+            error_info = "Unknown feature type"
+            error_data: Error = {
+                "error": error_info
+            }
+            error(error_info)
+            return error_data
+    except Exception as e:
+        error_info = "Failed to process feature"
+        error(e, error_info)
+        error_data: Error = {
+            "error": error_info
+        }
+        return error_data

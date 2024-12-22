@@ -20,3 +20,12 @@ def get_point_data(point: adsk.core.Point3D):
     except Exception as e:
         error(e, "to get point data")
         return None
+
+def remove_nulls(data):
+    """Recursively removes null values from nested dictionaries and arrays."""
+    if isinstance(data, dict):
+        return {k: remove_nulls(v) for k, v in data.items() if v is not None}
+    elif isinstance(data, list):
+        return [remove_nulls(item) for item in data if item is not None]
+    else:
+        return data

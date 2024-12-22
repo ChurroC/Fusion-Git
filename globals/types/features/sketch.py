@@ -1,5 +1,5 @@
 from typing import Literal, TypedDict
-from ..timeline import Error
+from ..types import Error
 
 class Point3D(TypedDict):
     x: str
@@ -24,8 +24,8 @@ class PlaneBase(TypedDict):
     name: int
 
 class SketchDetails(TypedDict, total=False):
-    curves: list[LineCurve | CircleCurve]
-    plane: PlaneFace | PlaneCustom | PlaneBase
+    curves: list[LineCurve | CircleCurve | Error]
+    plane: PlaneFace | PlaneCustom | PlaneBase | Error
 
 class SketchFeature(TypedDict):
     name: str

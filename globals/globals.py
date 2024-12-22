@@ -19,23 +19,14 @@ def print_fusion(message: str):
         error()
 
 # This is my way to print to handle errors
-def error(*args: str | Exception | None):
-    global ui
-    
-    info = None
-    if args:
-        for arg in args:
-            if (arg):
-                info = str(arg)
-                break
-    try:
-        if ui:
-            # got to us ui.messageBox since if it fails it never prints out message text
-            print_fusion(f"""Failed {[f'to "{x}"' "," for x in args if not isinstance(x, Exception)]}: {[str(x) + "," for x in args if isinstance(x, Exception)]}\n{traceback.format_exc()}""")
-    except: pass
+def error(*args: str | Exception):
+    reasons = ", ".join([reason for reason in args if not isinstance(reason, Exception)])
+    exception_reasons = ", ".join([str(exception_reason) for exception_reason in args if isinstance(exception_reason, Exception)])
+    print_fusion(f"Failed {reasons}: {exception_reasons}\n{traceback.format_exc()}")
+
 
 # This is to intialize the global variables only on the first import
-if "ui" not in globals():
+if "app" not in globals():
     try:
         app = adsk.core.Application.get()
         ui = app.userInterface

@@ -3,7 +3,7 @@ import adsk.fusion
 import traceback
 import json
 
-
+# Done
 def run(context):
     try:
         global app, ui, design, units_manager, message
@@ -31,12 +31,14 @@ def run(context):
             ui.messageBox(f"Failed:\n{traceback.format_exc()}")
 
 
+# Done
 def print_fusion(new_print: str):
     global message
     # ui.messageBox(new_print)
     message += f"{new_print}\n"
 
 
+# Done
 def format_value(value_input):
     """Format value using the design's default units"""
     try:
@@ -45,6 +47,7 @@ def format_value(value_input):
         return str(value_input)
 
 
+# Done
 def get_point_data(point: adsk.core.Point3D):
     """Get coordinates from a point"""
     try:
@@ -58,6 +61,7 @@ def get_point_data(point: adsk.core.Point3D):
         return None
 
 
+# Done
 def remove_nulls(data):
     """Recursively removes null values from nested dictionaries and arrays."""
     if isinstance(data, dict):
@@ -68,6 +72,7 @@ def remove_nulls(data):
         return data
 
 
+# Done
 def get_sketch_data(sketch: adsk.fusion.Sketch):
     """Get detailed sketch data with error logging"""
     try:
