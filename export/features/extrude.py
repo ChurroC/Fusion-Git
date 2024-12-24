@@ -1,5 +1,4 @@
 import adsk.fusion
-from ..globals.utils import get_point_data, format_value
 from ..globals.types.types import Error, ExtrudeExtent, ExtrudeDetails, OneSideExtent, TwoSidesExtent, SymmetricExtent
 from ..globals.globals import error
 

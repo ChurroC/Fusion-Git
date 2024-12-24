@@ -32,9 +32,6 @@ def error(*args: str | Exception):
     }
     return error_data
 
-def is_error(data: dict) -> bool:
-    return "error" in data
-
 # This is to intialize the global variables only on the first import
 if "ui" not in globals():
     try:

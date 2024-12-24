@@ -15,7 +15,7 @@ class SymmetricExtent(TypedDict):
 ExtrudeExtent = OneSideExtent | TwoSidesExtent | SymmetricExtent
 
 class ExtrudeDetails(TypedDict):
-    operation: Literal[0, 1, 2, 3, 4, 5]  # Cut=0, Join=1, Intersect=2, NewBody=3, CutIntersect=4, CutJoin=5
+    operation: Literal[0, 1, 2, 3, 4]  # Cut=0, Join=1, Intersect=2, NewBody=3, CutIntersect=4
     extent: ExtrudeExtent | Error
 
 class ExtrudeFeature(TypedDict):
