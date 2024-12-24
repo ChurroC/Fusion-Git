@@ -6,6 +6,8 @@ app: adsk.core.Application
 ui: adsk.core.UserInterface
 design: adsk.fusion.Design
 units_manager: adsk.fusion.FusionUnitsManager
+root: adsk.fusion.Component
+active_document: adsk.core.Document
 
 # This is my way to print to the Fusion 360 UI
 def print_fusion(message: str):
@@ -30,6 +32,9 @@ def error(*args: str | Exception):
     }
     return error_data
 
+def is_error(data: dict) -> bool:
+    return "error" in data
+
 # This is to intialize the global variables only on the first import
 if "ui" not in globals():
     try:
@@ -38,6 +43,8 @@ if "ui" not in globals():
         print_fusion("") # Just to make sure the text palette is created
         design = adsk.fusion.Design.cast(app.activeProduct)
         units_manager = adsk.fusion.FusionUnitsManager.cast(design.unitsManager)
+        root = design.rootComponent
+        active_document = app.activeDocument
     except Exception as e:
         if ui:
             error("Failed to initialize globals", e)

@@ -1,74 +1,50 @@
 import adsk.fusion
 from ..globals.utils import get_point_data, format_value
-from ..globals.types.types import Error, SketchDetails, Curve, LineCurve, CircleCurve, Plane, PlaneFace, PlaneCustom, PlaneBase
-from ..globals.globals import error
+from ..globals.types.types import SketchDetails, Error, Curve, LineCurve, CircleCurve, Plane
+from ..globals.globals import error, root
 
 
-def get_sketch_data(sketch: adsk.fusion.Sketch) -> SketchDetails | Error:
+def set_sketch_data(sketch: SketchDetails) -> None:
     try:
-        data: SketchDetails = {
-            "curves": [],
-            "plane": get_plane_data(adsk.fusion.ConstructionPlane.cast(sketch.referencePlane))
-        }
-        
-        for curve in sketch.sketchCurves:
-            data["curves"].append(get_curve_data(curve))
-        
-        return data
+        plane = set_plane_data(sketch["details"]["plane"])
+        sketch = root.sketches.add(plane)
+        set_sketch_entities(sketch["details"]["curves"])
+        ww = sketch["details"]
 
     except Exception as e:
-        return error("Failed to process sketches", e)
+        error("Failed to process sketches", e)
 
-
-def get_curve_data(curve: adsk.fusion.SketchCurve) -> Curve | Error:
+def set_plane_data(plane: Plane) -> adsk.fusion.ConstructionPlane | None:
     try:
-        curve_type = curve.objectType
-        
-        if curve_type == adsk.fusion.SketchLine.classType():
-            curve = adsk.fusion.SketchLine.cast(curve)
-            line_curve_data: LineCurve = {
-                "type": curve_type,
-                "start_point": get_point_data(curve.startSketchPoint.geometry),
-                "end_point": get_point_data(curve.endSketchPoint.geometry),
-            }
-            return line_curve_data
-        elif curve_type == adsk.fusion.SketchCircle.classType():
-            curve = adsk.fusion.SketchCircle.cast(curve)
-            circle_curve_data: CircleCurve = {
-                "type": curve_type,
-                "center_point": get_point_data(curve.centerSketchPoint.geometry),
-                "radius": format_value(curve.radius),
-            }
-            return circle_curve_data
-        else:
-            return error("Unknown curve type")
-    except Exception as e:
-        return error("Failed to process curves", e)
-
-def get_plane_data(plane: adsk.fusion.ConstructionPlane) -> Plane | Error:
-    try:
-        if (plane.objectType == adsk.fusion.BRepFace.classType()):
-            # Sketch on surface
-            face_plane_data: PlaneFace = {
-                "type": "face",
-            }
-            return face_plane_data
-        elif (plane.timelineObject is None):
-            # Sketch on base planes - Like XY
-            # We are going to stick with this for now till I get the main functionalities working
-            base_plane_data: PlaneBase = {
-                "type": "base_plane",
-                "name": plane.name
-            }
-            return base_plane_data
-        elif (plane.timelineObject is not None):
-            # Sketch on custom planes"
-            custom_plane_data: PlaneCustom = {
-                "type": "custom_plane",
-                "index": plane.timelineObject.index,
-            }
-            return custom_plane_data
+        if (plane["type"] == "base_plane"): 
+            if (plane["name"] == "XY"):
+                return root.xYConstructionPlane
+            elif (plane["name"] == "XZ"):
+                return root.xZConstructionPlane
+            elif (plane["name"] == "YZ"):
+                return root.yZConstructionPlane
+            else:
+                return error("Unknown base plane")
         else:
             return error("Unknown plane type")
     except Exception as e:
         return error("Failed to process plane", e)
+
+def set_sketch_entities(curves: Curve) -> None:
+    try:
+        for curve in curves:
+            if curve["type"] == adsk.fusion.SketchCircle.classType():
+                center = get_point_data(curve["centerPoint"])
+                radius = units_manager.evaluateExpression(curve["radius"])
+                if center and radius:
+                    sketch.sketchCurves.sketchCircles.addByCenterRadius(center, radius)
+
+            elif curve["type"] == adsk.fusion.SketchLine.classType():
+                start = get_point_data(curve["startPoint"])
+                end = get_point_data(curve["endPoint"])
+                if start and end:
+                    sketch.sketchCurves.sketchLines.addByTwoPoints(start, end)
+        else:
+            error("Unknown curve type")
+    except Exception as e:
+        error("Failed to process curves", e)

@@ -4,18 +4,17 @@ from ..globals.types.types import Error, ExtrudeExtent, ExtrudeDetails, OneSideE
 from ..globals.globals import error
 
 
-def set_extrude_data(extrude: adsk.fusion.ExtrudeFeature) -> ExtrudeDetails | Error:
+def get_extrude_data(extrude: adsk.fusion.ExtrudeFeature) -> ExtrudeDetails | Error:
     try:
         data: ExtrudeDetails = {
             "operation": extrude.operation,
             "extent": get_extent_data(extrude),
         }
         
+        return data
 
     except Exception as e:
-        error(e, "Failed to process extrudes")
-    
-    return data
+        return error(f"Failed to process extrudes {extrude.name}", e)
 
 
 def get_extent_data(extrude: adsk.fusion.ExtrudeFeature) -> ExtrudeExtent | Error:

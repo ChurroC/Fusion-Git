@@ -14,11 +14,12 @@ class SymmetricExtent(TypedDict):
     isFullLength: bool
 ExtrudeExtent = OneSideExtent | TwoSidesExtent | SymmetricExtent
 
-class ExtrudeDetails(TypedDict, total=False):
+class ExtrudeDetails(TypedDict):
     operation: Literal[0, 1, 2, 3, 4, 5]  # Cut=0, Join=1, Intersect=2, NewBody=3, CutIntersect=4, CutJoin=5
     extent: ExtrudeExtent | Error
 
 class ExtrudeFeature(TypedDict):
     name: str
     type: Literal["adsk::fusion::ExtrudeFeature"]
+    index: int
     details: ExtrudeDetails | Error

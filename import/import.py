@@ -1,3 +1,4 @@
+# type: ignore
 import adsk.core
 import adsk.fusion
 import traceback
@@ -18,8 +19,6 @@ def run(context):
         fileDialog.title = "Select Timeline JSON File"
         fileDialog.filter = "JSON files (*.json)"
 
-        if fileDialog.showOpen() != adsk.core.DialogResults.DialogOK:
-            return
 
         import_timeline(fileDialog.filename)
         ui.messageBox(message)

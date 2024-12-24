@@ -41,3 +41,9 @@ Check for first time import and init - https://stackoverflow.com/questions/30483
 
 
 also to get to text command do Option + CMD + C on Mac OS or ALT + CTRL + C on Windows OS
+
+
+
+        # --check-untyped-defs
+        # --ignore-missing-imports
+        # --explicit-package-bases

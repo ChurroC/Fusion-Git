@@ -21,11 +21,12 @@ class PlaneBase(TypedDict):
     name: int
 Plane = PlaneFace | PlaneCustom | PlaneBase
 
-class SketchDetails(TypedDict, total=False):
+class SketchDetails(TypedDict):
     curves: list[Curve | Error]
     plane: Plane | Error
 
 class SketchFeature(TypedDict):
     name: str
     type: Literal["adsk::fusion::Sketch"]
+    index: int
     details: SketchDetails | Error
