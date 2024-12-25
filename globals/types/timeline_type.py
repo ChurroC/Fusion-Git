@@ -1,7 +1,7 @@
 from typing import TypedDict
-from .features.sketch import SketchFeature
-from .features.extrude import ExtrudeFeature
-from .utils import Error
+from .features.sketch_type import SketchFeature
+from .features.extrude_type import ExtrudeFeature
+from .utils_type import Error
 
 Feature = SketchFeature | ExtrudeFeature
 

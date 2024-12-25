@@ -1,5 +1,5 @@
 from typing import Literal, TypedDict
-from ..utils import Error, Point3D
+from ..utils_type import Error, Point3D
 
 class CircleCurve(TypedDict):
     type: Literal["adsk::fusion::SketchCircle"]

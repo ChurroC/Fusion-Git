@@ -2,7 +2,6 @@
 #Description-
 # import nah
 import adsk.core, adsk.fusion
-from typing import cast
 import json
 
 from .globals.globals import app, ui, units_manager, design, error, print_fusion
@@ -24,7 +23,7 @@ def run(context):
 
         timeline_data: Timeline = {
             "document_name": app.activeDocument.name,
-            "units": cast(int, units_manager.distanceDisplayUnits),
+            "units": units_manager.distanceDisplayUnits,
             "features": [],
         }
         
@@ -65,6 +64,6 @@ def get_feature_data(feature: adsk.fusion.TimelineObject) -> Feature | Error:
             }
             return extrude_feature_data
         else:
-            return error("Unknown feature type")
+            raise Exception("Unknown feature type")
     except Exception as e:
         return error("Failed to process feature", e)

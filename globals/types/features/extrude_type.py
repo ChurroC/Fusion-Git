@@ -1,5 +1,5 @@
 from typing import Literal, TypedDict
-from ..utils import Error
+from ..utils_type import Error
 
 class OneSideExtent(TypedDict):
     type: Literal[0]
