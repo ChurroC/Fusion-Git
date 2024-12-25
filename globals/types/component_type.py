@@ -16,5 +16,3 @@ class Component(TypedDict):
     units: int
     features: List[Union[Feature, Error]]
     child_components: NotRequired[List[Union['Component', LinkedComponent, Error]]] # Recursive type
-    is_linked: NotRequired[bool]
-

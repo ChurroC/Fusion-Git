@@ -82,3 +82,76 @@ output_directory/
         Linked_Component_2/
             component.json
 This would help make sure I know which one is the root_component and understand 
+
+Better idea is too have
+output_directory/
+├── component.json           # Root component features
+├── 000_SubComponent1/     # Timeline ordered components
+│   └── component.json
+├── 001_SubComponent2/
+│   └── component.json
+├── _linked/               # Linked components
+│   ├── LinkedPart1/
+│   │   └── component.json
+│   └── LinkedPart2/
+│       └── component.json
+
+Like so:
+// MainAssembly/features.json
+{
+  "document_name": "MainAssembly",
+  "units": 3,
+  "features": [
+    {
+      "name": "Sketch1",
+      "type": "adsk::fusion::Sketch",
+      "index": 0,
+      "details": {
+        "curves": [...],
+        "plane": {...}
+      }
+    },
+    {
+      "name": "SubComponent1",
+      "type": "adsk::fusion::Component",
+      "index": 1,
+      "details": {
+        "is_linked": false,
+        // Reference to the component's full data in its own directory
+        "document_name": "SubComponent1"
+      }
+    },
+    {
+      "name": "CircularPattern1",
+      "type": "adsk::fusion::CircularPatternFeature",
+      "index": 2,
+      "details": {...}
+    }
+  ]
+}
+
+// MainAssembly/001_SubComponent1/features.json
+{
+  "document_name": "SubComponent1",
+  "units": 3,
+  "features": [
+    {
+      "name": "BaseSketch",
+      "type": "adsk::fusion::Sketch",
+      "index": 0,
+      "details": {
+        "curves": [...],
+        "plane": {...}
+      }
+    },
+    {
+      "name": "BaseExtrude",
+      "type": "adsk::fusion::ExtrudeFeature",
+      "index": 1,
+      "details": {...}
+    }
+  ]
+}
+
+
+Can't figure out what type of entitiy a circular pattern is
