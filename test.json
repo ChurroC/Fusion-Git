@@ -5,6 +5,7 @@
     {
       "name": "Sketch7",
       "type": "adsk::fusion::Sketch",
+      "index": 0,
       "details": {
         "curves": [
           {
@@ -26,6 +27,7 @@
     {
       "name": "Extrude4",
       "type": "adsk::fusion::ExtrudeFeature",
+      "index": 1,
       "details": {
         "operation": 3,
         "extent": {
@@ -37,6 +39,7 @@
     {
       "name": "Sketch3",
       "type": "adsk::fusion::Sketch",
+      "index": 2,
       "details": {
         "curves": [
           {
@@ -101,6 +104,7 @@
     {
       "name": "Extrude1",
       "type": "adsk::fusion::ExtrudeFeature",
+      "index": 3,
       "details": {
         "operation": 3,
         "extent": {
@@ -113,6 +117,7 @@
     {
       "name": "Sketch9",
       "type": "adsk::fusion::Sketch",
+      "index": 4,
       "details": {
         "curves": [
           {
@@ -134,6 +139,7 @@
     {
       "name": "Extrude5",
       "type": "adsk::fusion::ExtrudeFeature",
+      "index": 5,
       "details": {
         "operation": 3,
         "extent": {

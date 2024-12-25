@@ -47,3 +47,38 @@ also to get to text command do Option + CMD + C on Mac OS or ALT + CTRL + C on W
         # --check-untyped-defs
         # --ignore-missing-imports
         # --explicit-package-bases
+
+
+
+
+
+
+
+
+
+
+
+
+Currenty idea intially was gonna be:
+output_directory/
+    Test API v17/
+        component.json
+        Child_Component_1/
+            component.json
+        Child_Component_2/
+            component.json
+
+But linked component are annoying. Since like the nutstrips that Patrick uses.
+They are made once as a component that are linked into other componets by linking
+Idea currently is:
+output_directory/
+    Root_Component/
+        component.json
+        Internal_Child_1/
+            component.json
+    _linked_components/
+        Linked_Component_1/
+            component.json
+        Linked_Component_2/
+            component.json
+This would help make sure I know which one is the root_component and understand 
