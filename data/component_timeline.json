@@ -1,0 +1,21 @@
+{
+  "Component Test v6": [
+    "Cube:1",
+    "Cylinder:1",
+    "Component Insert Linked Component Test v1:1",
+    "CopyPaste Cube:2"
+  ],
+  "Cube": [
+    "Sketch1",
+    "Extrude1"
+  ],
+  "Cylinder": [
+    "Sketch1",
+    "Extrude1",
+    "Triangle:1"
+  ],
+  "Triangle": [
+    "Sketch1",
+    "Extrude1"
+  ]
+}

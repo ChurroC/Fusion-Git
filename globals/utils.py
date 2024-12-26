@@ -1,3 +1,5 @@
+import json
+import os
 from .globals import units_manager
 from .types.types import Point3D
 import adsk.core
@@ -32,3 +34,8 @@ def remove_nulls(data):
         return [remove_nulls(item) for item in data if item is not None]
     else:
         return data
+
+def write_to_file(file_path, data):
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    with open(file_path, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=2)
