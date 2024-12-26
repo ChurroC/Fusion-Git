@@ -21,33 +21,36 @@ def run(context):
 
         if folderDialog.showDialog() != adsk.core.DialogResults.DialogOK:
             return
-        selected_folder_path = folderDialog.folder
+        folder_path = folderDialog.folder
 
         global component_timeline
         component_timeline = get_component_timeline_data()
         
         # This is just for dev purposes
-        write_to_file(os.path.join(selected_folder_path, 'component_timeline.json'), get_component_timeline_data(True))
+        write_to_file(os.path.join(folder_path, 'component_timeline.json'), get_component_timeline_data(True))
         
         
         for component_id in component_timeline:
             data: Timeline = {
                 "document_name": app.activeDocument.name,
+                "units": units_manager.defaultLengthUnits,
                 "features": [],
             }
-            if component_timeline[component_id]["is_linked"] or component_timeline[component_id]["is_root"]:
-                data["units"] = units_manager.defaultLengthUnits
+            if not component_timeline[component_id]["is_linked"] and not component_timeline[component_id]["is_root"]:
+                del data["units"]
             
-            folder_path = selected_folder_path
-            if not component_timeline[component_id]["is_root"] and not component_timeline[component_id]["is_linked"]:
-                folder_path = os.path.join(selected_folder_path, "components", component_timeline[component_id]["name"])
+            file_path: str
+            if component_timeline[component_id]["is_root"]:
+                file_path = os.path.join(folder_path, 'timeline.json')
+            elif not component_timeline[component_id]["is_linked"]:
+                file_path = os.path.join(folder_path, "components", f"{component_timeline[component_id]['name']}.json")
             elif component_timeline[component_id]["is_linked"]:
-                folder_path = os.path.join(selected_folder_path, "linked_components", component_timeline[component_id]["name"])
+                file_path = os.path.join(folder_path, "linked_components", f"{component_timeline[component_id]['name']}.json")
             
             for timeline_item in component_timeline[component_id]["components"]:
                 data["features"].append(get_timeline_feature(timeline_item))
             
-            write_to_file(os.path.join(folder_path, 'timeline.json'), data)
+            write_to_file(file_path, data)
         
         print_fusion("Timeline successfully exported")
     except Exception as e:

@@ -1,5 +1,6 @@
 {
   "document_name": "Component Test v7",
+  "units": "in",
   "features": [
     {
       "name": "Cube",
@@ -41,6 +42,5 @@
         "id": "5554263b-b36b-4dd9-8e88-401b1c47f762"
       }
     }
-  ],
-  "units": "in"
+  ]
 }
