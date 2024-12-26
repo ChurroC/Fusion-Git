@@ -4,6 +4,7 @@ from .globals import units_manager
 from .types.types import Point3D
 import adsk.core
 
+
 def format_value(value_input):
     """Format value using the design's default units"""
     try:
@@ -19,12 +20,14 @@ def get_point_data(point: adsk.core.Point3D) -> Point3D:
         "z": format_value(getattr(point, "z", 0)),
     }
 
+
 def set_point_data(point: Point3D):
     return adsk.core.Point3D.create(
-            units_manager.evaluateExpression(point["x"]),
-            units_manager.evaluateExpression(point["y"]),
-            units_manager.evaluateExpression(point["z"]),
-        )
+        units_manager.evaluateExpression(point["x"]),
+        units_manager.evaluateExpression(point["y"]),
+        units_manager.evaluateExpression(point["z"]),
+    )
+
 
 def remove_nulls(data):
     """Recursively removes null values from nested dictionaries and arrays."""
@@ -35,7 +38,8 @@ def remove_nulls(data):
     else:
         return data
 
+
 def write_to_file(file_path, data):
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
-    with open(file_path, 'w', encoding='utf-8') as f:
+    with open(file_path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)

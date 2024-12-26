@@ -6,18 +6,26 @@ import adsk.core, adsk.fusion
 import os
 
 from .globals.globals import app, ui, units_manager, design, error, print_fusion
-from .globals.types.types import Timeline, Feature, SketchFeature, ExtrudeFeature, Error, ComponentFeature, FusionComponentTimeline
+from .globals.types.types import (
+    Timeline,
+    Feature,
+    SketchFeature,
+    ExtrudeFeature,
+    Error,
+    ComponentFeature,
+    FusionComponentTimeline,
+)
 from .globals.utils import write_to_file
-
 from .features.features import get_sketch_data, get_extrude_data
 
 component_timeline: FusionComponentTimeline
+
 
 def run(context):
     try:
         folderDialog = ui.createFolderDialog()
         folderDialog.title = "Save Timeline Export"
-        folderDialog.initialDirectory = "data" # Hmmm doesn't seem to wrok
+        folderDialog.initialDirectory = "data"  # Hmmm doesn't seem to wrok
 
         if folderDialog.showDialog() != adsk.core.DialogResults.DialogOK:
             return
@@ -34,24 +42,33 @@ def run(context):
             }
             if not component_timeline[component_id]["is_linked"] and not component_timeline[component_id]["is_root"]:
                 del data["units"]
-            
+
             file_path: str | None = None
             if component_timeline[component_id]["is_root"]:
-                file_path = os.path.join(folder_path, 'timeline.json')
+                file_path = os.path.join(folder_path, "timeline.json")
             elif not component_timeline[component_id]["is_linked"]:
-                file_path = os.path.join(folder_path, "components", f"{component_timeline[component_id]['name']}.json")
+                file_path = os.path.join(
+                    folder_path,
+                    "components",
+                    f"{component_timeline[component_id]['name']}.json",
+                )
             elif component_timeline[component_id]["is_linked"]:
-                file_path = os.path.join(folder_path, "linked_components", f"{component_timeline[component_id]['name']}.json")
-            
+                file_path = os.path.join(
+                    folder_path,
+                    "linked_components",
+                    f"{component_timeline[component_id]['name']}.json",
+                )
+
             for timeline_item in component_timeline[component_id]["components"]:
                 data["features"].append(get_timeline_feature(timeline_item))
-            
+
             if file_path:
                 write_to_file(file_path, data)
-        
+
         print_fusion("Timeline successfully exported")
     except Exception as e:
         error("Failed to export timeline", e)
+
 
 def get_component_timeline_data() -> FusionComponentTimeline:
     component_timeline: FusionComponentTimeline = {
@@ -59,18 +76,20 @@ def get_component_timeline_data() -> FusionComponentTimeline:
             "is_root": True,
             "is_linked": False,
             "name": design.rootComponent.name,
-            "components": []
+            "components": [],
         }
     }
-    
+
     for timeline_item in design.timeline:
         entity = timeline_item.entity
         component_id = None
-        
-        if hasattr(entity, 'parentComponent'):
-            parent_component = cast(adsk.fusion.Feature, entity).parentComponent # If I try to cast using fusion api it deletes parentComponent for some reason
+
+        if hasattr(entity, "parentComponent"):
+            parent_component = cast(
+                adsk.fusion.Feature, entity
+            ).parentComponent  # If I try to cast using fusion api it deletes parentComponent for some reason
             component_id = parent_component.id
-        elif hasattr(entity, 'sourceComponent'):
+        elif hasattr(entity, "sourceComponent"):
             occurrence = adsk.fusion.Occurrence.cast(entity)
             source_component = occurrence.sourceComponent
             component_id = source_component.id
@@ -80,13 +99,14 @@ def get_component_timeline_data() -> FusionComponentTimeline:
                 "is_root": False,
                 "is_linked": occurrence.isReferencedComponent,
                 "name": occurrence.component.name,
-                "components": []
+                "components": [],
             }
-        
+
         if component_id:
             component_timeline[component_id]["components"].append(timeline_item)
 
     return component_timeline
+
 
 def get_timeline_feature(feature: adsk.fusion.TimelineObject) -> Feature | Error:
     try:
@@ -94,13 +114,13 @@ def get_timeline_feature(feature: adsk.fusion.TimelineObject) -> Feature | Error
         feature_type = entity.objectType
         print("feature_type")
         print(feature_type)
-        
+
         if feature_type == adsk.fusion.Sketch.classType():
             extrude = adsk.fusion.Sketch.cast(entity)
             sketch_feature_data: SketchFeature = {
                 "name": extrude.name,
                 "type": cast(Literal["adsk::fusion::Sketch"], feature_type),
-                "details": get_sketch_data(extrude)
+                "details": get_sketch_data(extrude),
             }
             return sketch_feature_data
         elif feature_type == adsk.fusion.ExtrudeFeature.classType():
@@ -108,7 +128,7 @@ def get_timeline_feature(feature: adsk.fusion.TimelineObject) -> Feature | Error
             extrude_feature_data: ExtrudeFeature = {
                 "name": sketch.name,
                 "type": cast(Literal["adsk::fusion::ExtrudeFeature"], feature_type),
-                "details": get_extrude_data(sketch)
+                "details": get_extrude_data(sketch),
             }
             return extrude_feature_data
         elif feature_type == adsk.fusion.Occurrence.classType():
@@ -119,8 +139,8 @@ def get_timeline_feature(feature: adsk.fusion.TimelineObject) -> Feature | Error
                 "type": cast(Literal["adsk::fusion::Occurrence"], feature_type),
                 "details": {
                     "is_linked": occurrence.isReferencedComponent,
-                    "id": component.id
-                }
+                    "id": component.id,
+                },
             }
             return component_feature_data
         else:

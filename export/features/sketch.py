@@ -1,7 +1,17 @@
 from typing import Literal, cast
 import adsk.fusion
 from ..globals.utils import get_point_data, format_value
-from ..globals.types.types import Error, SketchDetails, Curve, LineCurve, CircleCurve, Plane, PlaneFace, PlaneCustom, PlaneBase
+from ..globals.types.types import (
+    Error,
+    SketchDetails,
+    Curve,
+    LineCurve,
+    CircleCurve,
+    Plane,
+    PlaneFace,
+    PlaneCustom,
+    PlaneBase,
+)
 from ..globals.globals import error
 
 
@@ -9,12 +19,12 @@ def get_sketch_data(sketch: adsk.fusion.Sketch) -> SketchDetails | Error:
     try:
         data: SketchDetails = {
             "curves": [],
-            "plane": get_plane_data(adsk.fusion.ConstructionPlane.cast(sketch.referencePlane))
+            "plane": get_plane_data(adsk.fusion.ConstructionPlane.cast(sketch.referencePlane)),
         }
-        
+
         for curve in sketch.sketchCurves:
             data["curves"].append(get_curve_data(curve))
-        
+
         return data
 
     except Exception as e:
@@ -23,7 +33,7 @@ def get_sketch_data(sketch: adsk.fusion.Sketch) -> SketchDetails | Error:
 
 def get_curve_data(curve: adsk.fusion.SketchCurve) -> Curve | Error:
     curve_type = curve.objectType
-    
+
     if curve_type == adsk.fusion.SketchLine.classType():
         curve = adsk.fusion.SketchLine.cast(curve)
         line_curve_data: LineCurve = {
@@ -43,22 +53,18 @@ def get_curve_data(curve: adsk.fusion.SketchCurve) -> Curve | Error:
     else:
         raise Exception("Unknown curve type")
 
+
 def get_plane_data(plane: adsk.fusion.ConstructionPlane) -> Plane | Error:
-    if (plane.objectType == adsk.fusion.BRepFace.classType()):
+    if plane.objectType == adsk.fusion.BRepFace.classType():
         # Sketch on surface
-        face_plane_data: PlaneFace = {
-            "type": "face"
-        }
+        face_plane_data: PlaneFace = {"type": "face"}
         return face_plane_data
-    elif (plane.timelineObject is None):
+    elif plane.timelineObject is None:
         # Sketch on base planes - Like XY
         # We are going to stick with this for now till I get the main functionalities working
-        base_plane_data: PlaneBase = {
-            "type": "base_plane",
-            "name": plane.name
-        }
+        base_plane_data: PlaneBase = {"type": "base_plane", "name": plane.name}
         return base_plane_data
-    elif (plane.timelineObject is not None):
+    elif plane.timelineObject is not None:
         # Sketch on custom planes"
         custom_plane_data: PlaneCustom = {
             "type": "custom_plane",
