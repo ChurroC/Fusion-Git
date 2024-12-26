@@ -10,13 +10,13 @@ root: adsk.fusion.Component
 active_document: adsk.core.Document
 
 # This is my way to print to the Fusion 360 UI
-def print_fusion(message: str):
+def print_fusion(*args: str):
     global ui
     try:
         palettes = ui.palettes
         textPalette = adsk.core.TextCommandPalette.cast(palettes.itemById("TextCommands"))
         textPalette.isVisible = True
-        textPalette.writeText(message)
+        textPalette.writeText(" ".join([str(arg) for arg in args]))
         adsk.doEvents()
     except Exception as e:
         error("Failed to print error", e)

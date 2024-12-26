@@ -1,0 +1,38 @@
+{
+  "document_name": "Component Test v6",
+  "units": 3,
+  "features": [
+    {
+      "name": "Cube",
+      "type": "adsk::fusion::Occurrence",
+      "details": {
+        "is_linked": false,
+        "id": "cdc4afcf-71a0-4a55-a4c5-44c9f0b07ec9"
+      }
+    },
+    {
+      "name": "Cylinder",
+      "type": "adsk::fusion::Occurrence",
+      "details": {
+        "is_linked": false,
+        "id": "0c54d3e2-1fac-4091-9ddd-216e9271f41c"
+      }
+    },
+    {
+      "name": "Linked Component Test v1",
+      "type": "adsk::fusion::Occurrence",
+      "details": {
+        "is_linked": true,
+        "id": "1c9bc1e6-9e1b-44e9-99f1-d8d28a280116"
+      }
+    },
+    {
+      "name": "Cube",
+      "type": "adsk::fusion::Occurrence",
+      "details": {
+        "is_linked": false,
+        "id": "cdc4afcf-71a0-4a55-a4c5-44c9f0b07ec9"
+      }
+    }
+  ]
+}

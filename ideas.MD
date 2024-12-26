@@ -154,4 +154,14 @@ Like so:
 }
 
 
-Can't figure out what type of entitiy a circular pattern is
+Can't figure out what type of entitiy a circular pattern of a component is
+
+
+
+Also final idea for the strucutre
+Basically I go through the timeline but every time I hit a component
+I do a recursion basiocally and run the code again but with a different path save
+then once the timeline inside the inner component is read it will create a json file
+and add it directly to the file system. So the nice part is I don't got to track all the children since they're
+just saved to the file system
+got to find a way to check for 

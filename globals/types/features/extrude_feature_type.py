@@ -21,5 +21,4 @@ class ExtrudeDetails(TypedDict):
 class ExtrudeFeature(TypedDict):
     name: str
     type: Literal["adsk::fusion::ExtrudeFeature"]
-    index: int
     details: ExtrudeDetails | Error

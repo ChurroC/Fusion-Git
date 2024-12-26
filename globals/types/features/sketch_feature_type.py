@@ -28,5 +28,4 @@ class SketchDetails(TypedDict):
 class SketchFeature(TypedDict):
     name: str
     type: Literal["adsk::fusion::Sketch"]
-    index: int
     details: SketchDetails | Error
