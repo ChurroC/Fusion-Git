@@ -12,7 +12,7 @@ def format_value(value_input):
         return str(value_input)
 
 
-def get_point_data(point: adsk.core.Point3D):
+def get_point_data(point: adsk.core.Point3D) -> Point3D:
     return {
         "x": format_value(point.x),
         "y": format_value(point.y),

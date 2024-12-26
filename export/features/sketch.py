@@ -1,3 +1,4 @@
+from typing import Literal, cast
 import adsk.fusion
 from ..globals.utils import get_point_data, format_value
 from ..globals.types.types import Error, SketchDetails, Curve, LineCurve, CircleCurve, Plane, PlaneFace, PlaneCustom, PlaneBase
@@ -26,7 +27,7 @@ def get_curve_data(curve: adsk.fusion.SketchCurve) -> Curve | Error:
     if curve_type == adsk.fusion.SketchLine.classType():
         curve = adsk.fusion.SketchLine.cast(curve)
         line_curve_data: LineCurve = {
-            "type": curve_type,
+            "type": cast(Literal["adsk::fusion::SketchLine"], curve_type),
             "start_point": get_point_data(curve.startSketchPoint.geometry),
             "end_point": get_point_data(curve.endSketchPoint.geometry),
         }
@@ -34,7 +35,7 @@ def get_curve_data(curve: adsk.fusion.SketchCurve) -> Curve | Error:
     elif curve_type == adsk.fusion.SketchCircle.classType():
         curve = adsk.fusion.SketchCircle.cast(curve)
         circle_curve_data: CircleCurve = {
-            "type": curve_type,
+            "type": cast(Literal["adsk::fusion::SketchCircle"], curve_type),
             "center_point": get_point_data(curve.centerSketchPoint.geometry),
             "radius": format_value(curve.radius),
         }
@@ -46,7 +47,7 @@ def get_plane_data(plane: adsk.fusion.ConstructionPlane) -> Plane | Error:
     if (plane.objectType == adsk.fusion.BRepFace.classType()):
         # Sketch on surface
         face_plane_data: PlaneFace = {
-            "type": "face",
+            "type": "face"
         }
         return face_plane_data
     elif (plane.timelineObject is None):

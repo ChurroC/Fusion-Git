@@ -18,7 +18,7 @@ class PlaneCustom(TypedDict):
     index: int
 class PlaneBase(TypedDict):
     type: Literal["base_plane"]
-    name: int
+    name: str
 Plane = PlaneFace | PlaneCustom | PlaneBase
 
 class SketchDetails(TypedDict):
