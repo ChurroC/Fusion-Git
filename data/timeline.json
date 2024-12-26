@@ -1,6 +1,5 @@
 {
-  "document_name": "Component Test v6",
-  "units": 3,
+  "document_name": "Component Test v7",
   "features": [
     {
       "name": "Cube",
@@ -33,6 +32,15 @@
         "is_linked": false,
         "id": "cdc4afcf-71a0-4a55-a4c5-44c9f0b07ec9"
       }
+    },
+    {
+      "name": "Component4",
+      "type": "adsk::fusion::Occurrence",
+      "details": {
+        "is_linked": false,
+        "id": "5554263b-b36b-4dd9-8e88-401b1c47f762"
+      }
     }
-  ]
+  ],
+  "units": "in"
 }

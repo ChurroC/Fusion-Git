@@ -165,3 +165,6 @@ then once the timeline inside the inner component is read it will create a json 
 and add it directly to the file system. So the nice part is I don't got to track all the children since they're
 just saved to the file system
 got to find a way to check for 
+
+
+At the end try to spawn threads every recursion

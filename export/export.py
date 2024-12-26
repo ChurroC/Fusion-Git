@@ -21,54 +21,74 @@ def run(context):
 
         if folderDialog.showDialog() != adsk.core.DialogResults.DialogOK:
             return
-        folder_path = folderDialog.folder
+        selected_folder_path = folderDialog.folder
 
         global component_timeline
         component_timeline = get_component_timeline_data()
         
         # This is just for dev purposes
-        write_to_file(os.path.join(folder_path, 'component_timeline.json'), get_component_timeline_data(True))
+        write_to_file(os.path.join(selected_folder_path, 'component_timeline.json'), get_component_timeline_data(True))
         
-        export_timeline_date(folder_path, component_timeline[design.rootComponent.id], design.rootComponent)
+        
+        for component_id in component_timeline:
+            data: Timeline = {
+                "document_name": app.activeDocument.name,
+                "features": [],
+            }
+            if component_timeline[component_id]["is_linked"] or component_timeline[component_id]["is_root"]:
+                data["units"] = units_manager.defaultLengthUnits
+            
+            folder_path = selected_folder_path
+            if not component_timeline[component_id]["is_root"] and not component_timeline[component_id]["is_linked"]:
+                folder_path = os.path.join(selected_folder_path, "components", component_timeline[component_id]["name"])
+            elif component_timeline[component_id]["is_linked"]:
+                folder_path = os.path.join(selected_folder_path, "linked_components", component_timeline[component_id]["name"])
+            
+            for timeline_item in component_timeline[component_id]["components"]:
+                data["features"].append(get_timeline_feature(timeline_item))
+            
+            write_to_file(os.path.join(folder_path, 'timeline.json'), data)
         
         print_fusion("Timeline successfully exported")
     except Exception as e:
         error("Failed to export timeline", e)
 
 def get_component_timeline_data(readable = False) -> FusionComponentTimeline:
-    component_timeline: FusionComponentTimeline = {}
-    timeline = design.timeline
-    for timeline_item in timeline:
+    component_timeline: FusionComponentTimeline = {
+        design.rootComponent.name if readable else design.rootComponent.id: {
+            "is_root": True,
+            "is_linked": False,
+            "name": design.rootComponent.name,
+            "components": []
+        }
+    }
+    
+    for timeline_item in design.timeline:
         entity = timeline_item.entity
         component_id = None
         
         if hasattr(entity, 'parentComponent'):
-            component_id = cast(adsk.fusion.Feature, entity).parentComponent.name if readable else cast(adsk.fusion.Feature, entity).parentComponent.id # If I try to cast using fusion api it deletes parentComponent for some reason
+            parent_component = cast(adsk.fusion.Feature, entity).parentComponent # If I try to cast using fusion api it deletes parentComponent for some reason
+            component_id = parent_component.name if readable else parent_component.id
         elif hasattr(entity, 'sourceComponent'):
             occurrence = adsk.fusion.Occurrence.cast(entity)
-            component_id = occurrence.sourceComponent.name if readable else occurrence.sourceComponent.id
-            
+            source_component = occurrence.sourceComponent
+            component_id = source_component.name if readable else source_component.id
+            # This is when an occurance of a component occurs
+            # We need to check if the component is already in our custom timeline
+            component_timeline[occurrence.component.name if readable else occurrence.component.id] = {
+                "is_root": False,
+                "is_linked": occurrence.isReferencedComponent,
+                "name": occurrence.component.name,
+                "components": []
+            }
+        
         if component_id:
-            if component_id not in component_timeline:
-                component_timeline[component_id] = []
-            component_timeline[component_id].append(timeline_item.name.strip() if readable else timeline_item)
-    
+            component_timeline[component_id]["components"].append(timeline_item.name.strip() if readable else timeline_item)
+
     return component_timeline
 
-def export_timeline_date(path: str, timeline: adsk.fusion.Timeline, root_component: adsk.fusion.Component):
-    # The timline param is going through component_timeline so it's already filtered and has only the features of the target component
-    data: Timeline = {
-        "document_name": app.activeDocument.name,
-        "units": units_manager.distanceDisplayUnits,
-        "features": [],
-    }
-    
-    for timeline_item in timeline:
-        data["features"].append(get_timeline_feature(path, timeline_item, root_component))
-    
-    write_to_file(os.path.join(path, 'timeline.json'), data)
-
-def get_timeline_feature(path: str, feature: adsk.fusion.TimelineObject, root_component: adsk.fusion.Component) -> Feature | Error:
+def get_timeline_feature(feature: adsk.fusion.TimelineObject) -> Feature | Error:
     try:
         entity = feature.entity
         feature_type = entity.objectType
@@ -94,19 +114,12 @@ def get_timeline_feature(path: str, feature: adsk.fusion.TimelineObject, root_co
         elif feature_type == adsk.fusion.Occurrence.classType():
             occurrence = adsk.fusion.Occurrence.cast(entity)
             component = occurrence.component
-            
-            if not occurrence.isReferencedComponent:
-                occurrences = root_component.occurrencesByComponent(component)
-                if occurrences.item(0).name == occurrence.name: # If it's the first occurrence
-                    global component_timeline
-                    export_timeline_date(os.path.join(path, component.name), component_timeline[component.id], component)
-            
             component_feature_data: ComponentFeature = {
-                "name": occurrence.component.name,
+                "name": component.name,
                 "type": feature_type,
                 "details": {
                     "is_linked": occurrence.isReferencedComponent,
-                    "id": occurrence.component.id
+                    "id": component.id
                 }
             }
             return component_feature_data

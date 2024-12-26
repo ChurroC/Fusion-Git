@@ -1,0 +1,37 @@
+{
+  "document_name": "Component Test v7",
+  "features": [
+    {
+      "name": "Sketch3",
+      "type": "adsk::fusion::Sketch",
+      "details": {
+        "curves": [
+          {
+            "type": "adsk::fusion::SketchCircle",
+            "center_point": {
+              "x": "0.50 in",
+              "y": "0.50 in",
+              "z": "0.00 in"
+            },
+            "radius": "0.50 in"
+          }
+        ],
+        "plane": {
+          "type": "base_plane",
+          "name": "XY"
+        }
+      }
+    },
+    {
+      "name": "Extrude3",
+      "type": "adsk::fusion::ExtrudeFeature",
+      "details": {
+        "operation": 0,
+        "extent": {
+          "type": 0,
+          "side_one": "1 in"
+        }
+      }
+    }
+  ]
+}
