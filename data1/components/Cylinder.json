@@ -1,5 +1,5 @@
 {
-  "document_name": "Component Test v7",
+  "document_name": "Component Test v11",
   "features": [
     {
       "name": "Sketch1",
@@ -47,6 +47,30 @@
       "details": {
         "is_linked": false,
         "id": "cdc4afcf-71a0-4a55-a4c5-44c9f0b07ec9"
+      }
+    },
+    {
+      "name": "WOw",
+      "type": "adsk::fusion::Occurrence",
+      "details": {
+        "is_linked": false,
+        "id": "0905bff1-4ea6-4081-9315-5229bb4144b5"
+      }
+    },
+    {
+      "name": "Cube v2",
+      "type": "adsk::fusion::Occurrence",
+      "details": {
+        "is_linked": true,
+        "id": "d2941cdb-7f96-4cdc-bbe1-c2459a8142f6"
+      }
+    },
+    {
+      "name": "Cube v1",
+      "type": "adsk::fusion::Occurrence",
+      "details": {
+        "is_linked": true,
+        "id": "2f9074f0-5609-4d34-8383-1a92ad7ae3dc"
       }
     }
   ]

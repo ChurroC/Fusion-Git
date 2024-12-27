@@ -1,7 +1,6 @@
 # Author - ChurroC
 # Description - Export timeline data to a JSON file
 
-from operator import is_
 from typing import Literal, cast
 import adsk.core, adsk.fusion
 import os
@@ -77,11 +76,9 @@ def get_component_timeline_data() -> FusionComponentTimeline:
             "is_root": True,
             "is_linked": False,
             "name": design.rootComponent.name,
-            "timeline": [],
+            "components": [],
         }
     }
-    is_component_creation = False
-    is_linked = False
 
     for timeline_item in design.timeline:
         entity = timeline_item.entity
@@ -98,24 +95,15 @@ def get_component_timeline_data() -> FusionComponentTimeline:
             component_id = source_component.id
             # This is when an occurance of a component occurs
             # We need to check if the component is already in our custom timeline
-            if component_id not in component_timeline:
-                is_component_creation = True if not occurrence.isReferencedComponent else False
-                is_linked = occurrence.isReferencedComponent
-                component_timeline[component_id] = {
-                    "is_root": False,
-                    "is_linked": occurrence.isReferencedComponent,
-                    "name": occurrence.component.name,
-                    "timeline": [],
-                }
+            component_timeline[occurrence.component.id] = {
+                "is_root": False,
+                "is_linked": occurrence.isReferencedComponent,
+                "name": occurrence.component.name,
+                "components": [],
+            }
 
         if component_id:
-            component_timeline[component_id]["timeline"].append(
-                {
-                    "is_linked": is_linked,
-                    "is_component_creation": is_component_creation,
-                    "timeline_item": timeline_item,
-                }
-            )
+            component_timeline[component_id]["components"].append(timeline_item)
 
     return component_timeline
 
