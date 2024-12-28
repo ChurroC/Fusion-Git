@@ -140,7 +140,7 @@ def write_component_data_to_file(component_id: str, folder_path: str, file_name:
     if is_linked:
         backslash_char = "\\"
         data["info"] = {
-            "link": f"[{component_details['name']}](/data4/linked_components/{file_name.replace(' ', '%20')}/timeline.md)",
+            "link": f"[{component_details['name']}](/data4/linked_components/{file_name.replace(' ', '%20')}/timeline.md/timeline.md)",
             "component_reference": component_reference,
             "component_reference_id": component_id,
             "component_creation_name": component_details["name"],

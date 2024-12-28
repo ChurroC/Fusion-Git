@@ -8,7 +8,7 @@
 
 **info**
 
-&emsp;&emsp;• link: [Cube v2](/data4/linked_components/Cube%20v2-d2941cdb-7f96-4cdc-bbe1-c2459a8142f6/timeline.md)
+&emsp;&emsp;• link: [Cube v2](/data4/linked_components/Cube%20v2-d2941cdb-7f96-4cdc-bbe1-c2459a8142f6/timeline.md/timeline.md)
 
 &emsp;&emsp;• component_reference: true
 
