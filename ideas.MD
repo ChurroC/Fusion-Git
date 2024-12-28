@@ -14,6 +14,8 @@ if the image diff don't matter. Then they can check the json diff to see if the 
 then. Take a screenshot of the removals then cv2 to color red. Sketch of the new then color green.
 Then sketch eveyrhting else next. THen combine the screenshots. 
 
+Adding onto the idea above I coudl also add stl files since they can be rendered by github
+
 I like the way it currently
 data/
 ├── metadata.json
@@ -49,6 +51,11 @@ output_directory/
             component.json
         Linked_Component_2/
             component.json
+
+
+Maybe have a deteremistic hash for every component referenced. So that when you change one linked component or just a component in general the has changes reflecting the changes everywhere
+But also this doesn't reflect how a function works in git cause the function woudl change but the references calling it wouldn't change
+
 
 TIPS:
 Import using relative pathing - https://forums.autodesk.com/t5/fusion-api-and-scripts/importing-python-modules-those-i-create-into-scripts/td-p/6061765
