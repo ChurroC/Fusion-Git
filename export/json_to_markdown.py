@@ -1,4 +1,5 @@
 import os
+from typing import Mapping
 
 from .globals.types.types import Timeline
 
@@ -158,6 +159,10 @@ def format_timeline(timeline: dict) -> str:
     return md
 
 
+BASE_INDENT = "&emsp;&emsp;"  # Two &emsp; for each level
+DOUBLE_NEWLINE = "\n\n"
+
+
 def format_python_variable(word: str) -> str:
     return word.replace("_", " ").title()
 
@@ -166,53 +171,65 @@ def bold(word: str) -> str:
     return f"**{word}**"
 
 
-def double_new_line(word: str) -> str:
-    return f"{word}{DOUBLE_NEWLINE}"
-
-
 def indent(level: int) -> str:
     """Get indentation for given level."""
     return BASE_INDENT * level
 
 
-def format_timeline2(timeline: Timeline) -> str:
+def format_timeline2(timeline) -> str:
     """Format the entire timeline."""
     md = ""
 
-    for key, value in timeline.items():
-        if key != "features" and key != "info":
-            key
-            md += double_new_line(bold(format_python_variable(key)))
-            md += f"{indent(1)}- {double_new_line(value)}"
-        elif isinstance(value, int):
-            md += double_new_line(bold(format_python_variable(key)))
-            md += f"{indent(1)}- {double_new_line(value)}"
+    def read_list(lst: list, tab_index: int) -> str:
+        md = ""
+        for index, value in enumerate(lst, 1):
+            if isinstance(value, dict):
+                if "error" in value:
+                    md += f"{value['error']}"
+                elif "md" in value:
+                    md += f"{value['md']}"
+                else:
+                    md += f"{indent(tab_index)}{index}:{DOUBLE_NEWLINE}"
+                    md += read_dict(value, tab_index + 1)
+            elif isinstance(value, list):
+                md += read_list(value, tab_index + 1)
+            else:
+                md += f"{value}"
+            md += DOUBLE_NEWLINE
+        return md
 
+    def read_dict(dictionary, tab_index: int) -> str:
+        md = ""
+        for key, value in dictionary.items():
+            if isinstance(value, dict):
+                if "error" in value:
+                    md += f"{indent(tab_index)}{bold(format_python_variable(key))}: {value['error']}"
+                elif "md" in value:
+                    md += f"{indent(tab_index)}{bold(format_python_variable(key))}: {value['md']}"
+                else:
+                    md += f"{indent(tab_index)}{bold(format_python_variable(key))}:{DOUBLE_NEWLINE}"
+                    md += read_dict(value, tab_index + 1)
+            elif isinstance(value, list):
+                md += f"{indent(tab_index)}{bold(format_python_variable(key))}:{DOUBLE_NEWLINE}"
+                md += read_list(value, tab_index + 1)
+            else:
+                md += f"{indent(tab_index)}{bold(format_python_variable(key))}: {value}"
+            md += DOUBLE_NEWLINE
+        return md
+
+    md += read_dict(timeline, 0)
+
+    print("FINAL")
+    print("FINAL")
+    print("FINAL")
+    print("FINAL")
+    print("FINAL")
+    print("FINAL")
     return md
 
 
-def write_to_file(file_path, json_data):
+def write_markdown_to_file(file_path, json_data):
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
-    markdown = format_timeline(json_data)
+    markdown = format_timeline2(json_data)
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(markdown)
-
-
-from typing import Literal, TypedDict, cast
-
-
-from typing import TypedDict, Literal
-
-
-class Person(TypedDict):
-    name: str
-    age: int
-    email: str
-    is_active: bool
-
-
-# Define PersonKeys as a Literal type based on the keys of Person
-PersonKeys = Literal[tuple(Person.__annotations__.keys())]
-
-# Create a variable of type PersonKeys
-person_key: PersonKeys = "name"

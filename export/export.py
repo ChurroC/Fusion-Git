@@ -16,7 +16,8 @@ from .globals.types.types import (
     FusionComponentTimeline,
     TimelineDetail,
 )
-from .json_to_markdown import write_to_file
+from .json_to_markdown import write_markdown_to_file
+from .globals.utils import write_to_file
 from .features.features import get_sketch_data, get_extrude_data
 
 component_timeline: FusionComponentTimeline
@@ -107,15 +108,14 @@ def write_component_data_to_file(component_id: str, folder_path: str, file_name:
     is_root = component_details["is_root"]
     timeline_details = component_details["timeline_details"]
 
-    final_folder_path = (
-        os.path.join(folder_path, file_name)
-        if not is_linked
-        else os.path.join(src_folder_path, "linked_components", file_name, "timeline.md")
-    )
+    final_folder_path = os.path.join(folder_path, file_name)
 
     data: Timeline = {
         "document_name": component_details["name"],
-        "units": cast(Literal[0, 1, 2, 3, 4], units_manager.distanceDisplayUnits),
+        "units": {
+            "md": units_manager.defaultLengthUnits,
+            "value": cast(Literal[0, 1, 2, 3, 4], units_manager.distanceDisplayUnits),
+        },
         "features": [],
     }
 
@@ -131,7 +131,7 @@ def write_component_data_to_file(component_id: str, folder_path: str, file_name:
             "component_creation_name": component_details["name"],
         }
 
-    write_to_file(os.path.join(final_folder_path, "timeline.md"), data)
+    write_markdown_to_file(os.path.join(final_folder_path, "timeline.md"), data)
 
     if is_linked:
         data["info"] = {
@@ -140,7 +140,7 @@ def write_component_data_to_file(component_id: str, folder_path: str, file_name:
             "component_reference_id": component_id,
             "component_creation_name": component_details["name"],
         }
-        write_to_file(os.path.join(folder_path, file_name, "timeline.md"), data)
+        write_markdown_to_file(os.path.join(folder_path, file_name, "timeline.md"), data)
 
 
 def get_timeline_feature(timeline_detail: TimelineDetail, folder_path) -> Feature | Error:
