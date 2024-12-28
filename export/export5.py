@@ -5,7 +5,7 @@ from typing import Literal, cast
 import adsk.core, adsk.fusion
 import os
 
-from .globals.globals import ui, units_manager, design, error, print_fusion
+from .globals.globals import app, ui, units_manager, design, error, print_fusion
 from .globals.types.types import (
     Timeline,
     Feature,
@@ -37,6 +37,19 @@ def run(context):
         global component_timeline
         component_timeline = get_component_timeline_data()
 
+        # This is just for me to check out the data structure of component timeline
+        """
+        for component_id, component_details in component_timeline.items():
+            # Print out this file strucure to print_fusion
+            print_fusion(
+                f"Component {component_details['name']} is root: {component_details['is_root']} is linked: {component_details['is_linked']}"
+            )
+            for timeline_item in component_details["timeline"]:
+                print_fusion(
+                    f"\t{timeline_item['timeline_item'].name} --- is linked: {timeline_item['is_linked']} --- is component creation: {timeline_item['is_component_creation']}",
+                )
+        """
+
         write_component_data_to_file(design.rootComponent.id, src_folder_path, "")
 
         print_fusion("Timeline successfully exported")
@@ -60,8 +73,6 @@ def get_component_timeline_data() -> FusionComponentTimeline:
         parent_component_id = None
         is_component_creation = False
         is_linked = False
-
-        print_fusion(entity.classType())
 
         if hasattr(entity, "parentComponent"):
             parent_component = cast(
@@ -107,12 +118,10 @@ def write_component_data_to_file(component_id: str, folder_path: str, file_name:
     is_root = component_details["is_root"]
     timeline_details = component_details["timeline_details"]
 
-    final_folder_path = (
-        os.path.join(folder_path, file_name)
-        if not is_linked
-        else os.path.join(src_folder_path, "linked_components", file_name, "timeline.md")
-    )
+    final_folder_path = os.path.join(folder_path, file_name)
 
+    if is_linked:
+        final_folder_path = os.path.join(src_folder_path, "linked_components", file_name, "timeline.md")
     data: Timeline = {
         "document_name": component_details["name"],
         "units": cast(Literal[0, 1, 2, 3, 4], units_manager.distanceDisplayUnits),

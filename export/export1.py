@@ -5,7 +5,7 @@ from typing import Literal, cast
 import adsk.core, adsk.fusion
 import os
 
-from .globals.globals import app, ui, units_manager, design, error, print_fusion
+from .globals.globals import ui, units_manager, design, error, print_fusion
 from .globals.types.types import (
     Timeline,
     Feature,
@@ -37,7 +37,7 @@ def run(context):
         for component_id in component_timeline:
             data: Timeline = {
                 "document_name": component_timeline[component_id]["name"],
-                "units": cast(int, units_manager.defaultLengthUnits),
+                "units": cast(Literal, units_manager.defaultLengthUnits),
                 "features": [],
             }
             if not component_timeline[component_id]["is_linked"] and not component_timeline[component_id]["is_root"]:

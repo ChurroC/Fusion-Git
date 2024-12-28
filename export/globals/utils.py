@@ -43,3 +43,20 @@ def write_to_file(file_path, data):
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     with open(file_path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
+
+
+# This is a pretty fast way to search for a key through a nested dictionary
+# Instead of reading path by path for finding a component source path I could use this
+# I could also use this to find the occurrence of a component in the timeline which is useful for joints
+def gen_dict_extract(key, var):
+    if hasattr(var, "items"):
+        for k, v in var.items():
+            if k == key:
+                yield v
+            if isinstance(v, dict):
+                for result in gen_dict_extract(key, v):
+                    yield result
+            elif isinstance(v, list):
+                for d in v:
+                    for result in gen_dict_extract(key, d):
+                        yield result

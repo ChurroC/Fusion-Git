@@ -65,6 +65,10 @@ data4 - uses markdown to show links to the intial reference of a component
 
 TODO:
 Fix up units cause it's a string right now "in" instead of the number
+Do Joints
+Do Linked Components
+Why have the features be called component_feature_type and not component_type
+Stop the annoyting type.type and just turn it into type
 
 TIPS:
 Import using relative pathing - https://forums.autodesk.com/t5/fusion-api-and-scripts/importing-python-modules-those-i-create-into-scripts/td-p/6061765
