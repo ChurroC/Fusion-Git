@@ -10,6 +10,7 @@ Feature = SketchFeature | ExtrudeFeature | ComponentFeature
 
 
 class TimelineInfo(TypedDict):
+    link: str
     component_reference: bool
     component_reference_id: str
     component_creation_name: str

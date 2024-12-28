@@ -16,9 +16,10 @@ from .globals.types.types import (
     Error,
     ComponentFeature,
     FusionComponentTimeline,
+    FusionComponentDetails,
     TimelineDetail,
 )
-from .json_to_markdown import write_to_file
+from .globals.utils import write_to_file
 from .features.features import get_sketch_data, get_extrude_data
 
 component_timeline: FusionComponentTimeline
@@ -117,10 +118,10 @@ def write_component_data_to_file(component_id: str, folder_path: str, file_name:
     final_folder_path = os.path.join(folder_path, file_name)
 
     if is_linked:
-        final_folder_path = os.path.join(src_folder_path, "linked_components", file_name, "timeline.md")
+        final_folder_path = os.path.join(src_folder_path, "linked_components", file_name, "timeline.json")
     data: Timeline = {
         "document_name": component_details["name"],
-        "units": cast(Literal[0, 1, 2, 3, 4], units_manager.distanceDisplayUnits),
+        "units": cast(Literal[0, 1, 2, 3, 4], units_manager.defaultLengthUnits),
         "features": [],
     }
 
@@ -129,23 +130,20 @@ def write_component_data_to_file(component_id: str, folder_path: str, file_name:
             data["features"].append(get_timeline_feature(timeline_detail, final_folder_path))
     elif not is_linked:
         data["info"] = {
-            "link": f"[{component_details['name']}](/data4/{final_folder_path.replace(src_folder_path, '')})",
             "component_reference": component_reference,
             "component_reference_id": component_id,
             "component_creation_name": component_details["name"],
         }
 
-    write_to_file(os.path.join(final_folder_path, "timeline.md"), data)
+    write_to_file(os.path.join(final_folder_path, "timeline.json"), data)
 
     if is_linked:
-        backslash_char = "\\"
         data["info"] = {
-            "link": f"[{component_details['name']}](/data4/linked_components/{file_name.replace(' ', '%20')}/timeline.md)",
             "component_reference": component_reference,
             "component_reference_id": component_id,
             "component_creation_name": component_details["name"],
         }
-        write_to_file(os.path.join(folder_path, file_name, "timeline.md"), data)
+        write_to_file(os.path.join(folder_path, file_name, "timeline.json"), data)
 
 
 def get_timeline_feature(timeline_detail: TimelineDetail, folder_path) -> Feature | Error:

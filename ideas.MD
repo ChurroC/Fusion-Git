@@ -63,6 +63,9 @@ data2 - folder config
 data3 - copies fusion folder path
 data4 - uses markdown to show links to the intial reference of a component
 
+TODO:
+Fix up units cause it's a string right now "in" instead of the number
+
 TIPS:
 Import using relative pathing - https://forums.autodesk.com/t5/fusion-api-and-scripts/importing-python-modules-those-i-create-into-scripts/td-p/6061765
 
