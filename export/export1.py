@@ -36,7 +36,7 @@ def run(context):
 
         for component_id in component_timeline:
             data: Timeline = {
-                "document_name": app.activeDocument.name,
+                "document_name": component_timeline[component_id]["name"],
                 "units": cast(int, units_manager.defaultLengthUnits),
                 "features": [],
             }
