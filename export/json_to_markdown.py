@@ -94,7 +94,7 @@ def timeline_to_markdown(timeline: dict) -> str:
     if "info" in timeline:
         markdown += "**info**\n\n"
         info = timeline["info"]
-        markdown += f"&emsp;&emsp;• link: {str(info['link']).lower()}\n\n"
+        markdown += f"&emsp;&emsp;• link: {str(info['link'])}\n\n"
         markdown += f"&emsp;&emsp;• component_reference: {str(info['component_reference']).lower()}\n\n"
         markdown += f"&emsp;&emsp;• component_reference_id: {info['component_reference_id']}\n\n"
         markdown += f"&emsp;&emsp;• component_creation_name: {info['component_creation_name']}\n\n"
