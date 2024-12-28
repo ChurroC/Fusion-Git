@@ -64,6 +64,7 @@ def get_component_timeline_data() -> FusionComponentTimeline:
         design.rootComponent.id: {
             "is_root": True,
             "is_linked": False,
+            "path": "/data4/",
             "name": design.rootComponent.name,
             "timeline_details": [],
         }
@@ -89,9 +90,14 @@ def get_component_timeline_data() -> FusionComponentTimeline:
             if component_id not in component_timeline:
                 is_linked = occurrence.isReferencedComponent
                 is_component_creation = True if not is_linked else False
+
+                parent_path = component_timeline[parent_component_id]["path"]
+                component_path = os.path.join(parent_path, f"{occurrence.component.name}-{component_id}")
+
                 component_timeline[component_id] = {
                     "is_root": False,
                     "is_linked": occurrence.isReferencedComponent,
+                    "path": component_path,
                     "name": occurrence.component.name,
                     "timeline_details": [],
                 }
@@ -128,8 +134,9 @@ def write_component_data_to_file(component_id: str, folder_path: str, file_name:
         for timeline_detail in timeline_details:
             data["features"].append(get_timeline_feature(timeline_detail, final_folder_path))
     elif not is_linked:
+        backslash_char = "\\"
         data["info"] = {
-            "link": f"[{component_details['name']}](/data4/{final_folder_path.replace(src_folder_path, '')})",
+            "link": f"[{component_details['name']}]({component_details['path'].replace(' ', '%20').replace(backslash_char, '/')})",
             "component_reference": component_reference,
             "component_reference_id": component_id,
             "component_creation_name": component_details["name"],
@@ -138,7 +145,6 @@ def write_component_data_to_file(component_id: str, folder_path: str, file_name:
     write_to_file(os.path.join(final_folder_path, "timeline.md"), data)
 
     if is_linked:
-        backslash_char = "\\"
         data["info"] = {
             "link": f"[{component_details['name']}](/data4/linked_components/{file_name.replace(' ', '%20')}/timeline.md/timeline.md)",
             "component_reference": component_reference,

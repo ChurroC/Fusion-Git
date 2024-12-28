@@ -31,6 +31,7 @@ class TimelineDetail(TypedDict):
 
 
 class FusionComponentDetails(TypedDict):
+    path: str
     is_root: bool
     is_linked: bool  # This is going to see if the parent component of this timeline is linked
     name: str
