@@ -50,13 +50,13 @@ def run(context):
                 file_path = os.path.join(
                     folder_path,
                     "components",
-                    f"{component_timeline[component_id]['name']}.json",
+                    f"{component_timeline[component_id]['name']}-{component_id}.json",
                 )
             elif component_timeline[component_id]["is_linked"]:
                 file_path = os.path.join(
                     folder_path,
                     "linked_components",
-                    f"{component_timeline[component_id]['name']}.json",
+                    f"{component_timeline[component_id]['name']}-{component_id}.json",
                 )
 
             for timeline_item in component_timeline[component_id]["components"]:
