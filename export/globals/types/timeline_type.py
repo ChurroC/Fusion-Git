@@ -9,10 +9,17 @@ from .utils_type import Error
 Feature = SketchFeature | ExtrudeFeature | ComponentFeature
 
 
+class TimelineInfo(TypedDict):
+    component_reference: bool
+    component_reference_id: str
+    component_creation_name: str
+
+
 # This is going to be our timeline data export structure
 class Timeline(TypedDict):
     document_name: str
     units: NotRequired[Literal[0, 1, 2, 3, 4]]
+    info: NotRequired[TimelineInfo]
     features: list[Feature | Error]
 
 

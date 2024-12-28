@@ -58,6 +58,10 @@ But also this doesn't reflect how a function works in git cause the function wou
 
 have a link for component files to their references in git so like what they have git
 
+data1 - flat config
+data2 - folder config
+data3 - copies fusion folder path
+data4 - uses markdown to show links to the intial reference of a component
 
 TIPS:
 Import using relative pathing - https://forums.autodesk.com/t5/fusion-api-and-scripts/importing-python-modules-those-i-create-into-scripts/td-p/6061765

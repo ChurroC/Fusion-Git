@@ -1,0 +1,38 @@
+{
+  "document_name": "WOw",
+  "units": "in",
+  "features": [
+    {
+      "name": "Sketch1",
+      "type": "adsk::fusion::Sketch",
+      "details": {
+        "curves": [
+          {
+            "type": "adsk::fusion::SketchCircle",
+            "center_point": {
+              "x": "2.50 in",
+              "y": "2.50 in",
+              "z": "0.00 in"
+            },
+            "radius": "0.50 in"
+          }
+        ],
+        "plane": {
+          "type": "base_plane",
+          "name": "YZ"
+        }
+      }
+    },
+    {
+      "name": "Extrude1",
+      "type": "adsk::fusion::ExtrudeFeature",
+      "details": {
+        "operation": 3,
+        "extent": {
+          "type": 0,
+          "side_one": "1 in"
+        }
+      }
+    }
+  ]
+}
