@@ -56,6 +56,8 @@ output_directory/
 Maybe have a deteremistic hash for every component referenced. So that when you change one linked component or just a component in general the has changes reflecting the changes everywhere
 But also this doesn't reflect how a function works in git cause the function woudl change but the references calling it wouldn't change
 
+have a link for component files to their references in git so like what they have git
+
 
 TIPS:
 Import using relative pathing - https://forums.autodesk.com/t5/fusion-api-and-scripts/importing-python-modules-those-i-create-into-scripts/td-p/6061765

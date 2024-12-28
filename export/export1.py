@@ -147,3 +147,20 @@ def get_timeline_feature(feature: adsk.fusion.TimelineObject) -> Feature | Error
             raise Exception("Unknown feature type")
     except Exception as e:
         return error("Failed to process feature", e)
+
+
+"""
+This function does something amazing.
+
+**Parameters:**
+
+- `x`: An integer.
+- `y`: A string.
+
+**Returns:**
+
+- The sum of `x` and the length of `y`.
+"""
+"""
+[a relative link](export.py)
+"""
