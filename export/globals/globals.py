@@ -1,5 +1,5 @@
 import adsk.core, adsk.fusion, adsk.cam, traceback
-from .types.types import Error
+from .types import Error
 
 # These are the defaults for the Fusion 360 API
 app: adsk.core.Application
@@ -40,21 +40,12 @@ if "ui" not in globals():
     try:
         app = adsk.core.Application.get()
         ui = app.userInterface
-        print_fusion("")  # Just to make sure the text palette is created
-        print_fusion("")  # Just to make sure the text palette is created
-        print_fusion("")  # Just to make sure the text palette is created
-        print_fusion("")  # Just to make sure the text palette is created
-        print_fusion("")  # Just to make sure the text palette is created
-        print_fusion("")  # Just to make sure the text palette is created
-        print_fusion("")  # Just to make sure the text palette is created
-        print_fusion("")  # Just to make sure the text palette is created
-        print_fusion("")  # Just to make sure the text palette is created
         design = adsk.fusion.Design.cast(app.activeProduct)
         units_manager = adsk.fusion.FusionUnitsManager.cast(design.unitsManager)
         root = design.rootComponent
         active_document = app.activeDocument
     except Exception as e:
-        if ui:
+        if "ui" in globals():
             error("Failed to initialize globals", e)
             # if there is no ui then manually open text palette and read the script error
             # Option + CMD + C on Mac OS or ALT + CTRL + C on Windows OS

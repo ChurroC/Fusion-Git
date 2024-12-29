@@ -67,7 +67,7 @@ TODO:
 Fix up units cause it's a string right now "in" instead of the number
 Do Joints
 Do Linked Components
-Add json hashes
+Add json hashes - DONEish need to do importing of this
 Why have the features be called component_feature_type and not component_type
 Stop the annoyting type.type and just turn it into type
 Use adsk.core.Camera to take pictures of sketches and cv2 to show the diff by highlgihting in green or red

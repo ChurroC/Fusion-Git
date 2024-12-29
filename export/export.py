@@ -6,7 +6,7 @@ import adsk.core, adsk.fusion
 import os
 
 from .globals.globals import ui, units_manager, design, error, print_fusion
-from .globals.types.types import (
+from .globals.types import (
     Timeline,
     Feature,
     SketchFeature,
@@ -16,9 +16,7 @@ from .globals.types.types import (
     FusionComponentTimeline,
     TimelineDetail,
 )
-from .json_to_markdown import write_markdown_to_file
-from .globals.utils import write_to_file
-from .globals.compression import compress_json
+from .json_to_markdown import write_to_file
 from .features.features import get_sketch_data, get_extrude_data
 
 component_timeline: FusionComponentTimeline
@@ -126,30 +124,30 @@ def write_component_data_to_file(component_id: str, folder_path: str, file_name:
         data["features"] = [
             get_timeline_feature(detail, final_folder_path) for detail in component_details["timeline_details"]
         ]
-        write_markdown_to_file(os.path.join(final_folder_path, "timeline.md"), data)
+        write_to_file(os.path.join(final_folder_path, "timeline.md"), data)
         return
 
     # Component reference
     if component_reference:
         data["info"] = {
-            "link": f"[{component_details['name']}]({component_details['path'].replace(' ', '%20').replace('\\', '/')}/timeline.md)",
+            "link_to_component": f"[{component_details['name']}]({component_details['path'].replace(' ', '%20').replace('\\', '/')}/timeline.md)",
             "component_reference": True,
             "component_reference_id": component_id,
             "component_creation_name": component_details["name"],
         }
-        write_markdown_to_file(os.path.join(final_folder_path, "timeline.md"), data)
+        write_to_file(os.path.join(final_folder_path, "timeline.md"), data)
         return
 
     # Linked component
     if component_details["is_linked"]:
         data["info"] = {
-            "link": f"[{component_details['name']}](/data4/linked_components/{file_name.replace(' ', '%20')}/timeline.md/timeline.md)",
+            "link_to_component": f"[{component_details['name']}](/data4/linked_components/{file_name.replace(' ', '%20')}/timeline.md/timeline.md)",
             "component_reference": False,
             "component_reference_id": component_id,
             "component_creation_name": component_details["name"],
         }
         write_markdown_to_file(os.path.join(folder_path, file_name, "timeline.md"), data)
-        return
+        write_to_file
 
 
 def get_timeline_feature(timeline_detail: TimelineDetail, folder_path) -> Feature | Error:

@@ -1,7 +1,7 @@
 from typing import Literal, cast
 import adsk.fusion
 from ..globals.utils import get_point_data, format_value
-from ..globals.types.types import (
+from ..globals.types import (
     Error,
     SketchDetails,
     Curve,

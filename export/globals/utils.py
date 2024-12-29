@@ -1,8 +1,7 @@
 import json
 import os
-from typing import Mapping, get_type_hints, TypedDict
 from .globals import units_manager
-from .types.types import Point3D
+from .types import Point3D
 import adsk.core
 
 
@@ -61,34 +60,3 @@ def gen_dict_extract(key, var):
                 for d in v:
                     for result in gen_dict_extract(key, d):
                         yield result
-
-
-def ordered_json_dumps(data: Mapping) -> str:
-    typed_dict_class = type(data)
-    typed_dict_class.__annotations__
-
-
-from typing import Literal, NotRequired, TypedDict
-import pprint
-
-
-class TimelineInfo(TypedDict):
-    link: str
-    component_reference: bool
-    component_reference_id: str
-    component_creation_name: str
-
-
-# This is going to be our timeline data export structure
-class Timeline(TypedDict):
-    document_name: str
-    units: NotRequired[Literal[0, 1, 2, 3, 4]]
-    info: NotRequired[TimelineInfo]
-
-
-def ordered_json_dumps(data) -> str:
-    typed_dict_class = type(data)
-    typed_dict_class.__annotations__
-
-
-pprint.pprint(ordered_json_dumps({"document_name": "test", "units": 0}))

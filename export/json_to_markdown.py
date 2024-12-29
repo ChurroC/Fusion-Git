@@ -1,6 +1,6 @@
 import os
-from export.order_json import order_dict
-from .globals.types.types import Timeline
+from .order_json import order_dict
+from .globals.types import Timeline
 from .globals.compression import compress_json
 
 BASE_INDENT = "&emsp;&emsp;"  # Two &emsp; for each level
@@ -66,10 +66,13 @@ def format_timeline(timeline) -> str:
     return md
 
 
-def write_markdown_to_file(file_path, json_data):
+def write_to_file(file_path, json_data, write_in_md=True):
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     json_data["json"] = compress_json(json_data)
     ordered_json_data = order_dict(json_data, Timeline)
     markdown = format_timeline(ordered_json_data)
     with open(file_path, "w", encoding="utf-8") as f:
-        f.write(markdown)
+        if write_in_md:
+            f.write(markdown)
+        else:
+            f.write(json_data["json"])
