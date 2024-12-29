@@ -55,8 +55,9 @@ def format_timeline(timeline) -> str:
                     md += f"{indent(tab_index)}{bold(format_python_variable(key))}:{DOUBLE_NEWLINE}"
                     md += read_dict(value, tab_index + 1)
             elif isinstance(value, list):
-                md += f"{indent(tab_index)}{bold(format_python_variable(key))}:{DOUBLE_NEWLINE}"
-                md += read_list(value, tab_index + 1)
+                if len(value) != 0:
+                    md += f"{indent(tab_index)}{bold(format_python_variable(key))}:{DOUBLE_NEWLINE}"
+                    md += read_list(value, tab_index + 1)
             else:
                 md += f"{indent(tab_index)}{bold(format_python_variable(key))}: {value}"
             md += DOUBLE_NEWLINE

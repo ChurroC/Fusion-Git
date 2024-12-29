@@ -36,15 +36,15 @@ def run(context):
         global component_timeline
         component_timeline = get_component_timeline_data()
 
-        for component_id, component_details in component_timeline.items():
-            # Print out this file strucure to print_fusion
-            print_fusion(
-                f"Component {component_details['name']} is root: {component_details['is_root']} is linked: {component_details['is_linked']}"
-            )
-            for timeline_item in component_details["timeline_details"]["timeline"]:
-                print_fusion(
-                    f"\t{timeline_item['timeline_item'].name} --- is linked: {timeline_item['is_linked']} --- is component creation: {timeline_item['is_component_creation']}",
-                )
+        # for component_id, component_details in component_timeline.items():
+        #     # Print out this file strucure to print_fusion
+        #     print_fusion(
+        #         f"Component {component_details['name']} is root: {component_details['is_root']} is linked: {component_details['is_linked']}"
+        #     )
+        #     for timeline_item in component_details["timeline_details"]:
+        #         print_fusion(
+        #             f"\t{timeline_item['timeline_item'].name} --- is linked: {timeline_item['is_linked']} --- is component creation: {timeline_item['is_component_creation']}",
+        #         )
 
         write_component_data_to_file(design.rootComponent.id, src_folder_path, "")
 
@@ -101,7 +101,7 @@ def get_component_timeline_data() -> FusionComponentTimeline:
                     "is_root": False,
                     "is_linked": occurrence.isReferencedComponent,
                     "path": component_path,
-                    "name": occurrence.component.name,
+                    "name": occurrence.name,
                     "timeline_details": [],
                 }
 
@@ -110,7 +110,7 @@ def get_component_timeline_data() -> FusionComponentTimeline:
                 {
                     "is_linked": occurrence.isReferencedComponent,
                     "is_component_creation": (
-                        is_component_creation if not occurrence.isReferencedComponent else False
+                        False if occurrence.isReferencedComponent else is_component_creation
                     ),  # If it is a reference we don't want to consider this as a creation
                     "timeline_item": timeline_item,
                 }
@@ -130,9 +130,7 @@ def write_component_data_to_file(component_id: str, folder_path: str, file_name:
         ),
         "features": [],
     }
-    print_fusion("")
-    print_fusion(component_details["name"])
-    print_fusion(component_reference, component_details["is_linked"])
+
     # Regular component with features
     if not component_reference and not component_details["is_linked"]:
         data["features"] = [
@@ -143,7 +141,6 @@ def write_component_data_to_file(component_id: str, folder_path: str, file_name:
 
     # Component reference
     if component_reference:
-        print_fusion(component_details["name"])
         data["info"] = {
             "link_to_component": f"[{component_details['name']}]({component_details['path'].replace(' ', '%20').replace('\\', '/')}/timeline.md)",
             "component_reference": True,
@@ -197,8 +194,8 @@ def get_timeline_feature(timeline_detail: TimelineDetail, folder_path) -> Featur
             write_component_data_to_file(
                 component.id,
                 folder_path,
-                f"{component.name}-{component.id}",
-                True if not is_component_creation else False,
+                f"{feature.index}{component.name}-{component.id}",
+                True if not is_component_creation and not is_linked else False,
             )
 
             component_feature_data: ComponentFeature = {
