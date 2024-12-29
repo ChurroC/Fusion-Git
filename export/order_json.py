@@ -1,17 +1,54 @@
 from typing import TypedDict, Union, get_origin, get_args, Literal, Generic, Type, Optional, Any, TypeVar, Tuple, Dict
 
 
-# Define a base TypedDict class to use as bound
 class BaseTypedDict(TypedDict):
     pass
 
 
-# Now use Type[BaseTypedDict] as the bound
 T = TypeVar("T", bound=Type[BaseTypedDict])
 
 
-def is_typeddict(tp: Type[Any]) -> bool:
+def get_matching_type(
+    value: Dict[str, Any],
+    possible_types: Tuple[Type[Any], ...],
+) -> Optional[Type[BaseTypedDict]]:
+    """Find matching TypedDict based on value structure"""
+    if not isinstance(value, dict):
+        return None
+
+    # For Feature unions that have a 'type' field
+    if "type" in value:
+        for possible_type in possible_types:
+            if isinstance(possible_type, type) and is_typeddict(possible_type):
+                # Check if this TypedDict has matching 'type' field constraints
+                try:
+                    type_annotation = possible_type.__annotations__.get("type")
+                    if is_literal(type_annotation):
+                        literal_values = get_args(type_annotation)
+                        if value["type"] in literal_values:
+                            return possible_type
+                except AttributeError:
+                    continue
+
+    # Default to first TypedDict in union if no match found
+    for t in possible_types:
+        if isinstance(t, type) and is_typeddict(t):
+            return t
+
+    return None
+
+
+def is_literal(tp: Any) -> bool:
+    """Check if a type is a Literal"""
+    if tp is None:
+        return False
+    return get_origin(tp) is Literal
+
+
+def is_typeddict(tp: Any) -> bool:
     """Check if a type is a TypedDict"""
+    if not isinstance(tp, type):
+        return False
     return hasattr(tp, "__annotations__") and hasattr(tp, "__total__")
 
 
@@ -20,12 +57,7 @@ def is_union(tp: Type[Any]) -> bool:
     return get_origin(tp) is Union
 
 
-def is_literal(tp: Type[Any]) -> bool:
-    """Check if a type is a Literal"""
-    return get_origin(tp) is Literal
-
-
-def dump_typed_dict(data: Dict[str, Any], schema: T) -> Dict[str, Any]:
+def order_dict(data: Dict[str, Any], schema: T) -> Dict[str, Any]:
     """Convert a dict to match TypedDict structure while maintaining key order"""
     if not isinstance(data, dict):
         return data
@@ -81,27 +113,3 @@ def dump_typed_dict(data: Dict[str, Any], schema: T) -> Dict[str, Any]:
         result[key] = value
 
     return result
-
-
-def get_matching_type(value: Dict[str, Any], possible_types: Tuple[Type[Any], ...]) -> Optional[T]:
-    """Find matching TypedDict based on value structure"""
-    if not isinstance(value, dict):
-        return None
-
-    # For Feature unions that have a 'type' field
-    if "type" in value:
-        for possible_type in possible_types:
-            if is_typeddict(possible_type):
-                # Check if this TypedDict has matching 'type' field constraints
-                type_annotation = possible_type.__annotations__.get("type")
-                if is_literal(type_annotation):
-                    literal_values = get_args(type_annotation)
-                    if value["type"] in literal_values:
-                        return possible_type  # type: ignore
-
-    # Default to first TypedDict in union if no match found
-    for t in possible_types:
-        if is_typeddict(t):
-            return t  # type: ignore
-
-    return None

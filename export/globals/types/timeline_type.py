@@ -22,6 +22,7 @@ class Timeline(TypedDict):
     units: NotRequired[ReadableValue[Literal[0, 1, 2, 3, 4]]]
     info: NotRequired[TimelineInfo]
     features: list[Feature | Error]
+    json: NotRequired[str]
 
 
 class TimelineDetail(TypedDict):

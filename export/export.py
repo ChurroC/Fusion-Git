@@ -119,7 +119,6 @@ def write_component_data_to_file(component_id: str, folder_path: str, file_name:
             "value": cast(Literal[0, 1, 2, 3, 4], units_manager.distanceDisplayUnits),
         },
         "features": [],
-        "json": compress_json(component_details),
     }
 
     # Regular component with features

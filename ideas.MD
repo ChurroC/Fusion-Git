@@ -67,8 +67,13 @@ TODO:
 Fix up units cause it's a string right now "in" instead of the number
 Do Joints
 Do Linked Components
+Add json hashes
 Why have the features be called component_feature_type and not component_type
 Stop the annoyting type.type and just turn it into type
+Use adsk.core.Camera to take pictures of sketches and cv2 to show the diff by highlgihting in green or red
+Do the same for extrudes but instead straight up change the color of the feature then take a picture
+Also remember to add stl files at the end
+
 
 TIPS:
 Import using relative pathing - https://forums.autodesk.com/t5/fusion-api-and-scripts/importing-python-modules-those-i-create-into-scripts/td-p/6061765
