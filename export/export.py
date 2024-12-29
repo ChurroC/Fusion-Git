@@ -18,10 +18,10 @@ from .globals.types.types import (
 )
 from .json_to_markdown import write_markdown_to_file
 from .globals.utils import write_to_file
+from .globals.compression import compress_json
 from .features.features import get_sketch_data, get_extrude_data
 
 component_timeline: FusionComponentTimeline
-src_folder_path: str
 
 
 def run(context):
@@ -32,7 +32,6 @@ def run(context):
 
         if folderDialog.showDialog() != adsk.core.DialogResults.DialogOK:
             return
-        global src_folder_path
         src_folder_path = folderDialog.folder
 
         global component_timeline
@@ -58,27 +57,32 @@ def get_component_timeline_data() -> FusionComponentTimeline:
 
     for timeline_item in design.timeline:
         entity = timeline_item.entity
-        parent_component_id = None
-        is_component_creation = False
-        is_linked = False
 
-        print_fusion(entity.classType())
-
-        if hasattr(entity, "parentComponent"):
+        if hasattr(entity, "parentComponent"):  # This is a feature
             parent_component = cast(
                 adsk.fusion.Feature, entity
             ).parentComponent  # If I try to cast using fusion api it deletes parentComponent for some reason
-            parent_component_id = parent_component.id
-        elif hasattr(entity, "sourceComponent"):
+            component_timeline[parent_component.id]["timeline_details"].append(
+                {
+                    "is_linked": False,
+                    "is_component_creation": False,
+                    "timeline_item": timeline_item,
+                }
+            )
+        elif hasattr(
+            entity, "sourceComponent"
+        ):  # This is an occurrence - 1. creation of a component - 2. reference of a component (copy and paste) - 3. reference of a component (linked)
             occurrence = adsk.fusion.Occurrence.cast(entity)
-            parent_component_id = occurrence.sourceComponent.id
-            component_id = occurrence.component.id
-            # This is when an occurance of a component occurs
-            # We need to check if the component is already in our custom timeline
-            if component_id not in component_timeline:
-                is_linked = occurrence.isReferencedComponent
-                is_component_creation = True if not is_linked else False
+            parent_component_id = (
+                occurrence.sourceComponent.id
+            )  # This is so we can add this occurence to the timline of the parent component
+            component_id = (
+                occurrence.component.id
+            )  # This is the id of the component that is being referenced from the occurence
 
+            # If this occurence happens for the first time we know that this is the creation of the component since we are iterating through the timeline
+            # If we iterate through the timeline we must have a creation occur before a reference (reference are basically copy and pastes)
+            if component_id not in component_timeline:
                 parent_path = component_timeline[parent_component_id]["path"]
                 component_path = os.path.join(parent_path, f"{occurrence.component.name}-{component_id}")
 
@@ -90,11 +94,13 @@ def get_component_timeline_data() -> FusionComponentTimeline:
                     "timeline_details": [],
                 }
 
-        if parent_component_id:
+            # Here we add it to the timeline of the parent component
             component_timeline[parent_component_id]["timeline_details"].append(
                 {
-                    "is_linked": is_linked,
-                    "is_component_creation": is_component_creation,
+                    "is_linked": occurrence.isReferencedComponent,
+                    "is_component_creation": (
+                        True if not occurrence.isReferencedComponent else False
+                    ),  # If it is a reference we don't want to consider this as a creation
                     "timeline_item": timeline_item,
                 }
             )
@@ -104,10 +110,6 @@ def get_component_timeline_data() -> FusionComponentTimeline:
 
 def write_component_data_to_file(component_id: str, folder_path: str, file_name: str, component_reference=False):
     component_details = component_timeline[component_id]
-    is_linked = component_details["is_linked"]
-    is_root = component_details["is_root"]
-    timeline_details = component_details["timeline_details"]
-
     final_folder_path = os.path.join(folder_path, file_name)
 
     data: Timeline = {
@@ -117,30 +119,38 @@ def write_component_data_to_file(component_id: str, folder_path: str, file_name:
             "value": cast(Literal[0, 1, 2, 3, 4], units_manager.distanceDisplayUnits),
         },
         "features": [],
+        "json": compress_json(component_details),
     }
 
-    if not component_reference:
-        for timeline_detail in timeline_details:
-            data["features"].append(get_timeline_feature(timeline_detail, final_folder_path))
-    elif not is_linked:
-        backslash_char = "\\"
+    # Regular component with features
+    if not component_reference and not component_details["is_linked"]:
+        data["features"] = [
+            get_timeline_feature(detail, final_folder_path) for detail in component_details["timeline_details"]
+        ]
+        write_markdown_to_file(os.path.join(final_folder_path, "timeline.md"), data)
+        return
+
+    # Component reference
+    if component_reference:
         data["info"] = {
-            "link": f"[{component_details['name']}]({component_details['path'].replace(' ', '%20').replace(backslash_char, '/')}/timeline.md)",
-            "component_reference": component_reference,
+            "link": f"[{component_details['name']}]({component_details['path'].replace(' ', '%20').replace('\\', '/')}/timeline.md)",
+            "component_reference": True,
             "component_reference_id": component_id,
             "component_creation_name": component_details["name"],
         }
+        write_markdown_to_file(os.path.join(final_folder_path, "timeline.md"), data)
+        return
 
-    write_markdown_to_file(os.path.join(final_folder_path, "timeline.md"), data)
-
-    if is_linked:
+    # Linked component
+    if component_details["is_linked"]:
         data["info"] = {
             "link": f"[{component_details['name']}](/data4/linked_components/{file_name.replace(' ', '%20')}/timeline.md/timeline.md)",
-            "component_reference": component_reference,
+            "component_reference": False,
             "component_reference_id": component_id,
             "component_creation_name": component_details["name"],
         }
         write_markdown_to_file(os.path.join(folder_path, file_name, "timeline.md"), data)
+        return
 
 
 def get_timeline_feature(timeline_detail: TimelineDetail, folder_path) -> Feature | Error:
