@@ -1,1 +1,123 @@
-eNrFkluL2zAQhf9K0FMLVpFs+frY0L5uoYW2lMWMpFFr4thBttOkIf+9E9ubyzbQh8L2xaAzozPfHPnAbGuGNTZ92cAaWcGW+7pqLHoWsKGp+o4VB7a2VKgakrZQD9QVHQPmEPrBIzV8O7D58scV9uaHpMZ+v8Hz1Um+XGdgu1VRuKGr2qYo5jJ5WuyhqseZZvDb2fyO12JZeVPjXyznJjI2tCH6ctNWTX+2eiXeiGDx9Hl9MTuwHZVJE4tx6/3N6dfV6UjeHmw1dKMYT+JjwDY1NKPTDfxb6HDxYSxdyDWJ5dRPbnOSX76S9zE4J/tu1/vB4iXaZwvP9ffTo7CbKNsNeuipjR4uYLjrcQphMhIB6yqLZXviZXLa6mryJ19B833M+u7kB0NP5bExz6ZWXUl/0gppbwd1h8FJMe16Q4PodzMeZyYCPxVP+SSZBINxykMNiiuVSK6tFhx0IjIVJUIKy67hloN+ETBjjQJnHE8lCK4gjjkoExOiyZ3QIkWT34B9fvj5ElwiF7F2TnKFkHAlMsnzSMY8DsNcayWV0vEfgS224T+wzdPvoz2Bn9hsmCtprOapy4mNIuRao+QmVHEOmVShS/4XW+hykSoneJyInCsbKZ5FWcQl5CHYFDCyhtgej78BgQmo4w==
+{
+  "document_name": "Cylinder",
+  "units": {
+    "md": "in",
+    "value": 3
+  },
+  "features": [
+    {
+      "name": "Sketch1",
+      "type": {
+        "md": "Sketch",
+        "value": "adsk::fusion::Sketch"
+      },
+      "details": {
+        "curves": [
+          {
+            "type": {
+              "md": "Sketch Circle",
+              "value": "adsk::fusion::SketchCircle"
+            },
+            "center_point": {
+              "md": "(0.00, 0.00, 0.00)",
+              "value": {
+                "x": "0.00",
+                "y": "0.00",
+                "z": "0.00"
+              }
+            },
+            "radius": "0.50"
+          }
+        ],
+        "plane": {
+          "type": {
+            "md": "Base Plane",
+            "value": "base_plane"
+          },
+          "name": "XY"
+        }
+      }
+    },
+    {
+      "name": "Extrude1",
+      "type": {
+        "md": "Extrude",
+        "value": "adsk::fusion::ExtrudeFeature"
+      },
+      "details": {
+        "operation": {
+          "md": "New Body",
+          "value": 3
+        },
+        "extent": {
+          "type": {
+            "md": "One Side Extent",
+            "value": 0
+          },
+          "side_one": "1 in"
+        }
+      }
+    },
+    {
+      "name": "Triangle:1",
+      "type": {
+        "md": "Component Occurence",
+        "value": "adsk::fusion::Occurrence"
+      },
+      "details": {
+        "is_linked": false,
+        "is_component_creation": true,
+        "id": "681ace57-2ba4-4461-bdb0-ab608436010d"
+      }
+    },
+    {
+      "name": "Cube:3",
+      "type": {
+        "md": "Component Occurence",
+        "value": "adsk::fusion::Occurrence"
+      },
+      "details": {
+        "is_linked": false,
+        "is_component_creation": true,
+        "id": "cdc4afcf-71a0-4a55-a4c5-44c9f0b07ec9"
+      }
+    },
+    {
+      "name": "WOw:2",
+      "type": {
+        "md": "Component Occurence",
+        "value": "adsk::fusion::Occurrence"
+      },
+      "details": {
+        "is_linked": false,
+        "is_component_creation": true,
+        "id": "0905bff1-4ea6-4081-9315-5229bb4144b5"
+      }
+    },
+    {
+      "name": "Cube v2:1",
+      "type": {
+        "md": "Component Occurence",
+        "value": "adsk::fusion::Occurrence"
+      },
+      "details": {
+        "is_linked": true,
+        "is_component_creation": false,
+        "id": "d2941cdb-7f96-4cdc-bbe1-c2459a8142f6"
+      }
+    },
+    {
+      "name": "Cube v2:1",
+      "type": {
+        "md": "Component Occurence",
+        "value": "adsk::fusion::Occurrence"
+      },
+      "details": {
+        "is_linked": true,
+        "is_component_creation": false,
+        "id": "2f9074f0-5609-4d34-8383-1a92ad7ae3dc"
+      }
+    }
+  ],
+  "json": "eNrNUsuK20AQ/BUxpwQ0YUYaPY9rNsc4sIEkhEXMoycRlkdGD+86xv+eliXbq3iXnAK+CFFdXd1VPXtiat2vwXWFk2sgOVnsqtIZaIhPeld2Lcn3ZG2wUDqEtrLqkRUefGJBdn0DSPixJ1Pzwwo6/Ysjsdtt4Nw6wpd2Ik27ynPbt2Xt8nwqo6aBTpbVcabum+0k/oqWtygbXcE/JCcSCmt0CE2xqUvXnaXesQ+M+d7l+/6ityfPyBhAxHaX39+n3wOqNtKUfXtEIkQefbKppDt2z3a+ky14n4+ly8IKwWLko9QU4LfvKHzwz4HeP3dNb+Aq0Ql/0/9U/zje6K9o6w00skPeWe4TPHl3tdnNLwzPHYxxzWYvHXgPpQHvfqyfexj2tFgo6iEDwj18MjM3X5pSup8V5Fd+FvV6g12u85YaLw9Ov+3tyBgpc19lW+DbXQEKWlm14A+IPikXuoHJNWYzFIfBccqlhiihgZKCChFzqoxiVKqYpSKMGWeGvPSw6BXk4c3sr40W0mpLEy4ZFTKKqBQ6Qic6s0yxBHQ22//r8ikPbmZ9lrFIWcupABlTwVJOs5BHNAqCTCnBhVDRVfzeNvj/L2ha8nUHJ3/DYBNkgmujaGIztIAHoUoBpzoQUSZTLgIb37iFwGYsEZbRKGYZFSYUNA3TkHKZBdIkEkKj0cLj4Q/iXgJ6"
+}

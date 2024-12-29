@@ -1,1 +1,233 @@
-eNrVVlFPgzAQ/iukT5rAUmTTyaOLPvlg4ovGLKSjXWzGCintskn4796gGWOSjMjGtG93/e674zvaXoZoHOolEyoQZMmQjyZ6xpCNtOAqRX6GlhScXIBrRSINCC+30ZwRpSUDwEeGTODrgqnw0wWg2iRsF1q6q3BEaLrw/blOeSx832wDJ2WK8KjIGWq5MuQNXFbEBTtC+LyFAGmqiFRBEnOhdixX7uDm9n5/jW2ryYcH+LrKk6E1BOPBCFuFHJua9VVYuLBySMwEPUzrdMnrtEuc2+eRrI/a24vm/DKz8ydkO3n1jcJ1ynxh2fqovbVop70Z+pTsUnfa/z6efdxqvRzOqY2SiIgirqbeA0mZ9VJsVeLNwBmUeKjZvOlv70Z9Yz+uldSUVY/8geZm/6kcD1DtUY8TJokCGIwQIMpasVKRkghDizhlQbytF7lV32vThdfDdDHhMoyO/VYGBMQhfAaTDQ2+w9s1xCPPdUfjYfFj/fB1OY6SUK7TPcgZO+517Dhu2/Fp/g1V3P0u
+{
+  "document_name": "Cube",
+  "units": {
+    "md": "in",
+    "value": 3
+  },
+  "features": [
+    {
+      "name": "Sketch1",
+      "type": {
+        "md": "Sketch",
+        "value": "adsk::fusion::Sketch"
+      },
+      "details": {
+        "curves": [
+          {
+            "type": {
+              "md": "Sketch line",
+              "value": "adsk::fusion::SketchLine"
+            },
+            "start_point": {
+              "md": "(0.50, 0.50, 0.00)",
+              "value": {
+                "x": "0.50",
+                "y": "0.50",
+                "z": "0.00"
+              }
+            },
+            "end_point": {
+              "md": "(-0.50, 0.50, 0.00)",
+              "value": {
+                "x": "-0.50",
+                "y": "0.50",
+                "z": "0.00"
+              }
+            }
+          },
+          {
+            "type": {
+              "md": "Sketch line",
+              "value": "adsk::fusion::SketchLine"
+            },
+            "start_point": {
+              "md": "(-0.50, 0.50, 0.00)",
+              "value": {
+                "x": "-0.50",
+                "y": "0.50",
+                "z": "0.00"
+              }
+            },
+            "end_point": {
+              "md": "(-0.50, -0.50, 0.00)",
+              "value": {
+                "x": "-0.50",
+                "y": "-0.50",
+                "z": "0.00"
+              }
+            }
+          },
+          {
+            "type": {
+              "md": "Sketch line",
+              "value": "adsk::fusion::SketchLine"
+            },
+            "start_point": {
+              "md": "(-0.50, -0.50, 0.00)",
+              "value": {
+                "x": "-0.50",
+                "y": "-0.50",
+                "z": "0.00"
+              }
+            },
+            "end_point": {
+              "md": "(0.50, -0.50, 0.00)",
+              "value": {
+                "x": "0.50",
+                "y": "-0.50",
+                "z": "0.00"
+              }
+            }
+          },
+          {
+            "type": {
+              "md": "Sketch line",
+              "value": "adsk::fusion::SketchLine"
+            },
+            "start_point": {
+              "md": "(0.50, -0.50, 0.00)",
+              "value": {
+                "x": "0.50",
+                "y": "-0.50",
+                "z": "0.00"
+              }
+            },
+            "end_point": {
+              "md": "(0.50, 0.50, 0.00)",
+              "value": {
+                "x": "0.50",
+                "y": "0.50",
+                "z": "0.00"
+              }
+            }
+          },
+          {
+            "type": {
+              "md": "Sketch line",
+              "value": "adsk::fusion::SketchLine"
+            },
+            "start_point": {
+              "md": "(0.50, 0.50, 0.00)",
+              "value": {
+                "x": "0.50",
+                "y": "0.50",
+                "z": "0.00"
+              }
+            },
+            "end_point": {
+              "md": "(-0.50, -0.50, 0.00)",
+              "value": {
+                "x": "-0.50",
+                "y": "-0.50",
+                "z": "0.00"
+              }
+            }
+          },
+          {
+            "type": {
+              "md": "Sketch line",
+              "value": "adsk::fusion::SketchLine"
+            },
+            "start_point": {
+              "md": "(-0.50, 0.50, 0.00)",
+              "value": {
+                "x": "-0.50",
+                "y": "0.50",
+                "z": "0.00"
+              }
+            },
+            "end_point": {
+              "md": "(0.50, -0.50, 0.00)",
+              "value": {
+                "x": "0.50",
+                "y": "-0.50",
+                "z": "0.00"
+              }
+            }
+          }
+        ],
+        "plane": {
+          "type": {
+            "md": "Base Plane",
+            "value": "base_plane"
+          },
+          "name": "XY"
+        }
+      }
+    },
+    {
+      "name": "Extrude1",
+      "type": {
+        "md": "Extrude",
+        "value": "adsk::fusion::ExtrudeFeature"
+      },
+      "details": {
+        "operation": {
+          "md": "New Body",
+          "value": 3
+        },
+        "extent": {
+          "type": {
+            "md": "One Side Extent",
+            "value": 0
+          },
+          "side_one": "1 in"
+        }
+      }
+    },
+    {
+      "name": "Sketch3",
+      "type": {
+        "md": "Sketch",
+        "value": "adsk::fusion::Sketch"
+      },
+      "details": {
+        "curves": [
+          {
+            "type": {
+              "md": "Sketch Circle",
+              "value": "adsk::fusion::SketchCircle"
+            },
+            "center_point": {
+              "md": "(0.50, 0.50, 0.00)",
+              "value": {
+                "x": "0.50",
+                "y": "0.50",
+                "z": "0.00"
+              }
+            },
+            "radius": "0.50"
+          }
+        ],
+        "plane": {
+          "type": {
+            "md": "Base Plane",
+            "value": "base_plane"
+          },
+          "name": "XY"
+        }
+      }
+    },
+    {
+      "name": "Extrude3",
+      "type": {
+        "md": "Extrude",
+        "value": "adsk::fusion::ExtrudeFeature"
+      },
+      "details": {
+        "operation": {
+          "md": "Join",
+          "value": 0
+        },
+        "extent": {
+          "type": {
+            "md": "One Side Extent",
+            "value": 0
+          },
+          "side_one": "1 in"
+        }
+      }
+    }
+  ],
+  "json": "eNrNVsFOg0AQ/RWyJ03AbNN44dimHoxRk140piFbdho3pQuB3dpK+HcH2ILUWoyU6oUsM2/ezhtmMqSEh75egVSeZCsgLhnrORCbaClUQtyUrDgahUTTmgUaEcPMJgtgSseAgJeUmMDpEpT/OkCg2kZQhZbmOpwwnixdd6ETEUrXNW7k5KCYCIo7fR2vDfkBLisQEloI73IIkiaKxcqLQiFVxXJBr66pbe2elF7WZCnZICJ3oW1bH9+LI6UkQ1KQfJ/SaeV0jpJmdj9Su+Z1TKzzQ1bn7HI7ZHZQcDvr38jtmtcRsb+djn6l9jGz/7eNTzu1nZt4ZpMoYLKAN1SPWALWY+GqRc/R6JV4zMfsiKdnUzXzPtmoWHP4sjSM/dsaGv9NuYb2tkcYQcwU4iq6e3izRiHfNpcYbBSUBWrc/SDBmgoO1qT0VzE0/1zo8MK8BmRg4VZsqCm/7PAMG3AsYj9oazEDQmIfdUB86pGKGRc62Tl7bI9hz+1xG37+v6Gna41Z9gHr3r06"
+}

@@ -18,9 +18,9 @@
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Type**: Sketch Circle
 
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Center Point**: (6.349999904632568, 6.349999904632568, 0.0)
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Center Point**: (2.50, 2.50, 0.00)
 
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Radius**: 0.50 in
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Radius**: 0.50
 
 
 
@@ -62,5 +62,5 @@
 
 
 
-**Json**: eNqFUltLwzAU/ivhPCmU0d2K9nEyH52wB1EZJTZnGNalJU221dL/7lkSOqoT+3a+2+F8aQuizO0elckU3yOk8LI6QgRWSVND2sJeECYVQQdeWBJMuwi2yI3VSIL3FoJvvUOTf45JaJoKe6uHL3bgot6l6dbWslRpGmjKFGi4LNzO3OpDCL+SxR6kzgv8JzKIKDin41BnVSmV6aNuktF0dn/+4lkyncyTu4hdgeJRfHtZ1MKJrJPRPGaukWYwfdFEejd1tFdzIW3tQC/pNhFUBVcuaXDYgtfInh11ueqDwMzrKS20/PpG2V3Ut748GW0F/qo94H+WFPhH/5A/+i8r1NyQro97wiNblKIZ/gZ4Mug7HexeKWRrKZAtPd97YvLURGTluQMY+6a6TfcN63zLUA==
+**Json**: eNqFUltLwzAU/ivhPCmU0Sm+9HEyH52wB1EZJTZnGNYmJZettfS/e9qElnrBlxC+W3K+pAOhC1+hcrniFUIGz7sLJOCVdBayDipBmFQEnXnpSXDbJ3BE7rxBErx1EH37E7riY01C19Y4WQM824ELe8qyo7dSqyyLNGUKdFyW45mFN+cY/ksWu5emKPGfyCii4IKGQ5PXWio3RV3drO7ShIU1XaXp9ZzXQUOKgSKsnbeftB2k0FOq4UJ6OyJE9ocE6pKr0b2484ZbZE8jNV/4ncA86CkqFvjySsF9MhW6bZzxAn80GvE/54/8Q3ijb9XqGg13pJviHvHCNlq0yxfGxmGoa3H2TiHbS4FsG/jJk5LHEpHroQNYM/oyNM2h/wKirsIa
 

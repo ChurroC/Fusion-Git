@@ -1,1 +1,82 @@
-eNrVkc1qwzAQhF8l6GyBV5Z/5GuvhV56KyVIqxWY2HKwpUAwfvfKoaaE9lYI7VGrYebbnYXZEeNAPhy9Hoi17GkczqNPg8MrzeFwgYJlLPouzKxd2GCTpPNpdNF9TPpizZgjHeJESfC2sN0mGkqqcD1vL23nU9u6OHejb9sXxDhN5HFTWAq662/m3XzsO3+ilOF0P1O2TXDnOeKUcpIBa8MUt8+NBS1K7dDxGnTOpS5LriWWXEpULjd5TajYumZfYNeUYWl6BFyOpbQFCQ5OI5e5Aq6stVxARUrU4CTgHdzzLeHwrYNfwH7i/My6b7LBAiqDQBVXBCbdjxRXygG3jRWNFk0OUN1f8s9WvPvJR+CVZSlFVRhuiirdzVrFG2qaVDcYQFm7uhL/reT39QMCZVpo
+{
+  "document_name": "Component Test v13",
+  "units": {
+    "md": "in",
+    "value": 3
+  },
+  "features": [
+    {
+      "name": "Cube:1",
+      "type": {
+        "md": "Component Occurence",
+        "value": "adsk::fusion::Occurrence"
+      },
+      "details": {
+        "is_linked": false,
+        "is_component_creation": true,
+        "id": "cdc4afcf-71a0-4a55-a4c5-44c9f0b07ec9"
+      }
+    },
+    {
+      "name": "Cylinder:1",
+      "type": {
+        "md": "Component Occurence",
+        "value": "adsk::fusion::Occurrence"
+      },
+      "details": {
+        "is_linked": false,
+        "is_component_creation": true,
+        "id": "0c54d3e2-1fac-4091-9ddd-216e9271f41c"
+      }
+    },
+    {
+      "name": "Linked Component Test v1:1",
+      "type": {
+        "md": "Component Occurence",
+        "value": "adsk::fusion::Occurrence"
+      },
+      "details": {
+        "is_linked": true,
+        "is_component_creation": false,
+        "id": "1c9bc1e6-9e1b-44e9-99f1-d8d28a280116"
+      }
+    },
+    {
+      "name": "Cube:2",
+      "type": {
+        "md": "Component Occurence",
+        "value": "adsk::fusion::Occurrence"
+      },
+      "details": {
+        "is_linked": false,
+        "is_component_creation": true,
+        "id": "cdc4afcf-71a0-4a55-a4c5-44c9f0b07ec9"
+      }
+    },
+    {
+      "name": "Component4:1",
+      "type": {
+        "md": "Component Occurence",
+        "value": "adsk::fusion::Occurrence"
+      },
+      "details": {
+        "is_linked": false,
+        "is_component_creation": true,
+        "id": "5554263b-b36b-4dd9-8e88-401b1c47f762"
+      }
+    },
+    {
+      "name": "Linked Component Test v1:2",
+      "type": {
+        "md": "Component Occurence",
+        "value": "adsk::fusion::Occurrence"
+      },
+      "details": {
+        "is_linked": true,
+        "is_component_creation": false,
+        "id": "1c9bc1e6-9e1b-44e9-99f1-d8d28a280116"
+      }
+    }
+  ],
+  "json": "eNrVUstqwzAQ/JWgswVeWX5I114LvfRWSpBXKzCJ5eBHIAT/e9dp3RDaQy+F5LoazYOZs/AdTi3FcRtdS8KKp649dJEPm1caxs0RMpGIKTbjIOxZtJ4hTeTT0e0nxmdzIgK5ceqJAW9nsdJMNVlg3Hg60PfPK/kLIn+JSFcq4fywszZMQ9NFay+ITwhreBpds794aIbtvok7YsLg9gMlywVX5i32bIcZhB37aXlchNGjdgGDLMGlUrs8l05jLrVGE9I6LQmNmOfk6v/EGp76O8qQYq59RkpCcCh1akAa771UUJBRJQQNeJPh+aKw+dHo/2f6cv17pDXwIgxoagQqpCGouQ0y0pgA0ldeVU5VKUBx28uyK/XAu1r59B0tK89zrYqslnVWcAveG1lRVfHGoAbUZSgL9bdlqUdb1vv8ATLGqVQ="
+}

@@ -1,3 +1,4 @@
+import json
 import os
 from .order_json import order_dict
 from .globals.types import Timeline
@@ -75,4 +76,4 @@ def write_to_file(file_path, json_data, write_in_md=True):
         if write_in_md:
             f.write(markdown)
         else:
-            f.write(json_data["json"])
+            json.dump(ordered_json_data, f, indent=2)

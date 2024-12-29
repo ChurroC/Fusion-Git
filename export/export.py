@@ -36,6 +36,16 @@ def run(context):
         global component_timeline
         component_timeline = get_component_timeline_data()
 
+        for component_id, component_details in component_timeline.items():
+            # Print out this file strucure to print_fusion
+            print_fusion(
+                f"Component {component_details['name']} is root: {component_details['is_root']} is linked: {component_details['is_linked']}"
+            )
+            for timeline_item in component_details["timeline_details"]["timeline"]:
+                print_fusion(
+                    f"\t{timeline_item['timeline_item'].name} --- is linked: {timeline_item['is_linked']} --- is component creation: {timeline_item['is_component_creation']}",
+                )
+
         write_component_data_to_file(design.rootComponent.id, src_folder_path, "")
 
         print_fusion("Timeline successfully exported")
@@ -79,11 +89,13 @@ def get_component_timeline_data() -> FusionComponentTimeline:
                 occurrence.component.id
             )  # This is the id of the component that is being referenced from the occurence
 
+            is_component_creation = False
             # If this occurence happens for the first time we know that this is the creation of the component since we are iterating through the timeline
             # If we iterate through the timeline we must have a creation occur before a reference (reference are basically copy and pastes)
             if component_id not in component_timeline:
                 parent_path = component_timeline[parent_component_id]["path"]
                 component_path = os.path.join(parent_path, f"{occurrence.component.name}-{component_id}")
+                is_component_creation = True
 
                 component_timeline[component_id] = {
                     "is_root": False,
@@ -98,7 +110,7 @@ def get_component_timeline_data() -> FusionComponentTimeline:
                 {
                     "is_linked": occurrence.isReferencedComponent,
                     "is_component_creation": (
-                        True if not occurrence.isReferencedComponent else False
+                        is_component_creation if not occurrence.isReferencedComponent else False
                     ),  # If it is a reference we don't want to consider this as a creation
                     "timeline_item": timeline_item,
                 }
@@ -118,7 +130,9 @@ def write_component_data_to_file(component_id: str, folder_path: str, file_name:
         ),
         "features": [],
     }
-
+    print_fusion("")
+    print_fusion(component_details["name"])
+    print_fusion(component_reference, component_details["is_linked"])
     # Regular component with features
     if not component_reference and not component_details["is_linked"]:
         data["features"] = [
@@ -129,6 +143,7 @@ def write_component_data_to_file(component_id: str, folder_path: str, file_name:
 
     # Component reference
     if component_reference:
+        print_fusion(component_details["name"])
         data["info"] = {
             "link_to_component": f"[{component_details['name']}]({component_details['path'].replace(' ', '%20').replace('\\', '/')}/timeline.md)",
             "component_reference": True,

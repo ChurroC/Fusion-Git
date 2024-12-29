@@ -6,21 +6,29 @@ from .types import Point3D, ReadableValue
 import adsk.core
 
 
-def format_value(value_input):
-    """Format value using the design's default units"""
+def format_value(value_input, include_units: bool = False):
+    """Format value with optional units
+    Args:
+        value_input: The value to format
+        include_units: Whether to include units in the output (default: False)
+    """
     try:
-        return units_manager.formatValue(value_input)
+        formatted = units_manager.formatValue(value_input)
+        return formatted if include_units else formatted.split(" ")[0]
     except:
         return str(value_input)
 
 
 def get_point_data(point: adsk.core.Point3D) -> Point3D:
+    x = format_value(point.x)
+    y = format_value(point.y)
+    z = format_value(point.z)
     return {
-        "md": f"({point.x}, {point.y}, {getattr(point, "z", 0)})",
+        "md": f"({x}, {y}, {z})",
         "value": {
-            "x": format_value(point.x),
-            "y": format_value(point.y),
-            "z": format_value(getattr(point, "z", 0)),
+            "x": x,
+            "y": y,
+            "z": z,
         },
     }
 
@@ -41,12 +49,6 @@ def remove_nulls(data):
         return [remove_nulls(item) for item in data if item is not None]
     else:
         return data
-
-
-def write_to_file(file_path, data):
-    os.makedirs(os.path.dirname(file_path), exist_ok=True)
-    with open(file_path, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2)
 
 
 # This is a pretty fast way to search for a key through a nested dictionary

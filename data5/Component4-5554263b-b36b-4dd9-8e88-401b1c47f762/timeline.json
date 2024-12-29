@@ -1,1 +1,34 @@
-eNq9jkFuxCAQBP8yZyOBjR2bax6wl0g5rCJrgCFCa+MVho0iy38PREmekGt1z3QdYDeTVwppDrgSKHje1vsWCpDQQA4+7aAOWG2JfCjogUsuve5swBGmHKkUrgf8nL9Ej+F9odJMn/dK0O43pVze/RaUuhiTY6RgasNSQr98D/h9Xny4UdlxuOzUVGJ+XWYTy1Z5ACrFXMPqM4wCDfVPrNUomZSDYNpqzlAPfJTdwAW3cJ7Nn9zr5eM/vPjEe+2cYJJwYJKPgk2d6FnftpPWUkip++L1dn4Bl2t9CQ==
+{
+  "document_name": "Component4",
+  "units": {
+    "md": "in",
+    "value": 3
+  },
+  "features": [
+    {
+      "name": "Triangle:2",
+      "type": {
+        "md": "Component Occurence",
+        "value": "adsk::fusion::Occurrence"
+      },
+      "details": {
+        "is_linked": false,
+        "is_component_creation": true,
+        "id": "681ace57-2ba4-4461-bdb0-ab608436010d"
+      }
+    },
+    {
+      "name": "WOw:1",
+      "type": {
+        "md": "Component Occurence",
+        "value": "adsk::fusion::Occurrence"
+      },
+      "details": {
+        "is_linked": false,
+        "is_component_creation": true,
+        "id": "0905bff1-4ea6-4081-9315-5229bb4144b5"
+      }
+    }
+  ],
+  "json": "eNrNj8FuhDAMRH+l8plICQTK5rofsJdKPVQVchJTRQthBUmrCvHvNduW/kKvM2/G4xX85PJIMXURRwID52m8TZEFDQXkGNICZoXRsxUiS+84ZOaqrYCeMOWZGHhZ4Sf+NAeMbwOZktn0eaMjfRQ/XJzjWHT0Vwfol6sxfV7CFI25E98I3/GUMAz3HWHphhCvxIU9DgsVu+J+mzs38yRuAJPmvJv74aZV6Kh+FKVFLbRulLDeSoG2ka2uGqmkh20rjh+eLx9G/Zv58iRr2/dKaMJGaNkqcapULeqyPFmrlda25vmv2xdnVpdY"
+}

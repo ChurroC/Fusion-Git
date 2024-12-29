@@ -18,9 +18,9 @@
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Type**: Sketch Circle
 
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Center Point**: (0.0, 0.0, 0.0)
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Center Point**: (0.00, 0.00, 0.00)
 
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Radius**: 0.50 in
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Radius**: 0.50
 
 
 
@@ -62,7 +62,7 @@
 
 &emsp;&emsp;3:
 
-&emsp;&emsp;&emsp;&emsp;**Name**: Triangle
+&emsp;&emsp;&emsp;&emsp;**Name**: Triangle:1
 
 &emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
 
@@ -80,7 +80,7 @@
 
 &emsp;&emsp;4:
 
-&emsp;&emsp;&emsp;&emsp;**Name**: Cube
+&emsp;&emsp;&emsp;&emsp;**Name**: Cube:3
 
 &emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
 
@@ -88,7 +88,7 @@
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Is Linked**: False
 
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Is Component Creation**: True
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Is Component Creation**: False
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Id**: cdc4afcf-71a0-4a55-a4c5-44c9f0b07ec9
 
@@ -98,7 +98,7 @@
 
 &emsp;&emsp;5:
 
-&emsp;&emsp;&emsp;&emsp;**Name**: WOw
+&emsp;&emsp;&emsp;&emsp;**Name**: WOw:2
 
 &emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
 
@@ -106,7 +106,7 @@
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Is Linked**: False
 
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Is Component Creation**: True
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Is Component Creation**: False
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Id**: 0905bff1-4ea6-4081-9315-5229bb4144b5
 
@@ -116,7 +116,7 @@
 
 &emsp;&emsp;6:
 
-&emsp;&emsp;&emsp;&emsp;**Name**: Cube v2
+&emsp;&emsp;&emsp;&emsp;**Name**: Cube v2:1
 
 &emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
 
@@ -134,7 +134,7 @@
 
 &emsp;&emsp;7:
 
-&emsp;&emsp;&emsp;&emsp;**Name**: Cube v2
+&emsp;&emsp;&emsp;&emsp;**Name**: Cube v2:1
 
 &emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
 
@@ -152,5 +152,5 @@
 
 
 
-**Json**: eNrNUsuK20AQ/BUxpwQ0YUYaPY9rNsc4sIEkhEXMoycRlkdGD+86xv+etiQ/lN0lp4Avgqnqru6q1p6YWvdrcF3h5BpITha7qnQGGuKT3pVdS/I9WRskSofQVlY9VoUHn1iQXd8AFvzYk6n5YQWd/sWxsNtt4Nw6wpd2Ik27ynPbt2Xt8nyiUdNAJ8tqmKn7ZjuJv6LlLcpGV/APyakIhTU6hKbY1KXrzlLv2Afme6fP+4vYnjwjjRjzBte72ev31euA2o00Zd8OYDSCjz7ZVNINSrPl72QL3ueBumyuECzGelSbkvz2HbUP/jnZ++eu6Q28iHbC3wxi4j+Ox/or43oDjeyw7iz3CZ68u9rs5qeG5w7G3Gazlw68h9KAdz/y5x6GPS0SRX3MgPAxqSs3X5pSup/D/WaKi3q9wR7XeUuNPwA4/bazoWIsmbsq2wJ/4RWgoJVVC/4R0SflQjcwecZkjuRxcJxyqSFKaKCkoELEnCqjGJUqZqkIY8aZIdcOFr26ne210UJabWnCJaNCRhGVQkfoQ2eWKZaAzmbbf10+3czyLGORspZTATKmgqWcZiGPaBQEmVKCC6GiF9F72+B/G5hWfH3/k7vjYBNkgmujaGIzNIDHoEoBpzoQUSZTLgIb37SBwGYsEZbRKGYZFSYUNA3TkHKZBdIkEkKj0cDj4Q87fQOs
+**Json**: eNrNUsuO00AQ/BVrTiB50Iw9fh43Wo4EaZEAoZU1jx6w4owjP7IJUf6dduwkmLDaE2IvllVVXd3VPQdiat2vwXWFk2sgOVnsq9IZaIhPeld2LckPZG2QKB1CW1n1qAqPPrEgu74BFHw7kKn4YQWd/sFR2O03cCkd4Ws5kaZd5bnt27J2eT7R6Gmgk2V16qn7ZjuZ/8XLW5SNruAFy0mExhoTQlNs6tJ1F6s37B1jvnf9vr36HcgOFQOI2P76+/P8e0TXRpqyb09IhMijTzaVdKfq2cx3sgXv44m6DqwQLEY9Wk0L/PIVjY/+ZaH3u67pDdxsdMKfzT/x78cb/bHaegON7FB3sfsAT95dbfbzC8Oug3Fds95LB95DacC7H/lLDcOaFomiHnZAuIdPZpbmU1NK972C/CbPol5vsMp13lLj5cHp57OdFKNknqtsC3y7K0BDK6sW/AHRZ+dCNzClxt0M5NA4TrnUECU0UFJQIWJOlVGMShWzVIQx48yQ3zMsegV5+H/nP7NDZ220kFZbmnDJqJBRRKXQEUbRmWWKJaCzWYDPy6c8eD3zs4xFylpOBciYCpZymoU8olEQZEoJLoSKbg7gbYN//4amV/JyBBNkgmujaGIzjIAXoUoBpzoQUSZTLgIbv/IIgc1YIiyjUcwyKkwoaBqmIeUyC6RJJIRGY4TH4y/IRwMQ
 

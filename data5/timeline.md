@@ -6,7 +6,7 @@
 
 &emsp;&emsp;1:
 
-&emsp;&emsp;&emsp;&emsp;**Name**: Cube
+&emsp;&emsp;&emsp;&emsp;**Name**: Cube:1
 
 &emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
 
@@ -24,7 +24,7 @@
 
 &emsp;&emsp;2:
 
-&emsp;&emsp;&emsp;&emsp;**Name**: Cylinder
+&emsp;&emsp;&emsp;&emsp;**Name**: Cylinder:1
 
 &emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
 
@@ -42,7 +42,7 @@
 
 &emsp;&emsp;3:
 
-&emsp;&emsp;&emsp;&emsp;**Name**: Linked Component Test v1
+&emsp;&emsp;&emsp;&emsp;**Name**: Linked Component Test v1:1
 
 &emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
 
@@ -60,7 +60,7 @@
 
 &emsp;&emsp;4:
 
-&emsp;&emsp;&emsp;&emsp;**Name**: Cube
+&emsp;&emsp;&emsp;&emsp;**Name**: Cube:2
 
 &emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
 
@@ -68,7 +68,7 @@
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Is Linked**: False
 
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Is Component Creation**: True
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Is Component Creation**: False
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Id**: cdc4afcf-71a0-4a55-a4c5-44c9f0b07ec9
 
@@ -78,7 +78,7 @@
 
 &emsp;&emsp;5:
 
-&emsp;&emsp;&emsp;&emsp;**Name**: Component4
+&emsp;&emsp;&emsp;&emsp;**Name**: Component4:1
 
 &emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
 
@@ -96,7 +96,7 @@
 
 &emsp;&emsp;6:
 
-&emsp;&emsp;&emsp;&emsp;**Name**: Linked Component Test v1
+&emsp;&emsp;&emsp;&emsp;**Name**: Linked Component Test v1:2
 
 &emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
 
@@ -114,5 +114,5 @@
 
 
 
-**Json**: eNrdUk1rwzAM/SvF5xiixE7iXHcd7LLbGMWWZQhLnJKPQin571O6ZaVs10G3q/T0Png6C9/j3FGc9tF2JGrx0HeHPvJg90zjtDtCLhIxx2YaRX0WnWdIE3l0tO3M+HxJRCA7zQMx4OUsNprZEaOm04G+7q7UT4h8EJGuRML68a2uwzw2fazrC+IDwgqeJtu0FwfNuG+b+EZMGGw7UrJOcGPe48BmmEHU0zCvy1UYPSobMMgSbCqV1VpahVoqhSakLi0JjViW5Or+xBqehrtJkKJWPqdMQrAoVWpAGu+9zKAgk5UQFOBNgseLwu5bm7+d6NPzz4G2uKswoHEIVEhD4LgJMtKYANJXPqtsVqUAxW0nf/ujNj51Nxm01iorciddXnAD3htZUVXxd4EDVGUoi+xf/tTr8g47wqbQ
+**Json**: eNrVUstqwzAQ/JWgswVeWX5I114LvfRWSpBXKzCx5WBbgRD875XTumloD+2hNL2uRvNg5sRsj6EjP2296Yhpdtd3+97Hw+aRxmlzgIwlLPhmGpk+sc5GSOPj6WDaEPHZnDBHZgoDRcDTia00oSYNETcd9/T+80L+gBi/eKQLFTN23Gntwtj0Xusz4hUSNSxNpmnPHppx2zZ+R5HQmXakZLngyrzFIdqJDExPQ1geF2G0KI1Dx0swKZcmz7mRmHMpUbm0TktCxeY5ufg/Rg1Lww1lSDGXNiPBwRnkMlXAlbWWCyhIiRKcBLzKcH9W2Hxq9Pczvbn+OtIaeBEGVDUCFVwR1LENUlwpB9xWVlRGVClAcd3Lsivxt518DPDzYa2E8oamlee5FEVW8zorYg3WKl5RVcWRQQ0oS1cW4nvTEv9tWs/zC800qZ8=
 
