@@ -1,5 +1,5 @@
 from typing import Literal, TypedDict
-from ..utils_type import Error
+from ..utils_type import Error, ReadableValue
 
 
 class ComponentDetails(TypedDict):
@@ -10,5 +10,5 @@ class ComponentDetails(TypedDict):
 
 class ComponentFeature(TypedDict):
     name: str
-    type: Literal["adsk::fusion::Occurrence"]
+    type: ReadableValue[Literal["adsk::fusion::Occurrence"]]
     details: ComponentDetails | Error

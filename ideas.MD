@@ -63,6 +63,11 @@ data2 - folder config
 data3 - copies fusion folder path
 data4 - uses markdown to show links to the intial reference of a component
 
+Just reallized idot me I just redid yaml
+soooo should I change to yaml or just shoudl I keep it.
+Since the original json file would have more info so there is no point in having a yaml resprestation if it doesn't have all the data
+But if I do give it the data it kinda ruins the super readability portion.
+
 TODO:
 Fix up units cause it's a string right now "in" instead of the number
 Do Joints

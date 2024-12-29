@@ -17,7 +17,8 @@ from .globals.types import (
     TimelineDetail,
 )
 from .json_to_markdown import write_to_file
-from .features.features import get_sketch_data, get_extrude_data
+from .features import get_sketch_data, get_extrude_data
+from .globals.utils import create_readable_value
 
 component_timeline: FusionComponentTimeline
 
@@ -112,10 +113,9 @@ def write_component_data_to_file(component_id: str, folder_path: str, file_name:
 
     data: Timeline = {
         "document_name": component_details["name"],
-        "units": {
-            "md": units_manager.defaultLengthUnits,
-            "value": cast(Literal[0, 1, 2, 3, 4], units_manager.distanceDisplayUnits),
-        },
+        "units": create_readable_value(
+            units_manager.defaultLengthUnits, cast(Literal[0, 1, 2, 3, 4], units_manager.distanceDisplayUnits)
+        ),
         "features": [],
     }
 
@@ -146,8 +146,7 @@ def write_component_data_to_file(component_id: str, folder_path: str, file_name:
             "component_reference_id": component_id,
             "component_creation_name": component_details["name"],
         }
-        write_markdown_to_file(os.path.join(folder_path, file_name, "timeline.md"), data)
-        write_to_file
+        write_to_file(os.path.join(folder_path, file_name, "timeline.md"), data)
 
 
 def get_timeline_feature(timeline_detail: TimelineDetail, folder_path) -> Feature | Error:
@@ -164,7 +163,7 @@ def get_timeline_feature(timeline_detail: TimelineDetail, folder_path) -> Featur
             extrude = adsk.fusion.Sketch.cast(entity)
             sketch_feature_data: SketchFeature = {
                 "name": extrude.name,
-                "type": cast(Literal["adsk::fusion::Sketch"], feature_type),
+                "type": create_readable_value("Sketch", cast(Literal["adsk::fusion::Sketch"], feature_type)),
                 "details": get_sketch_data(extrude),
             }
             return sketch_feature_data
@@ -172,7 +171,7 @@ def get_timeline_feature(timeline_detail: TimelineDetail, folder_path) -> Featur
             sketch = adsk.fusion.ExtrudeFeature.cast(entity)
             extrude_feature_data: ExtrudeFeature = {
                 "name": sketch.name,
-                "type": cast(Literal["adsk::fusion::ExtrudeFeature"], feature_type),
+                "type": create_readable_value("Extrude", cast(Literal["adsk::fusion::ExtrudeFeature"], feature_type)),
                 "details": get_extrude_data(sketch),
             }
             return extrude_feature_data
@@ -188,8 +187,10 @@ def get_timeline_feature(timeline_detail: TimelineDetail, folder_path) -> Featur
             )
 
             component_feature_data: ComponentFeature = {
-                "name": component.name,
-                "type": cast(Literal["adsk::fusion::Occurrence"], feature_type),
+                "name": occurrence.name,
+                "type": create_readable_value(
+                    "Component Occurence", cast(Literal["adsk::fusion::Occurrence"], feature_type)
+                ),
                 "details": {
                     "is_linked": occurrence.isReferencedComponent,
                     "is_component_creation": is_component_creation,

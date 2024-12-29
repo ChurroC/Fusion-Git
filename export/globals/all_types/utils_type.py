@@ -1,9 +1,21 @@
-from typing import Generic, NotRequired, TypeVar, TypedDict
-from .utils_type import ReadableValue
+from typing import Generic, Literal, TypeVar, TypedDict
 
 
 class Error(TypedDict):
     error: str
+
+
+Value = TypeVar("Value")
+
+
+class NoMarkdown(TypedDict, Generic[Value]):
+    display: Literal[True]
+    value: Value
+
+
+class ReadableValue(TypedDict, Generic[Value]):
+    md: str
+    value: Value
 
 
 class Point3DValue(TypedDict):
@@ -13,12 +25,3 @@ class Point3DValue(TypedDict):
 
 
 Point3D = ReadableValue[Point3DValue]
-
-
-T = TypeVar("T")
-
-
-class ReadableValue(TypedDict, Generic[T]):
-    md: str
-    display: NotRequired[bool]
-    value: T

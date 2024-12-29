@@ -1,7 +1,8 @@
 import json
 import os
+from typing import TypeVar
 from .globals import units_manager
-from .types import Point3D
+from .types import Point3D, ReadableValue
 import adsk.core
 
 
@@ -15,17 +16,20 @@ def format_value(value_input):
 
 def get_point_data(point: adsk.core.Point3D) -> Point3D:
     return {
-        "x": format_value(point.x),
-        "y": format_value(point.y),
-        "z": format_value(getattr(point, "z", 0)),
+        "md": f"({point.x}, {point.y}, {getattr(point, "z", 0)})",
+        "value": {
+            "x": format_value(point.x),
+            "y": format_value(point.y),
+            "z": format_value(getattr(point, "z", 0)),
+        },
     }
 
 
 def set_point_data(point: Point3D):
     return adsk.core.Point3D.create(
-        units_manager.evaluateExpression(point["x"]),
-        units_manager.evaluateExpression(point["y"]),
-        units_manager.evaluateExpression(point["z"]),
+        units_manager.evaluateExpression(point["value"]["x"]),
+        units_manager.evaluateExpression(point["value"]["y"]),
+        units_manager.evaluateExpression(point["value"]["z"]),
     )
 
 
@@ -60,3 +64,10 @@ def gen_dict_extract(key, var):
                 for d in v:
                     for result in gen_dict_extract(key, d):
                         yield result
+
+
+Value = TypeVar("Value")
+
+
+def create_readable_value(md: str, value: Value) -> ReadableValue[Value]:
+    return {"md": md, "value": value}

@@ -1,15 +1,15 @@
 from typing import Literal, TypedDict
-from ..utils_type import Error, Point3D
+from ..utils_type import Error, Point3D, ReadableValue
 
 
 class CircleCurve(TypedDict):
-    type: Literal["adsk::fusion::SketchCircle"]
+    type: ReadableValue[Literal["adsk::fusion::SketchCircle"]]
     center_point: Point3D
     radius: str
 
 
 class LineCurve(TypedDict):
-    type: Literal["adsk::fusion::SketchLine"]
+    type: ReadableValue[Literal["adsk::fusion::SketchLine"]]
     start_point: Point3D
     end_point: Point3D
 
@@ -18,16 +18,16 @@ Curve = LineCurve | CircleCurve
 
 
 class PlaneFace(TypedDict):
-    type: Literal["face"]
+    type: ReadableValue[Literal["face"]]
 
 
 class PlaneCustom(TypedDict):
-    type: Literal["custom_plane"]
+    type: ReadableValue[Literal["custom_plane"]]
     index: int
 
 
 class PlaneBase(TypedDict):
-    type: Literal["base_plane"]
+    type: ReadableValue[Literal["base_plane"]]
     name: str
 
 
@@ -41,5 +41,5 @@ class SketchDetails(TypedDict):
 
 class SketchFeature(TypedDict):
     name: str
-    type: Literal["adsk::fusion::Sketch"]
+    type: ReadableValue[Literal["adsk::fusion::Sketch"]]
     details: SketchDetails | Error
