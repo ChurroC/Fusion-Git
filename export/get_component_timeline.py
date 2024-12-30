@@ -3,9 +3,7 @@ from typing import cast
 import adsk.core, adsk.fusion
 
 from .globals.globals import design, print_fusion
-from .globals.types import (
-    FusionComponentTimeline,
-)
+from .globals.types import FusionComponentTimeline
 
 
 def get_component_timeline_data() -> FusionComponentTimeline:
@@ -20,6 +18,9 @@ def get_component_timeline_data() -> FusionComponentTimeline:
                 adsk.fusion.Feature, entity
             )  # If I try to cast using fusion api it deletes parentComponent for some reason
             parent_component = feature.parentComponent
+            print_fusion(
+                f"Feature: {feature.name} - {feature.classType()} - {parent_component.name} - {parent_component.id}"
+            )
             component_timeline[parent_component.id].append(timeline_item)
         elif hasattr(
             entity, "sourceComponent"
@@ -38,7 +39,7 @@ def get_component_timeline_data() -> FusionComponentTimeline:
                         f"{occurrence.timelineObject.index}{occurrence.component.name}-{occurrence.component.id}",
                     ),
                 )
-
+            print_fusion(f"Component: {occurrence.component.name} - {occurrence.component.id}")
             component_timeline.setdefault(occurrence.component.id, [])
             component_timeline[occurrence.sourceComponent.id].append(
                 timeline_item

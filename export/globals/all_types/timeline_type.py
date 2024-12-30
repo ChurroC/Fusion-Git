@@ -1,8 +1,8 @@
 from typing import Literal, NotRequired, TypedDict
 
-from .features.sketch_feature_type import SketchFeature
-from .features.extrude_feature_type import ExtrudeFeature
-from .features.component_feature_type import ComponentFeature
+from .features.sketch_type import SketchFeature
+from .features.extrude_type import ExtrudeFeature
+from .features.component_type import ComponentFeature
 from .utils_type import Error, ReadableValue
 
 Feature = SketchFeature | ExtrudeFeature | ComponentFeature
