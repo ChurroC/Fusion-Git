@@ -78,6 +78,13 @@ Stop the annoyting type.type and just turn it into type
 Use adsk.core.Camera to take pictures of sketches and cv2 to show the diff by highlgihting in green or red
 Do the same for extrudes but instead straight up change the color of the feature then take a picture
 Also remember to add stl files at the end
+Check out attributes - seems promisisng - https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-BAF017FE-10B8-4612-BDE2-0EF5D4C6F800
+
+
+
+RIGHT NOW THE 2 IDEAS TO TRAVERSE:
+One is to keep the same idea and just add some code to recursivbely travel through each object and in my custom timline json I can add the path in at the end
+Or second idea is take the recursion and screw the rest of the ideas and just recursively go through the entire structure. - I could use component.feature and componen.sketches. 
 
 
 TIPS:

@@ -12,9 +12,5 @@
 
 &emsp;&emsp;**Component Creation Name**: Cube v2:1
 
-
-
-
-
 **Json**: eNqNkMFqwzAMhl9lGAYbxE1qZ2uS6x6jBKPaMpjFdknsXELefcolbWkPuxn9nz5LWpiJOnsMSQXwyDr2ky/4NovuyAqWg0sT6xbmDSUuUGmGIRMm14JZhJRHJODcF5TauKGDC78qRaWjv8ZAYuo879L+ozSQoC43DM2NmkohN+pdVLPgwrbVqbYV//quWl4bWfNGNpIfoRVgToDS6DI5j6TBgzf370+acteqES2OGDTNbGGY8GWm3Lbffz59cOuRLuBieD7duv4BEWNwXA==
 

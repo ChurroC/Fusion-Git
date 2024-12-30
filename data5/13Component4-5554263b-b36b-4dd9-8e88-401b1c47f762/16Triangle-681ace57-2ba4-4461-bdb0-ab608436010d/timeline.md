@@ -12,9 +12,5 @@
 
 &emsp;&emsp;**Component Creation Name**: Triangle:1
 
-
-
-
-
 **Json**: eNqNkMFuwyAQRP+FUyuZGmxCYl/zC7lFEcLsUqEYqChUqiL/ezeHtqqUQ687s2935sYguxYxVZNsRDazUwk2va44S9axlkJ9Z/ONRSApJBp92LWRb9w65tHWVpAM50tHqs936xrS1dRsXI5vORGZNs+/1MtTD7Za1R8/yQlYuHA7BSMOXHrruBKT5BMA8EFqnIa99Eq6/hvA9UFah7s9HxaruFJa8gUWwe2ixUGNWkgBfQ0RiY4vEZ7p559XTEGPBZOjBLU0fCiZcA/7nzt/0K5QHSGnB0Vu2xdDYXRY
 
