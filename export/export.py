@@ -114,7 +114,7 @@ def write_component_data_to_file(occurrence: adsk.fusion.Occurrence, folder_path
     # f"[{component_details['name']}]({component_details['path'].replace(' ', '%20').replace('\\', '/')}/timeline.md)"
     elif component_reference:
         data["info"] = {
-            "link_to_component": f"[{occurrence.component.name}](/{os.path.join(output_folder, design.attributes.itemByName("CHURRO-EXPORT", occurrence.component.id).value, "timeline.md").replace(' ', '%20')})",
+            "link_to_component": f"[{occurrence.component.name}](/{os.path.join(output_folder, design.attributes.itemByName("CHURRO-EXPORT", occurrence.component.id).value, "timeline.md").replace(' ', '%20').replace('\\', '/')})",
             "component_reference": True,
             "component_reference_id": occurrence.component.id,
         }
@@ -122,7 +122,7 @@ def write_component_data_to_file(occurrence: adsk.fusion.Occurrence, folder_path
     # Linked component
     elif occurrence.isReferencedComponent:
         data["info"] = {
-            "link_to_component": f"[{occurrence.component.name}](/{os.path.join(output_folder, "linked_components").replace(' ', '%20')}/timeline.md)",
+            "link_to_component": f"[{occurrence.component.name}](/{os.path.join(output_folder, "linked_components").replace(' ', '%20').replace('\\', '/')}/timeline.md)",
             "component_reference": False,
             "component_reference_id": occurrence.component.id,
         }
