@@ -19,14 +19,22 @@ from .globals.types import (
 from .display_data import write_to_file
 from .features import get_sketch_data, get_extrude_data
 from .globals.utils import create_readable_value
-from .exportTest import get_component_timeline_data
+from .get_component_timeline import get_component_timeline_data
 
 src_folder_path: str
 component_timeline: FusionComponentTimeline
 
+# Options in case they don't wish to store the data in the default location - which is root
+output_folder = "data5"
+
 
 def run(context):
     try:
+        print_fusion("")
+        print_fusion("")
+        print_fusion("")
+        print_fusion("")
+
         folderDialog = ui.createFolderDialog()
         folderDialog.title = "Save Timeline Export"
         folderDialog.initialDirectory = "data"  # Hmmm doesn't seem to wrok
@@ -36,17 +44,19 @@ def run(context):
         global src_folder_path
         src_folder_path = folderDialog.folder
 
-        print_fusion("")
-        print_fusion("")
-        print_fusion("")
-        print_fusion("")
-
         global component_timeline
         component_timeline = get_component_timeline_data()
 
-        write_component_data_to_file(design.rootComponent.occurrences.item(0), "")
-        traverseAssembly(design.rootComponent.occurrences.asList, "")
-        # write_component_data_to_file(design.rootComponent.id, src_folder_path, "")
+        data: Timeline = {
+            "document_name": root.name,
+            "units": create_readable_value(
+                units_manager.defaultLengthUnits, cast(Literal[0, 1, 2, 3, 4], units_manager.distanceDisplayUnits)
+            ),
+            "features": [get_timeline_feature(timeline_feature) for timeline_feature in component_timeline[root.id]],
+        }
+        write_to_file(os.path.join(src_folder_path, "timeline.md"), data)
+
+        traverseAssembly(root.occurrences.asList, "")
 
         print_fusion("Timeline successfully exported")
     except Exception as e:
@@ -55,11 +65,19 @@ def run(context):
 
 def traverseAssembly(occurrences: adsk.fusion.OccurrenceList, path):
     for occurrence in occurrences:
-        folder_name = f"{occurrence.timelineObject.index}{occurrence.component.name}-{occurrence.component.id}"
-        path = os.path.join(path, folder_name)
+        try:
+            # I check if component is not linked before adding occurrence.timelineObject.index since there seems to be an error in fusio
+            # Also since a linked component will all reference the same component we're bing chilling - Since we need the index since the same level component
+            # Could cause the folder to be overwritten as a reference - Which will never happen to a linked component since they all have the same folder
+            folder_name = f"{occurrence.timelineObject.index if not occurrence.isReferencedComponent else ""}{occurrence.component.name}-{occurrence.component.id}"
+            occurrence_path = os.path.join(path, folder_name)
+            handle_occurrence(occurrence, occurrence_path)
 
-        if occurrence.childOccurrences:
-            traverseAssembly(occurrence.childOccurrences, path)
+            # If it's a linked component we don't want to read further in for now
+            if occurrence.childOccurrences and not occurrence.isReferencedComponent:
+                traverseAssembly(occurrence.childOccurrences, occurrence_path)
+        except Exception as e:
+            error("Failed to traverse assembly", e)
 
 
 def handle_occurrence(occurrence: adsk.fusion.Occurrence, path):
@@ -69,7 +87,10 @@ def handle_occurrence(occurrence: adsk.fusion.Occurrence, path):
         # This is the creation of the component
         write_component_data_to_file(occurrence, path)
     else:
-        write_component_data_to_file(occurrence, path, True)
+        if (
+            not occurrence.isReferencedComponent
+        ):  # Since if this is the second reference to a link it don't need to run cause it's in linked_components already
+            write_component_data_to_file(occurrence, path, True)
 
 
 def write_component_data_to_file(occurrence: adsk.fusion.Occurrence, folder_path: str, component_reference=False):
@@ -81,34 +102,33 @@ def write_component_data_to_file(occurrence: adsk.fusion.Occurrence, folder_path
         "features": [],
     }
 
+    folder_path = os.path.join(src_folder_path, folder_path)
+
     # Regular component with features
     if not component_reference and not occurrence.isReferencedComponent:
         data["features"] = [
             get_timeline_feature(timeline_feature) for timeline_feature in component_timeline[occurrence.component.id]
         ]
-        write_to_file(os.path.join(src_folder_path, folder_path, "timeline.md"), data)
-        return
 
     # Component reference
-    if component_reference:
+    # f"[{component_details['name']}]({component_details['path'].replace(' ', '%20').replace('\\', '/')}/timeline.md)"
+    elif component_reference:
         data["info"] = {
-            "link_to_component": f"[{component_details['name']}]({component_details['path'].replace(' ', '%20').replace('\\', '/')}/timeline.md)",
+            "link_to_component": f"[{occurrence.component.name}](/{os.path.join(output_folder, design.attributes.itemByName("CHURRO-EXPORT", occurrence.component.id).value, "timeline.md").replace(' ', '%20')})",
             "component_reference": True,
             "component_reference_id": occurrence.component.id,
-            "component_creation_name": occurrence.component.name,
         }
-        write_to_file(os.path.join(final_folder_path, "timeline.md"), data)
-        return
 
     # Linked component
-    if component_details["is_linked"]:
+    elif occurrence.isReferencedComponent:
         data["info"] = {
-            "link_to_component": f"[{component_details['name']}](/data4/linked_components/{folder_name.replace(' ', '%20')}/timeline.md/timeline.md)",
+            "link_to_component": f"[{occurrence.component.name}](/{os.path.join(output_folder, "linked_components").replace(' ', '%20')}/timeline.md)",
             "component_reference": False,
-            "component_reference_id": component_id,
-            "component_creation_name": component_details["name"],
+            "component_reference_id": occurrence.component.id,
         }
-        write_to_file(os.path.join(folder_path, folder_name, "timeline.md"), data)
+        folder_path = os.path.join(src_folder_path, "linked_components")
+
+    write_to_file(os.path.join(folder_path, "timeline.md"), data)
 
 
 def get_timeline_feature(timeline_feature: adsk.fusion.TimelineObject) -> Feature | Error:
