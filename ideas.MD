@@ -62,6 +62,7 @@ data1 - flat config
 data2 - folder config
 data3 - copies fusion folder path
 data4 - uses markdown to show links to the intial reference of a component
+data5 - Markdown but hashes the real json data
 
 Just reallized idot me I just redid yaml
 soooo should I change to yaml or just shoudl I keep it.
@@ -79,7 +80,16 @@ Use adsk.core.Camera to take pictures of sketches and cv2 to show the diff by hi
 Do the same for extrudes but instead straight up change the color of the feature then take a picture
 Also remember to add stl files at the end
 Check out attributes - seems promisisng - https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-BAF017FE-10B8-4612-BDE2-0EF5D4C6F800
+Threads to fasten the build process
 
+
+Go through each occurence
+Check if the occurence is the parent
+If it is use the component_timleine to go through the features
+else just call it as a reference
+
+
+AHHH I ust realized I could use attributes to store info about each timeline
 
 
 RIGHT NOW THE 2 IDEAS TO TRAVERSE:

@@ -1,4 +1,4 @@
-**Document Name**: WOw:1
+**Document Name**: Component2
 
 **Units**: in
 
@@ -18,9 +18,9 @@
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Type**: Sketch Circle
 
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Center Point**: (2.50, 2.50, 0.00)
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Center Point**: (0.00, 0.00, 0.00)
 
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Radius**: 0.50
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Radius**: 0.358
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Plane**:
 
@@ -44,5 +44,15 @@
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Side One**: 1 in
 
-**Json**: eNqFUltLwzAU/ivhPCmU0Sm+5HEyH52wB1EZJTZnGNYmJZettfS/e9qGlnrBlxC+W3K+pAVp8lCi9pkWJQKH592FryGBoJV3wFsoJaFKE3QWRSDJbZfAEYUPFknw1kJ07k/o84/e65sKJ+sIz3YQ0p04PwanjOY80pQp0QtVDGfmwZ5j+C9Z7F7ZvMB/IqOIgnMaD21WGaX9FHV1s7pLEzau6SpNr+e8FmpS9BRhzbz9pG0vhY5SrZAquAEhsjskUBVCD+7FnTfCIXsaqPnC7wRmo56iYoEvrxTcJVOh29rbIPFHoxH/c/7IP4xv9K1aU6EVnnRT3CNe2MbIZvnCWHsc61qcvdPI9koi24785EnJ44jITN8BrBl9GZrm0H0BqFbChQ==
+&emsp;&emsp;3:
+
+&emsp;&emsp;&emsp;&emsp;**Name**: Component3:1
+
+&emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
+
+&emsp;&emsp;&emsp;&emsp;**Details**:
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Id**: 71f8af70-ef31-4fd0-846a-c63b17693941
+
+**Json**: eNqFUl1PgzAU/StNnzQBAzL3weOW+ehM9qTGkK69xGbQEmjnJuG/ewdYgnPxpWnOOff03nNbU6G5zUGZRLEcaExXOi+0QuCeetQqaSoa1zQXSEmF0IFlFnVR49EUmLEloOCtpn35dg+Gf4QoNKcCXGkHD+WUiWofx6mtpFZx3NPoKcAwmbVvclseevM/vMhKljyDfyx7ERpzHAnKpNBSGWd1E9wFgUeG83bwq+kRFWcQsdNw/fq5NuhaMiFt1SLRw5w27x4tMqba8lHTS1YBeW6poeMdgkmnR68+wZdXdG48l+j6aEor4CLSHr8aQM8/dkv6la0uoGQGdc7uCT7JUovTeMVwNNDlNXp7o4BspQCy7nhXE2BNhUSizxnQkOCfGU3jvlcUX0zkOLLhuHxQ/Pp0raKTjCeTZ6dZmM5ZOgt8SKPQn6Qi8OeTKfP5NNqFs+kiWkxC7Ou9+QaW+fSi
 

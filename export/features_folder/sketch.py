@@ -1,5 +1,6 @@
 from typing import Literal, cast
 import adsk.fusion
+
 from ..globals.utils import get_point_data, format_value, create_readable_value
 from ..globals.types import (
     Error,
@@ -12,7 +13,7 @@ from ..globals.types import (
     PlaneCustom,
     PlaneBase,
 )
-from ..globals.globals import error
+from ..globals.globals import error, print_fusion
 
 
 def get_sketch_data(sketch: adsk.fusion.Sketch) -> SketchDetails | Error:
