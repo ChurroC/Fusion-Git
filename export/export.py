@@ -22,10 +22,9 @@ from .globals.utils import create_readable_value
 from .get_component_timeline import get_component_timeline_data
 
 src_folder_path: str
-component_timeline: FusionComponentTimeline
 
 # Options in case they don't wish to store the data in the default location - which is root
-output_folder = "data5"
+output_folder = "data"
 
 
 def run(context):
@@ -44,7 +43,6 @@ def run(context):
         global src_folder_path
         src_folder_path = folderDialog.folder
 
-        global component_timeline
         component_timeline = get_component_timeline_data()
 
         data: Timeline = {
@@ -56,44 +54,52 @@ def run(context):
         }
         write_to_file(os.path.join(src_folder_path, "timeline.md"), data)
 
-        traverseAssembly(root.occurrences.asList, "")
+        traverseAssembly(root.occurrences.asList, "", get_component_timeline_data())
 
         print_fusion("Timeline successfully exported")
     except Exception as e:
         error("Failed to export timeline", e)
 
 
-def traverseAssembly(occurrences: adsk.fusion.OccurrenceList, path):
+def traverseAssembly(occurrences: adsk.fusion.OccurrenceList, path, component_timeline: FusionComponentTimeline):
     for occurrence in occurrences:
         try:
             # I check if component is not linked before adding occurrence.timelineObject.index since there seems to be an error in fusio
             # Also since a linked component will all reference the same component we're bing chilling - Since we need the index since the same level component
             # Could cause the folder to be overwritten as a reference - Which will never happen to a linked component since they all have the same folder
             folder_name = f"{occurrence.timelineObject.index if not occurrence.isReferencedComponent else ""}{occurrence.component.name}-{occurrence.component.id}"
+            # ACTUALLY SCRATCH THAT - I'll Still need the index for linked components since they can be at the same level
+            # Just don't need it for the respresentation in the linked_components folder
             occurrence_path = os.path.join(path, folder_name)
-            handle_occurrence(occurrence, occurrence_path)
+            print_fusion(occurrence.name, occurrence_path)
+            handle_occurrence(occurrence, occurrence_path, component_timeline)
 
             # If it's a linked component we don't want to read further in for now
             if occurrence.childOccurrences and not occurrence.isReferencedComponent:
-                traverseAssembly(occurrence.childOccurrences, occurrence_path)
+                traverseAssembly(occurrence.childOccurrences, occurrence_path, component_timeline)
         except Exception as e:
             error("Failed to traverse assembly", e)
 
 
-def handle_occurrence(occurrence: adsk.fusion.Occurrence, path):
+def handle_occurrence(occurrence: adsk.fusion.Occurrence, path: str, component_timeline: FusionComponentTimeline):
     # First we need to check if this occurence is a component creation or a reference
     original_component_occurence = root.allOccurrencesByComponent(occurrence.component).item(0)
     if occurrence == original_component_occurence:
         # This is the creation of the component
-        write_component_data_to_file(occurrence, path)
+        write_component_data_to_file(occurrence, path, component_timeline)
     else:
         if (
             not occurrence.isReferencedComponent
         ):  # Since if this is the second reference to a link it don't need to run cause it's in linked_components already
-            write_component_data_to_file(occurrence, path, True)
+            write_component_data_to_file(occurrence, path, component_timeline, True)
 
 
-def write_component_data_to_file(occurrence: adsk.fusion.Occurrence, folder_path: str, component_reference=False):
+def write_component_data_to_file(
+    occurrence: adsk.fusion.Occurrence,
+    folder_path: str,
+    component_timeline: FusionComponentTimeline,
+    component_reference=False,
+):
     data: Timeline = {
         "document_name": occurrence.component.name,
         "units": create_readable_value(
@@ -102,7 +108,7 @@ def write_component_data_to_file(occurrence: adsk.fusion.Occurrence, folder_path
         "features": [],
     }
 
-    folder_path = os.path.join(src_folder_path, folder_path)
+    final_folder_path = os.path.join(src_folder_path, folder_path)
 
     # Regular component with features
     if not component_reference and not occurrence.isReferencedComponent:
@@ -122,13 +128,21 @@ def write_component_data_to_file(occurrence: adsk.fusion.Occurrence, folder_path
     # Linked component
     elif occurrence.isReferencedComponent:
         data["info"] = {
-            "link_to_component": f"[{occurrence.component.name}](/{os.path.join(output_folder, "linked_components").replace(' ', '%20').replace('\\', '/')}/timeline.md)",
+            "link_to_component": f"[{occurrence.component.name}](/{os.path.join(output_folder, "linked_components", folder_path, "timeline.md").replace(' ', '%20').replace('\\', '/')})",
             "component_reference": False,
             "component_reference_id": occurrence.component.id,
         }
-        folder_path = os.path.join(src_folder_path, "linked_components")
+        print_fusion()
+        traverseAssembly(
+            occurrence.childOccurrences,
+            os.path.join(src_folder_path, "linked_components", os.path.basename(folder_path)),
+            get_component_timeline_data(occurrence.component.parentDesign),
+        )
+        # write_to_file(
+        #     os.path.join(src_folder_path, "linked_components", os.path.basename(folder_path), "timeline.md"), data
+        # )
 
-    write_to_file(os.path.join(folder_path, "timeline.md"), data)
+    write_to_file(os.path.join(final_folder_path, "timeline.md"), data)
 
 
 def get_timeline_feature(timeline_feature: adsk.fusion.TimelineObject) -> Feature | Error:

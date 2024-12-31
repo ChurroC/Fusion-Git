@@ -2,15 +2,15 @@ import os
 from typing import cast
 import adsk.core, adsk.fusion
 
-from .globals.globals import design, print_fusion
+from .globals.globals import design
 from .globals.types import FusionComponentTimeline
 
 
-def get_component_timeline_data() -> FusionComponentTimeline:
-    component_timeline: FusionComponentTimeline = {design.rootComponent.id: []}
-    design.attributes.add("CHURRO-EXPORT", design.rootComponent.id, "")
+def get_component_timeline_data(doc=design) -> FusionComponentTimeline:
+    component_timeline: FusionComponentTimeline = {doc.rootComponent.id: []}
+    doc.attributes.add("CHURRO-EXPORT", doc.rootComponent.id, "")
 
-    for timeline_item in design.timeline:
+    for timeline_item in doc.timeline:
         entity = timeline_item.entity
 
         if hasattr(entity, "parentComponent"):  # This is a feature
@@ -18,9 +18,6 @@ def get_component_timeline_data() -> FusionComponentTimeline:
                 adsk.fusion.Feature, entity
             )  # If I try to cast using fusion api it deletes parentComponent for some reason
             parent_component = feature.parentComponent
-            print_fusion(
-                f"Feature: {feature.name} - {feature.classType()} - {parent_component.name} - {parent_component.id}"
-            )
             component_timeline[parent_component.id].append(timeline_item)
         elif hasattr(
             entity, "sourceComponent"
@@ -30,8 +27,8 @@ def get_component_timeline_data() -> FusionComponentTimeline:
             if (
                 occurrence.component.id not in component_timeline and not occurrence.isReferencedComponent
             ):  # If this is the first occurence of the component we know that this is a creation - Cause copy paste needs the inital component to be created
-                parent_path = design.attributes.itemByName("CHURRO-EXPORT", occurrence.sourceComponent.id).value
-                design.attributes.add(
+                parent_path = doc.attributes.itemByName("CHURRO-EXPORT", occurrence.sourceComponent.id).value
+                doc.attributes.add(
                     "CHURRO-EXPORT",
                     occurrence.component.id,
                     os.path.join(
@@ -39,7 +36,7 @@ def get_component_timeline_data() -> FusionComponentTimeline:
                         f"{occurrence.timelineObject.index}{occurrence.component.name}-{occurrence.component.id}",
                     ),
                 )
-            print_fusion(f"Component: {occurrence.component.name} - {occurrence.component.id}")
+
             component_timeline.setdefault(occurrence.component.id, [])
             component_timeline[occurrence.sourceComponent.id].append(
                 timeline_item

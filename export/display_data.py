@@ -63,9 +63,9 @@ def write_to_file(file_path, json_data, write_in_md=True):
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     json_data["json"] = compress_json(json_data)
     ordered_json_data = order_dict(json_data, Timeline)
-    markdown = read_dict_md(ordered_json_data)
     with open(file_path, "w", encoding="utf-8") as f:
         if write_in_md:
+            markdown = read_dict_md(ordered_json_data)
             f.write(markdown)
         else:
             json.dump(ordered_json_data, f, indent=2)
