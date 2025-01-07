@@ -26,3 +26,19 @@ TIPS:
 Import using relative pathing - https://forums.autodesk.com/t5/fusion-api-and-scripts/importing-python-modules-those-i-create-into-scripts/td-p/6061765
 
 See text console do Option + CMD + C on Mac OS or ALT + CTRL + C on Windows OS
+
+
+
+
+
+
+
+
+
+
+Currently I'm reading through the data once to find the path of each source component
+Then I recursivley read each component and for each component if it's the source I create a timeline component
+Then I know the folder path is based of the recursion which emulates the assembly tree on the left
+
+The other idea is to go through each item in the timeline but instead of creating a new component_data info
+I start writing 
