@@ -25,6 +25,13 @@ Before I find the intial creation component
 Which means I won't be able to have the path to the intial component
 I read through the feature and sketch properties of the component
 Then just write to file
+4: COMBINE 1 and 2 - goated idea
+Basically iterate through array like 2 but split each occurence
+Into its own thread
+Which shoudl
+5:
+We coudl also iterate stragiht through every occurence with no recursively
+Then for each reahhhh this is same as 1
 
 Still need to get recursively reading diles working for linked components
 
