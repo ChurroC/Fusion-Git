@@ -1,4 +1,4 @@
-from typing import TypedDict, Union, get_origin, get_args, Literal, Generic, Type, Optional, Any, TypeVar, Tuple, Dict
+from typing import TypedDict, Union, get_origin, get_args, Literal, Type, Optional, Any, TypeVar, Tuple, Dict
 
 
 class BaseTypedDict(TypedDict):

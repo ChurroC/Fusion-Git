@@ -1,4 +1,4 @@
-**Document Name**: Multi Level Components v5
+**Document Name**: Component Test v18
 
 **Units**: in
 
@@ -6,93 +6,63 @@
 
 &emsp;&emsp;1:
 
-&emsp;&emsp;&emsp;&emsp;**Name**: Sketch1
-
-&emsp;&emsp;&emsp;&emsp;**Type**: Sketch
-
-&emsp;&emsp;&emsp;&emsp;**Details**:
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Curves**:
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;1:
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Type**: Sketch line
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Start Point**: (1.00, 0.50, 0.00)
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**End Point**: (-1.00, 0.50, 0.00)
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;2:
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Type**: Sketch line
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Start Point**: (-1.00, 0.50, 0.00)
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**End Point**: (-1.00, -0.50, 0.00)
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;3:
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Type**: Sketch line
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Start Point**: (-1.00, -0.50, 0.00)
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**End Point**: (1.00, -0.50, 0.00)
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;4:
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Type**: Sketch line
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Start Point**: (1.00, -0.50, 0.00)
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**End Point**: (1.00, 0.50, 0.00)
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;5:
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Type**: Sketch line
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Start Point**: (1.00, 0.50, 0.00)
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**End Point**: (-1.00, -0.50, 0.00)
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;6:
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Type**: Sketch line
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Start Point**: (-1.00, 0.50, 0.00)
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**End Point**: (1.00, -0.50, 0.00)
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Plane**:
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Type**: Base Plane
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Name**: XY
-
-&emsp;&emsp;2:
-
-&emsp;&emsp;&emsp;&emsp;**Name**: Extrude1
-
-&emsp;&emsp;&emsp;&emsp;**Type**: Extrude
-
-&emsp;&emsp;&emsp;&emsp;**Details**:
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Operation**: New Body
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Extent**:
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Type**: One Side Extent
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Side One**: 0.5 in
-
-&emsp;&emsp;3:
-
-&emsp;&emsp;&emsp;&emsp;**Name**: Component1:1
+&emsp;&emsp;&emsp;&emsp;**Name**: Cube:1
 
 &emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
 
 &emsp;&emsp;&emsp;&emsp;**Details**:
 
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Id**: 7aae3a8b-7005-450f-98e2-f97c6278f099
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Id**: cdc4afcf-71a0-4a55-a4c5-44c9f0b07ec9
 
-**Json**: eNrNlU1Pg0AQhv/KZk+aQLNtrRSONfVUrUkvGtOQLQxxU1gILLW14b87fISGfhpr1QtZZt59dt6BzaypGzppAFLZkgdALfqQ+kqQESzAJ3dhEIUSkwlZ9KhGUylUQq01DVxUComhBfdT3NbNNOoBV2kMKHhd04o2mYNy3tooVKsI6q1leLOdcjeZW5aXJiKUllWlkemC4sIvznTSeFHB97CILyScAI5yCUITxWNlR6GQqqZctVuMaYS1esWTsesNbE2XqMgFGFvhMlfh8qNYYjRDKEh3G6mfZOpHoZl2Gavn1nXMrP5Fqv7rds+obK/h09S/sXtuXUfMfvd2XNbqJe7s//2Nf/bWnv0TTzUa+VwW8obrAU+APBWpjekZBu1Sj/VUM+L5pepa9T5cqjh1YWdoVPGDPazy9+UY2poeYQQxV6ircY/wTgahu2oOMVgqKBvUOHssgUyEC2RY5us9LP9cmLDDvAd52wnOxYafeoq2rR1PdY6MHRxwIJ3D/gpFKWl6EznJ4By6vD/TDcZ6+k2PebrZh47umYZz2zH6HjNNrGuafQLgVUnZ
+&emsp;&emsp;2:
+
+&emsp;&emsp;&emsp;&emsp;**Name**: Cylinder:1
+
+&emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
+
+&emsp;&emsp;&emsp;&emsp;**Details**:
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Id**: 0c54d3e2-1fac-4091-9ddd-216e9271f41c
+
+&emsp;&emsp;3:
+
+&emsp;&emsp;&emsp;&emsp;**Name**: Linked Component Test v1:1
+
+&emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
+
+&emsp;&emsp;&emsp;&emsp;**Details**:
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Id**: 1c9bc1e6-9e1b-44e9-99f1-d8d28a280116
+
+&emsp;&emsp;4:
+
+&emsp;&emsp;&emsp;&emsp;**Name**: Cube:2
+
+&emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
+
+&emsp;&emsp;&emsp;&emsp;**Details**:
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Id**: cdc4afcf-71a0-4a55-a4c5-44c9f0b07ec9
+
+&emsp;&emsp;5:
+
+&emsp;&emsp;&emsp;&emsp;**Name**: Component4:1
+
+&emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
+
+&emsp;&emsp;&emsp;&emsp;**Details**:
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Id**: 5554263b-b36b-4dd9-8e88-401b1c47f762
+
+&emsp;&emsp;6:
+
+&emsp;&emsp;&emsp;&emsp;**Name**: Linked Component Test v1:2
+
+&emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
+
+&emsp;&emsp;&emsp;&emsp;**Details**:
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Id**: 1c9bc1e6-9e1b-44e9-99f1-d8d28a280116
+
+**Json**: eNrNkcFqwzAQRH8l6ByBV5ZsSddeC730VkqRdldgEsshtgMh+N+rpKQh9NJLaK/L25lh5iRowLnnPH3k0LPw4mnod0Muh9Urj9PqAFasxZy7aRT+JHoqSJfL6RC2c+HrZS0Sh2necwHeTuIqM0f2ULjpuOPvz5v4C2J5ycg3KRFo3Hif5rEbsvcX4gspHsRT6LaXDN1ZCQl1SJhkC6GSOhgjg0YjtUaXqli1jE4sy/oW6LjtMvH+kaEqNJpqVhJSQKkrB9IRkVTQsFMtJA14F+q5yxum1Y/OHxkS0EUEbqRjiKUvdtK5BJIsKRuUrQCa++bOU6r/NOXVWj+yJ2OMVk0dZayb0hORk5atLbNCBNRtahv1uzHVn4/5vnwCWGk/5w==
 
