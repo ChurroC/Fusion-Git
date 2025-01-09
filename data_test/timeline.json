@@ -562,6 +562,16 @@
       "details": {
         "id": "2f9074f0-5609-4d34-8383-1a92ad7ae3dc"
       }
+    },
+    {
+      "name": "Cube v3:2",
+      "type": {
+        "md": "Component Occurence",
+        "value": "adsk::fusion::Occurrence"
+      },
+      "details": {
+        "id": "d2941cdb-7f96-4cdc-bbe1-c2459a8142f6"
+      }
     }
   ],
   "components": {
@@ -573,7 +583,7 @@
         "md": "in",
         "value": 3
       },
-      "features": [
+      "feature_index": [
         0,
         3,
         6,
@@ -584,28 +594,39 @@
       "references": []
     },
     "cdc4afcf-71a0-4a55-a4c5-44c9f0b07ec9": {
-      "path": "3Cylinder-0c54d\\12Cube-cdc4a",
+      "path": "NoneCube-cdc4a",
       "is_linked": false,
       "name": "Component Test v19",
       "units": {
         "md": "in",
         "value": 3
       },
-      "features": [
+      "feature_index": [
+        1,
+        2,
         14,
         15
       ],
-      "references": []
+      "references": [
+        {
+          "name": "Cube:2",
+          "path": "7Cube-cdc4a"
+        },
+        {
+          "name": "Cube:3",
+          "path": "NoneCylinder-0c54d\\12Cube-cdc4a"
+        }
+      ]
     },
     "0c54d3e2-1fac-4091-9ddd-216e9271f41c": {
-      "path": "3Cylinder-0c54d",
+      "path": "NoneCylinder-0c54d",
       "is_linked": false,
       "name": "Component Test v19",
       "units": {
         "md": "in",
         "value": 3
       },
-      "features": [
+      "feature_index": [
         4,
         5,
         8,
@@ -617,74 +638,963 @@
       "references": []
     },
     "1c9bc1e6-9e1b-44e9-99f1-d8d28a280116": {
-      "path": "Linked Component v1-1c9bc",
+      "path": "linked_components\\<adsk.fusion.TimelineObject; proxy of <Swig Object of type 'adsk::core::Ptr< adsk::fusion::TimelineObject > *' at 0x0000016C1AA1CA20> >Linked Component v1-1c9bc",
       "is_linked": true,
       "name": "Component Test v19",
       "units": {
         "md": "in",
         "value": 3
       },
-      "features": [],
-      "references": []
+      "feature_index": [],
+      "references": [
+        {
+          "name": "Linked Component v1:1",
+          "path": "6Linked Component v1-1c9bc"
+        },
+        {
+          "name": "Linked Component v1:2",
+          "path": "17Linked Component v1-1c9bc"
+        }
+      ],
+      "assembly": {
+        "timeline": [
+          {
+            "name": "Sketch1",
+            "type": {
+              "md": "Sketch",
+              "value": "adsk::fusion::Sketch"
+            },
+            "details": {
+              "curves": [
+                {
+                  "type": {
+                    "md": "Sketch line",
+                    "value": "adsk::fusion::SketchLine"
+                  },
+                  "start_point": {
+                    "md": "(0.00, 1.00, 0.00)",
+                    "value": {
+                      "x": "0.00",
+                      "y": "1.00",
+                      "z": "0.00"
+                    }
+                  },
+                  "end_point": {
+                    "md": "(-0.866, 0.50, 0.00)",
+                    "value": {
+                      "x": "-0.866",
+                      "y": "0.50",
+                      "z": "0.00"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "md": "Sketch line",
+                    "value": "adsk::fusion::SketchLine"
+                  },
+                  "start_point": {
+                    "md": "(-0.866, 0.50, 0.00)",
+                    "value": {
+                      "x": "-0.866",
+                      "y": "0.50",
+                      "z": "0.00"
+                    }
+                  },
+                  "end_point": {
+                    "md": "(-0.866, -0.50, 0.00)",
+                    "value": {
+                      "x": "-0.866",
+                      "y": "-0.50",
+                      "z": "0.00"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "md": "Sketch line",
+                    "value": "adsk::fusion::SketchLine"
+                  },
+                  "start_point": {
+                    "md": "(-0.866, -0.50, 0.00)",
+                    "value": {
+                      "x": "-0.866",
+                      "y": "-0.50",
+                      "z": "0.00"
+                    }
+                  },
+                  "end_point": {
+                    "md": "(0.00, -1.00, 0.00)",
+                    "value": {
+                      "x": "0.00",
+                      "y": "-1.00",
+                      "z": "0.00"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "md": "Sketch line",
+                    "value": "adsk::fusion::SketchLine"
+                  },
+                  "start_point": {
+                    "md": "(0.00, -1.00, 0.00)",
+                    "value": {
+                      "x": "0.00",
+                      "y": "-1.00",
+                      "z": "0.00"
+                    }
+                  },
+                  "end_point": {
+                    "md": "(0.866, -0.50, 0.00)",
+                    "value": {
+                      "x": "0.866",
+                      "y": "-0.50",
+                      "z": "0.00"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "md": "Sketch line",
+                    "value": "adsk::fusion::SketchLine"
+                  },
+                  "start_point": {
+                    "md": "(0.866, -0.50, 0.00)",
+                    "value": {
+                      "x": "0.866",
+                      "y": "-0.50",
+                      "z": "0.00"
+                    }
+                  },
+                  "end_point": {
+                    "md": "(0.866, 0.50, 0.00)",
+                    "value": {
+                      "x": "0.866",
+                      "y": "0.50",
+                      "z": "0.00"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "md": "Sketch line",
+                    "value": "adsk::fusion::SketchLine"
+                  },
+                  "start_point": {
+                    "md": "(0.866, 0.50, 0.00)",
+                    "value": {
+                      "x": "0.866",
+                      "y": "0.50",
+                      "z": "0.00"
+                    }
+                  },
+                  "end_point": {
+                    "md": "(0.00, 1.00, 0.00)",
+                    "value": {
+                      "x": "0.00",
+                      "y": "1.00",
+                      "z": "0.00"
+                    }
+                  }
+                }
+              ],
+              "plane": {
+                "type": {
+                  "md": "Base Plane",
+                  "value": "base_plane"
+                },
+                "name": "XY"
+              }
+            }
+          },
+          {
+            "name": "Extrude1",
+            "type": {
+              "md": "Extrude",
+              "value": "adsk::fusion::ExtrudeFeature"
+            },
+            "details": {
+              "operation": {
+                "md": "New Body",
+                "value": 3
+              },
+              "extent": {
+                "type": {
+                  "md": "One Side Extent",
+                  "value": 0
+                },
+                "side_one": "1 in"
+              }
+            }
+          }
+        ],
+        "components": {
+          "1c9bc1e6-9e1b-44e9-99f1-d8d28a280116": {
+            "path": "",
+            "is_linked": false,
+            "name": "Linked Component v1",
+            "units": {
+              "md": "in",
+              "value": 3
+            },
+            "feature_index": [
+              0,
+              1
+            ],
+            "references": []
+          }
+        }
+      }
     },
     "681ace57-2ba4-4461-bdb0-ab608436010d": {
-      "path": "13Component4-55542\\16Triangle-681ac",
+      "path": "NoneCylinder-0c54d\\NoneTriangle-681ac",
       "is_linked": false,
       "name": "Component Test v19",
       "units": {
         "md": "in",
         "value": 3
       },
-      "features": [],
-      "references": []
+      "feature_index": [
+        9,
+        10
+      ],
+      "references": [
+        {
+          "name": "Triangle:2",
+          "path": "NoneComponent4-55542\\16Triangle-681ac"
+        }
+      ]
     },
     "5554263b-b36b-4dd9-8e88-401b1c47f762": {
-      "path": "13Component4-55542",
+      "path": "NoneComponent4-55542",
       "is_linked": false,
       "name": "Component Test v19",
       "units": {
         "md": "in",
         "value": 3
       },
-      "features": [
+      "feature_index": [
         16,
-        18
+        18,
+        24
       ],
       "references": []
     },
     "0905bff1-4ea6-4081-9315-5229bb4144b5": {
-      "path": "3Cylinder-0c54d\\21WOw-0905b",
+      "path": "NoneComponent4-55542\\NoneWOw-0905b",
       "is_linked": false,
       "name": "Component Test v19",
       "units": {
         "md": "in",
         "value": 3
       },
-      "features": [],
-      "references": []
+      "feature_index": [
+        19,
+        20
+      ],
+      "references": [
+        {
+          "name": "WOw:2",
+          "path": "NoneCylinder-0c54d\\21WOw-0905b"
+        }
+      ]
     },
     "d2941cdb-7f96-4cdc-bbe1-c2459a8142f6": {
-      "path": "3Cylinder-0c54d\\Cube v3-d2941",
+      "path": "linked_components\\<adsk.fusion.TimelineObject; proxy of <Swig Object of type 'adsk::core::Ptr< adsk::fusion::TimelineObject > *' at 0x0000016C1AA1EF10> >Cube v3-d2941",
       "is_linked": true,
       "name": "Component Test v19",
       "units": {
         "md": "in",
         "value": 3
       },
-      "features": [],
-      "references": []
+      "feature_index": [],
+      "references": [
+        {
+          "name": "Cube v3:1",
+          "path": "NoneCylinder-0c54d\\22Cube v3-d2941"
+        },
+        {
+          "name": "Cube v3:2",
+          "path": "NoneComponent4-55542\\24Cube v3-d2941"
+        }
+      ],
+      "assembly": {
+        "timeline": [
+          {
+            "name": "Sketch1",
+            "type": {
+              "md": "Sketch",
+              "value": "adsk::fusion::Sketch"
+            },
+            "details": {
+              "curves": [
+                {
+                  "type": {
+                    "md": "Sketch line",
+                    "value": "adsk::fusion::SketchLine"
+                  },
+                  "start_point": {
+                    "md": "(0.00, 0.00, 0.00)",
+                    "value": {
+                      "x": "0.00",
+                      "y": "0.00",
+                      "z": "0.00"
+                    }
+                  },
+                  "end_point": {
+                    "md": "(1.00, 0.00, 0.00)",
+                    "value": {
+                      "x": "1.00",
+                      "y": "0.00",
+                      "z": "0.00"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "md": "Sketch line",
+                    "value": "adsk::fusion::SketchLine"
+                  },
+                  "start_point": {
+                    "md": "(1.00, 0.00, 0.00)",
+                    "value": {
+                      "x": "1.00",
+                      "y": "0.00",
+                      "z": "0.00"
+                    }
+                  },
+                  "end_point": {
+                    "md": "(1.00, -1.00, 0.00)",
+                    "value": {
+                      "x": "1.00",
+                      "y": "-1.00",
+                      "z": "0.00"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "md": "Sketch line",
+                    "value": "adsk::fusion::SketchLine"
+                  },
+                  "start_point": {
+                    "md": "(1.00, -1.00, 0.00)",
+                    "value": {
+                      "x": "1.00",
+                      "y": "-1.00",
+                      "z": "0.00"
+                    }
+                  },
+                  "end_point": {
+                    "md": "(0.00, -1.00, 0.00)",
+                    "value": {
+                      "x": "0.00",
+                      "y": "-1.00",
+                      "z": "0.00"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "md": "Sketch line",
+                    "value": "adsk::fusion::SketchLine"
+                  },
+                  "start_point": {
+                    "md": "(0.00, -1.00, 0.00)",
+                    "value": {
+                      "x": "0.00",
+                      "y": "-1.00",
+                      "z": "0.00"
+                    }
+                  },
+                  "end_point": {
+                    "md": "(0.00, 0.00, 0.00)",
+                    "value": {
+                      "x": "0.00",
+                      "y": "0.00",
+                      "z": "0.00"
+                    }
+                  }
+                }
+              ],
+              "plane": {
+                "type": {
+                  "md": "Base Plane",
+                  "value": "base_plane"
+                },
+                "name": "XZ"
+              }
+            }
+          },
+          {
+            "name": "Extrude1",
+            "type": {
+              "md": "Extrude",
+              "value": "adsk::fusion::ExtrudeFeature"
+            },
+            "details": {
+              "operation": {
+                "md": "New Body",
+                "value": 3
+              },
+              "extent": {
+                "type": {
+                  "md": "One Side Extent",
+                  "value": 0
+                },
+                "side_one": "1 in"
+              }
+            }
+          }
+        ],
+        "components": {
+          "d2941cdb-7f96-4cdc-bbe1-c2459a8142f6": {
+            "path": "",
+            "is_linked": false,
+            "name": "Cube v3",
+            "units": {
+              "md": "in",
+              "value": 3
+            },
+            "feature_index": [
+              0,
+              1
+            ],
+            "references": []
+          }
+        }
+      }
     },
     "2f9074f0-5609-4d34-8383-1a92ad7ae3dc": {
-      "path": "3Cylinder-0c54d\\Multi Level Components v6-2f907",
+      "path": "linked_components\\<adsk.fusion.TimelineObject; proxy of <Swig Object of type 'adsk::core::Ptr< adsk::fusion::TimelineObject > *' at 0x0000016C088A4960> >Multi Level Components v6-2f907",
       "is_linked": true,
       "name": "Component Test v19",
       "units": {
         "md": "in",
         "value": 3
       },
-      "features": [],
-      "references": []
+      "feature_index": [],
+      "references": [
+        {
+          "name": "Multi Level Components v6:1",
+          "path": "NoneCylinder-0c54d\\23Multi Level Components v6-2f907"
+        }
+      ],
+      "assembly": {
+        "timeline": [
+          {
+            "name": "Sketch1",
+            "type": {
+              "md": "Sketch",
+              "value": "adsk::fusion::Sketch"
+            },
+            "details": {
+              "curves": [
+                {
+                  "type": {
+                    "md": "Sketch line",
+                    "value": "adsk::fusion::SketchLine"
+                  },
+                  "start_point": {
+                    "md": "(1.00, 0.50, 0.00)",
+                    "value": {
+                      "x": "1.00",
+                      "y": "0.50",
+                      "z": "0.00"
+                    }
+                  },
+                  "end_point": {
+                    "md": "(-1.00, 0.50, 0.00)",
+                    "value": {
+                      "x": "-1.00",
+                      "y": "0.50",
+                      "z": "0.00"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "md": "Sketch line",
+                    "value": "adsk::fusion::SketchLine"
+                  },
+                  "start_point": {
+                    "md": "(-1.00, 0.50, 0.00)",
+                    "value": {
+                      "x": "-1.00",
+                      "y": "0.50",
+                      "z": "0.00"
+                    }
+                  },
+                  "end_point": {
+                    "md": "(-1.00, -0.50, 0.00)",
+                    "value": {
+                      "x": "-1.00",
+                      "y": "-0.50",
+                      "z": "0.00"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "md": "Sketch line",
+                    "value": "adsk::fusion::SketchLine"
+                  },
+                  "start_point": {
+                    "md": "(-1.00, -0.50, 0.00)",
+                    "value": {
+                      "x": "-1.00",
+                      "y": "-0.50",
+                      "z": "0.00"
+                    }
+                  },
+                  "end_point": {
+                    "md": "(1.00, -0.50, 0.00)",
+                    "value": {
+                      "x": "1.00",
+                      "y": "-0.50",
+                      "z": "0.00"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "md": "Sketch line",
+                    "value": "adsk::fusion::SketchLine"
+                  },
+                  "start_point": {
+                    "md": "(1.00, -0.50, 0.00)",
+                    "value": {
+                      "x": "1.00",
+                      "y": "-0.50",
+                      "z": "0.00"
+                    }
+                  },
+                  "end_point": {
+                    "md": "(1.00, 0.50, 0.00)",
+                    "value": {
+                      "x": "1.00",
+                      "y": "0.50",
+                      "z": "0.00"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "md": "Sketch line",
+                    "value": "adsk::fusion::SketchLine"
+                  },
+                  "start_point": {
+                    "md": "(1.00, 0.50, 0.00)",
+                    "value": {
+                      "x": "1.00",
+                      "y": "0.50",
+                      "z": "0.00"
+                    }
+                  },
+                  "end_point": {
+                    "md": "(-1.00, -0.50, 0.00)",
+                    "value": {
+                      "x": "-1.00",
+                      "y": "-0.50",
+                      "z": "0.00"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "md": "Sketch line",
+                    "value": "adsk::fusion::SketchLine"
+                  },
+                  "start_point": {
+                    "md": "(-1.00, 0.50, 0.00)",
+                    "value": {
+                      "x": "-1.00",
+                      "y": "0.50",
+                      "z": "0.00"
+                    }
+                  },
+                  "end_point": {
+                    "md": "(1.00, -0.50, 0.00)",
+                    "value": {
+                      "x": "1.00",
+                      "y": "-0.50",
+                      "z": "0.00"
+                    }
+                  }
+                }
+              ],
+              "plane": {
+                "type": {
+                  "md": "Base Plane",
+                  "value": "base_plane"
+                },
+                "name": "XY"
+              }
+            }
+          },
+          {
+            "name": "Extrude1",
+            "type": {
+              "md": "Extrude",
+              "value": "adsk::fusion::ExtrudeFeature"
+            },
+            "details": {
+              "operation": {
+                "md": "New Body",
+                "value": 3
+              },
+              "extent": {
+                "type": {
+                  "md": "One Side Extent",
+                  "value": 0
+                },
+                "side_one": "0.5 in"
+              }
+            }
+          },
+          {
+            "name": "Component1:1",
+            "type": {
+              "md": "Component Occurence",
+              "value": "adsk::fusion::Occurrence"
+            },
+            "details": {
+              "id": "7aae3a8b-7005-450f-98e2-f97c6278f099"
+            }
+          },
+          {
+            "name": "Sketch2",
+            "type": {
+              "md": "Sketch",
+              "value": "adsk::fusion::Sketch"
+            },
+            "details": {
+              "curves": [
+                {
+                  "type": {
+                    "md": "Sketch Circle",
+                    "value": "adsk::fusion::SketchCircle"
+                  },
+                  "center_point": {
+                    "md": "(-3.50, 0.00, 0.00)",
+                    "value": {
+                      "x": "-3.50",
+                      "y": "0.00",
+                      "z": "0.00"
+                    }
+                  },
+                  "radius": "0.40"
+                }
+              ],
+              "plane": {
+                "type": {
+                  "md": "Base Plane",
+                  "value": "base_plane"
+                },
+                "name": "XY"
+              }
+            }
+          },
+          {
+            "name": "Extrude2",
+            "type": {
+              "md": "Extrude",
+              "value": "adsk::fusion::ExtrudeFeature"
+            },
+            "details": {
+              "operation": {
+                "md": "New Body",
+                "value": 3
+              },
+              "extent": {
+                "type": {
+                  "md": "One Side Extent",
+                  "value": 0
+                },
+                "side_one": "1 in"
+              }
+            }
+          },
+          {
+            "name": "Component2:1",
+            "type": {
+              "md": "Component Occurence",
+              "value": "adsk::fusion::Occurrence"
+            },
+            "details": {
+              "id": "436095bc-eed0-4979-8fed-38e8ef85c7dc"
+            }
+          },
+          {
+            "name": "Sketch1",
+            "type": {
+              "md": "Sketch",
+              "value": "adsk::fusion::Sketch"
+            },
+            "details": {
+              "curves": [
+                {
+                  "type": {
+                    "md": "Sketch Circle",
+                    "value": "adsk::fusion::SketchCircle"
+                  },
+                  "center_point": {
+                    "md": "(0.00, 0.00, 0.00)",
+                    "value": {
+                      "x": "0.00",
+                      "y": "0.00",
+                      "z": "0.00"
+                    }
+                  },
+                  "radius": "0.358"
+                }
+              ],
+              "plane": {
+                "type": {
+                  "md": "Base Plane",
+                  "value": "base_plane"
+                },
+                "name": "YZ"
+              }
+            }
+          },
+          {
+            "name": "Extrude1",
+            "type": {
+              "md": "Extrude",
+              "value": "adsk::fusion::ExtrudeFeature"
+            },
+            "details": {
+              "operation": {
+                "md": "New Body",
+                "value": 3
+              },
+              "extent": {
+                "type": {
+                  "md": "One Side Extent",
+                  "value": 0
+                },
+                "side_one": "1 in"
+              }
+            }
+          },
+          {
+            "name": "Component3:1",
+            "type": {
+              "md": "Component Occurence",
+              "value": "adsk::fusion::Occurrence"
+            },
+            "details": {
+              "id": "71f8af70-ef31-4fd0-846a-c63b17693941"
+            }
+          },
+          {
+            "name": "Sketch1",
+            "type": {
+              "md": "Sketch",
+              "value": "adsk::fusion::Sketch"
+            },
+            "details": {
+              "curves": [
+                {
+                  "type": {
+                    "md": "Sketch line",
+                    "value": "adsk::fusion::SketchLine"
+                  },
+                  "start_point": {
+                    "md": "(-0.50, 1.20, 0.00)",
+                    "value": {
+                      "x": "-0.50",
+                      "y": "1.20",
+                      "z": "0.00"
+                    }
+                  },
+                  "end_point": {
+                    "md": "(0.40, 1.20, 0.00)",
+                    "value": {
+                      "x": "0.40",
+                      "y": "1.20",
+                      "z": "0.00"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "md": "Sketch line",
+                    "value": "adsk::fusion::SketchLine"
+                  },
+                  "start_point": {
+                    "md": "(0.40, 1.20, 0.00)",
+                    "value": {
+                      "x": "0.40",
+                      "y": "1.20",
+                      "z": "0.00"
+                    }
+                  },
+                  "end_point": {
+                    "md": "(0.40, 0.80, 0.00)",
+                    "value": {
+                      "x": "0.40",
+                      "y": "0.80",
+                      "z": "0.00"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "md": "Sketch line",
+                    "value": "adsk::fusion::SketchLine"
+                  },
+                  "start_point": {
+                    "md": "(0.40, 0.80, 0.00)",
+                    "value": {
+                      "x": "0.40",
+                      "y": "0.80",
+                      "z": "0.00"
+                    }
+                  },
+                  "end_point": {
+                    "md": "(-0.50, 0.80, 0.00)",
+                    "value": {
+                      "x": "-0.50",
+                      "y": "0.80",
+                      "z": "0.00"
+                    }
+                  }
+                },
+                {
+                  "type": {
+                    "md": "Sketch line",
+                    "value": "adsk::fusion::SketchLine"
+                  },
+                  "start_point": {
+                    "md": "(-0.50, 0.80, 0.00)",
+                    "value": {
+                      "x": "-0.50",
+                      "y": "0.80",
+                      "z": "0.00"
+                    }
+                  },
+                  "end_point": {
+                    "md": "(-0.50, 1.20, 0.00)",
+                    "value": {
+                      "x": "-0.50",
+                      "y": "1.20",
+                      "z": "0.00"
+                    }
+                  }
+                }
+              ],
+              "plane": {
+                "type": {
+                  "md": "Base Plane",
+                  "value": "base_plane"
+                },
+                "name": "XY"
+              }
+            }
+          },
+          {
+            "name": "Extrude1",
+            "type": {
+              "md": "Extrude",
+              "value": "adsk::fusion::ExtrudeFeature"
+            },
+            "details": {
+              "operation": {
+                "md": "New Body",
+                "value": 3
+              },
+              "extent": {
+                "type": {
+                  "md": "One Side Extent",
+                  "value": 0
+                },
+                "side_one": "1 in"
+              }
+            }
+          },
+          {
+            "name": "Component3:2",
+            "type": {
+              "md": "Component Occurence",
+              "value": "adsk::fusion::Occurrence"
+            },
+            "details": {
+              "id": "71f8af70-ef31-4fd0-846a-c63b17693941"
+            }
+          }
+        ],
+        "components": {
+          "2f9074f0-5609-4d34-8383-1a92ad7ae3dc": {
+            "path": "",
+            "is_linked": false,
+            "name": "Multi Level Components v6",
+            "units": {
+              "md": "in",
+              "value": 3
+            },
+            "feature_index": [
+              0,
+              1,
+              2
+            ],
+            "references": []
+          },
+          "7aae3a8b-7005-450f-98e2-f97c6278f099": {
+            "path": "NoneComponent1-7aae3",
+            "is_linked": false,
+            "name": "Multi Level Components v6",
+            "units": {
+              "md": "in",
+              "value": 3
+            },
+            "feature_index": [
+              3,
+              4,
+              5,
+              11
+            ],
+            "references": []
+          },
+          "436095bc-eed0-4979-8fed-38e8ef85c7dc": {
+            "path": "NoneComponent1-7aae3\\NoneComponent2-43609",
+            "is_linked": false,
+            "name": "Multi Level Components v6",
+            "units": {
+              "md": "in",
+              "value": 3
+            },
+            "feature_index": [
+              6,
+              7,
+              8
+            ],
+            "references": []
+          },
+          "71f8af70-ef31-4fd0-846a-c63b17693941": {
+            "path": "NoneComponent1-7aae3\\NoneComponent2-43609\\NoneComponent3-71f8a",
+            "is_linked": false,
+            "name": "Multi Level Components v6",
+            "units": {
+              "md": "in",
+              "value": 3
+            },
+            "feature_index": [
+              9,
+              10
+            ],
+            "references": [
+              {
+                "name": "Component3:2",
+                "path": "NoneComponent1-7aae3\\11Component3-71f8a"
+              }
+            ]
+          }
+        }
+      }
     }
   },
-  "json": "eNrtWF2Pm0YU/SuIp0ZiqrnzAYwfs0ofqrRbKZHatIlW80WDlsUWYGe3K//3zmCvibMYW/Xi9VZ5sTAzXM65nHvvgfuwyW9skZc2nPx1H5byxh2EF3NlJxBGYXM3c//vwxvjz05vZtPSlk1wqfW8sqW2bstCFnN/jTT19WSSzet8Wk4m7Y7VlmUUGtvIvKh9pNxH0kYzmekMJSAxYpJzJJnmiDEtMqxwYrUIl8toA+jdtW3050eIVqd3glgvbwNwuBa2btn2xAraVAwHfOu3uKB1I6vmajbNy2YT5Qf8I8dR8PCL8asu2H1463b4JXfurjv8pz3E2DMObWm+DYn2xkSDQX0ex6B6LK4hsujAqOjkdI9A1kt4f9TnoXssrgGy/7U6xqU6Rs2er4yftmqPFvGnKJwVsmy3b7F+LWsb/NYudaSVO3m12u/wrGfEHx/WWVv/f3PbVHNjHw2N9fmdOVyv/2Rl44bcN9NjOrOVbNy+Tbhf7Zfg9dTcdfGoz9FtY1cJ2rr3ZWmDd7mxwZvV+uYa7B+XW7ia+hyEEOTlNpuLO/fgja3GHMtYc2aoJQgyqRHDApAwxiACsRUkgYyBfqaxfJFXutin+/UmF1i7dNjqsUrxWp47RYo74eNHwq+kyef1g5i/a3afZl0furYm6AS6gDHlC1ooDTZGwoJyXtIKJEQGyKSGpJKkGCDekm9rc8kZ2dz3VS7Lv4tRvXecgtSWJ4goyRyUGJAyCiOpYpwyGmPA5oV6b76vvvlwffcMNr5vWPLnMCzHoeolGu/LXTyUu7GIHodqxxM9RiTfm/5eo+KbKj2jprq5NRuzrXLOGYmpQorGbvgYI1Bq09S5KFCgWZIlMelpq/TleKfj3pFO5p3oyGX0s8vLdjk8eQltbAA5IxvQZ+bIGZm53y+/jPpuJDBXmQPArIxdVafu3YgCR5wQoRQDxhR/ye9GpK1ssru+SVff5CT1/eHP//OY9HIlZyRXP7aDBR2zhAwRDLRRKMmEw+QGOVLKAtKEcSFTYCTbLulf5kWTB2/twhZd36mDRTwmSpIJnLAMIx5j4QY5ZSilKUUgBZEmkZYa/xHECVxvIPmLaSIVTVONiDYSsSRxBkCnCmUULKQGBNbK75vJ5rO7jUOX11dF21TDSSaL2kaPHEvw3ta+0Qq3e17mqxu1fL+eQV6f2UrdvkngiEZxlERAI0gczMpmtmXrFz/5BnCIg+qQ0odPT6j9PvTxIxAvFtSGGY8GsAh4H/yDvlLthD8eYBbxKI2ARAQi4n5pH/iDxloHvmfoojbENg3X4J6KRR/og7xCBxpoZ7lR64udZuIHU4PaaOM9hj4CB5nzIQIjyjyOIO2V+SEdfKBKCbgRg9oop032QW1+APh6EqE2zkl1flDrH0C+c16hNvIJuSyX/wKm57E4"
+  "json": "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"
 }

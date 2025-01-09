@@ -4,6 +4,7 @@
 
 from html import entities
 import json
+import time
 from typing import Literal, cast
 import adsk.core, adsk.fusion
 import os
@@ -56,11 +57,11 @@ def run(context):
         error("Failed to export timeline", e)
 
 
-def get_component_name(occurrence: adsk.fusion.Occurrence) -> str:
-    if occurrence.isReferencedComponent:
+def get_component_name(occurrence: adsk.fusion.Occurrence, index: None | int = None) -> str:
+    if index is None and occurrence.isReferencedComponent:
         return f"{occurrence.component.name}-{occurrence.component.id[:5]}"
     else:
-        return f"{occurrence.timelineObject.index}{occurrence.component.name}-{occurrence.component.id[:5]}"
+        return f"{index}{occurrence.component.name}-{occurrence.component.id[:5]}"
 
 
 def read_timeline_data(design=design):
@@ -82,7 +83,8 @@ def read_timeline_data(design=design):
         },
     }
 
-    for timeline_item in design.timeline:
+    for index, timeline_item in enumerate(design.timeline):
+        print_fusion(index)
         entity = timeline_item.entity
 
         if hasattr(entity, "parentComponent"):  # This is a feature
@@ -90,20 +92,27 @@ def read_timeline_data(design=design):
                 adsk.fusion.Feature, entity
             )  # If I try to cast using fusion api it deletes parentComponent for some reason
             data["timeline"].append(get_timeline_feature(timeline_item))
-            data["components"][feature.parentComponent.id]["feature_index"].append(timeline_item.index)
+            data["components"][feature.parentComponent.id]["feature_index"].append(index)
         elif hasattr(
             entity, "sourceComponent"
         ):  # This is an occurrence - Reasons for an occurence - 1. creation of a component - 2. reference of a component (copy and paste) - 3. reference of a component (linked)
             occurrence = adsk.fusion.Occurrence.cast(entity)
+            occurrence = cast(
+                adsk.fusion.Occurrence, entity
+            )  # If I try to cast using fusion api it deletes parentComponent for some reason
 
             data["timeline"].append(get_timeline_feature(timeline_item))
 
             # This is for the creation of a component
-            if occurrence.component.id not in data:
+            if occurrence.component.id not in data["components"]:
                 parent_path = data["components"][occurrence.sourceComponent.id]["path"]
 
                 data["components"][occurrence.component.id] = {
-                    "path": os.path.join(parent_path, get_component_name(occurrence)),
+                    "path": (
+                        os.path.join(parent_path, get_component_name(occurrence))
+                        if not occurrence.isReferencedComponent
+                        else os.path.join("linked_components", get_component_name(occurrence, timeline_item))
+                    ),
                     "is_linked": occurrence.isReferencedComponent,
                     "name": design.rootComponent.name,
                     "units": create_readable_value(
@@ -113,13 +122,27 @@ def read_timeline_data(design=design):
                     "feature_index": [],
                     "references": [],
                 }
-            else:
+                if occurrence.isReferencedComponent:
+                    parent_path = data["components"][occurrence.sourceComponent.id]["path"]
+                    data["components"][occurrence.component.id]["references"].append(
+                        {
+                            "name": occurrence.name,
+                            "path": os.path.join(parent_path, get_component_name(occurrence, index)),
+                        }
+                    )
+                    data["components"][occurrence.component.id]["assembly"] = read_timeline_data(
+                        occurrence.component.parentDesign
+                    )
+            else:  # Copy basically
                 parent_path = data["components"][occurrence.sourceComponent.id]["path"]
                 data["components"][occurrence.component.id]["references"].append(
-                    {"name": occurrence.name, "path": os.path.join(parent_path, get_component_name(occurrence))}
+                    {
+                        "name": occurrence.name,
+                        "path": os.path.join(parent_path, get_component_name(occurrence, index)),
+                    }
                 )
 
-            data["components"][occurrence.sourceComponent.id]["feature_index"].append(timeline_item.index)
+            data["components"][occurrence.sourceComponent.id]["feature_index"].append(index)
     return data
 
 

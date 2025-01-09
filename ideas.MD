@@ -36,6 +36,9 @@ Then for each reahhhh this is same as 1
 Still need to get recursively reading diles working for linked components
 
 
+In options menu show all the linekd assemblies and choose which data you which to keep and which you want to keep as a export stl file or somthing
+
+
 TODO:
 Do Joints
 Do Planes
