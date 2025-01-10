@@ -1,7 +1,8 @@
 import json
 import os
+from typing import Mapping
 from .order_json import order_dict
-from .globals.types import Data
+from .globals.types import Data, Error
 from .globals.utils import compress_json
 
 BASE_INDENT = "&emsp;&emsp;"  # Two &emsp; for each level
@@ -39,7 +40,7 @@ def read_list_md(lst: list, tab_index: int) -> str:
     return md
 
 
-def read_dict_md(dictionary, tab_index: int = 0) -> str:
+def read_dict_md(dictionary: Mapping, tab_index: int = 0) -> str:
     md = ""
     for key, value in dictionary.items():
         if isinstance(value, dict):
@@ -59,10 +60,9 @@ def read_dict_md(dictionary, tab_index: int = 0) -> str:
     return md
 
 
-def write_to_file(file_path, json_data, write_in_md=True):
+def write_to_file(file_path, json_data: Data, write_in_md=True):
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
-    json_data["json"] = compress_json(json_data)
-    ordered_json_data = order_dict(json_data, Timeline)
+    ordered_json_data = order_dict(json_data, Data)
     with open(file_path, "w", encoding="utf-8") as f:
         if write_in_md:
             markdown = read_dict_md(ordered_json_data)

@@ -1,11 +1,13 @@
 # Author - ChurroC
 # Description - Export timeline data to a JSON file
-# type: ignore
+""" # type: ignore """
 
 from typing import Literal, cast
 import adsk.core, adsk.fusion
 import json
 import os
+
+from export.display_data import write_to_file
 
 # from timeit import default_timer as timer
 
@@ -40,8 +42,8 @@ def run(context):
         output_folder = os.path.basename(os.path.normpath(src_folder_path))
 
         data = read_timeline_data()
-        data["json"] = compress_json(data)
 
+        # write_data(data, src_folder_path)
         os.makedirs(os.path.dirname(src_folder_path), exist_ok=True)
         with open(os.path.join(src_folder_path, "timeline.json"), "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2)
@@ -166,7 +168,6 @@ def get_timeline_feature(timeline_feature: adsk.fusion.TimelineObject) -> Featur
         elif feature_type == adsk.fusion.Occurrence.classType():
             occurrence = adsk.fusion.Occurrence.cast(entity)
             component = occurrence.component
-
             component_feature_data: ComponentFeature = {
                 "name": occurrence.name,
                 "type": create_readable_value(
