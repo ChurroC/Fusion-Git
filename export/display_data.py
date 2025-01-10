@@ -1,8 +1,8 @@
 import json
 import os
 from .order_json import order_dict
-from .globals.types import Timeline
-from .globals.compression import compress_json
+from .globals.types import Data
+from .globals.utils import compress_json
 
 BASE_INDENT = "&emsp;&emsp;"  # Two &emsp; for each level
 DOUBLE_NEWLINE = "\n\n"

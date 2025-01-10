@@ -2,30 +2,24 @@
 # Description - Export timeline data to a JSON file
 # type: ignore
 
-from html import entities
-import json
-import time
 from typing import Literal, cast
 import adsk.core, adsk.fusion
+import json
 import os
-from timeit import default_timer as timer
 
+# from timeit import default_timer as timer
 
-from .globals.globals import ui, units_manager, design, error, print_fusion, root
-from .globals.compression import compress_json
+from .globals.globals import ui, design, error, print_fusion
+from .globals.utils import create_readable_value, compress_json
 from .globals.types import (
-    Timeline,
+    Data,
     Feature,
     SketchFeature,
     ExtrudeFeature,
     Error,
     ComponentFeature,
-    FusionComponentTimeline,
 )
-from .display_data import write_to_file
 from .features import get_sketch_data, get_extrude_data
-from .globals.utils import create_readable_value
-from .get_component_timeline import get_component_timeline_data
 
 
 def run(context):
@@ -58,15 +52,18 @@ def run(context):
 
 
 def get_component_name(occurrence: adsk.fusion.Occurrence, index: None | int = None) -> str:
-    if index is None and occurrence.isReferencedComponent:
-        return f"{occurrence.component.name}-{occurrence.component.id[:5]}"
+    if index is None:
+        if occurrence.isReferencedComponent:
+            return f"{occurrence.component.name}-{occurrence.component.id[:5]}"
+        else:
+            return f"{occurrence.timelineObject.index}{occurrence.component.name}-{occurrence.component.id[:5]}"
     else:
         return f"{index}{occurrence.component.name}-{occurrence.component.id[:5]}"
 
 
 def read_timeline_data(design=design):
     # Instead of storing data in fusion attributes using a dict here is going to be faster
-    data = {
+    data: Data = {
         "timeline": [],
         "components": {
             design.rootComponent.id: {
@@ -84,7 +81,6 @@ def read_timeline_data(design=design):
     }
 
     for index, timeline_item in enumerate(design.timeline):
-        print_fusion(index)
         entity = timeline_item.entity
 
         if hasattr(entity, "parentComponent"):  # This is a feature
@@ -97,9 +93,6 @@ def read_timeline_data(design=design):
             entity, "sourceComponent"
         ):  # This is an occurrence - Reasons for an occurence - 1. creation of a component - 2. reference of a component (copy and paste) - 3. reference of a component (linked)
             occurrence = adsk.fusion.Occurrence.cast(entity)
-            occurrence = cast(
-                adsk.fusion.Occurrence, entity
-            )  # If I try to cast using fusion api it deletes parentComponent for some reason
 
             data["timeline"].append(get_timeline_feature(timeline_item))
 
@@ -111,7 +104,7 @@ def read_timeline_data(design=design):
                     "path": (
                         os.path.join(parent_path, get_component_name(occurrence))
                         if not occurrence.isReferencedComponent
-                        else os.path.join("linked_components", get_component_name(occurrence, timeline_item))
+                        else os.path.join("linked_components", get_component_name(occurrence, index))
                     ),
                     "is_linked": occurrence.isReferencedComponent,
                     "name": design.rootComponent.name,
@@ -123,6 +116,8 @@ def read_timeline_data(design=design):
                     "references": [],
                 }
                 if occurrence.isReferencedComponent:
+                    # Since I have the orgininal component path in linked_component
+                    # I can just add the reference to the linked component
                     parent_path = data["components"][occurrence.sourceComponent.id]["path"]
                     data["components"][occurrence.component.id]["references"].append(
                         {
@@ -130,6 +125,7 @@ def read_timeline_data(design=design):
                             "path": os.path.join(parent_path, get_component_name(occurrence, index)),
                         }
                     )
+                    # I also traverse the assembly within the linked component
                     data["components"][occurrence.component.id]["assembly"] = read_timeline_data(
                         occurrence.component.parentDesign
                     )
@@ -150,8 +146,6 @@ def get_timeline_feature(timeline_feature: adsk.fusion.TimelineObject) -> Featur
     try:
         entity = timeline_feature.entity
         feature_type = entity.objectType
-        print("feature_type")
-        print(feature_type)
 
         if feature_type == adsk.fusion.Sketch.classType():
             extrude = adsk.fusion.Sketch.cast(entity)

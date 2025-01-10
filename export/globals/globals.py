@@ -8,6 +8,7 @@ design: adsk.fusion.Design
 units_manager: adsk.fusion.FusionUnitsManager
 root: adsk.fusion.Component
 active_document: adsk.core.Document
+timeline: adsk.fusion.Timeline
 
 
 # This is my way to print to the Fusion 360 UI
