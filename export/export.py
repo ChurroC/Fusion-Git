@@ -7,12 +7,10 @@ import adsk.core, adsk.fusion
 import json
 import os
 
-from export.display_data import write_to_file
-
 # from timeit import default_timer as timer
 
 from .globals.globals import ui, design, error, print_fusion
-from .globals.utils import create_readable_value, compress_json
+from .globals.utils import create_readable_value, compress_json, create_no_markdown
 from .globals.types import (
     Data,
     Feature,
@@ -22,6 +20,7 @@ from .globals.types import (
     ComponentFeature,
 )
 from .features import get_sketch_data, get_extrude_data
+from .write_data import write_nested_data
 
 
 def run(context):
@@ -39,14 +38,9 @@ def run(context):
             return
 
         src_folder_path = folderDialog.folder
-        output_folder = os.path.basename(os.path.normpath(src_folder_path))
 
         data = read_timeline_data()
-
-        # write_data(data, src_folder_path)
-        os.makedirs(os.path.dirname(src_folder_path), exist_ok=True)
-        with open(os.path.join(src_folder_path, "timeline.json"), "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2)
+        write_nested_data(src_folder_path, data)
 
         print_fusion("Timeline successfully exported")
     except Exception as e:
@@ -63,20 +57,23 @@ def get_component_name(occurrence: adsk.fusion.Occurrence, index: None | int = N
         return f"{index}{occurrence.component.name}-{occurrence.component.id[:5]}"
 
 
-def read_timeline_data(design=design):
+def read_timeline_data(
+    path: str = "",
+    design=design,
+):
     # Instead of storing data in fusion attributes using a dict here is going to be faster
     data: Data = {
         "timeline": [],
         "components": {
             design.rootComponent.id: {
-                "path": "",
+                "path": path,
                 "is_linked": False,
                 "name": design.rootComponent.name,
                 "units": create_readable_value(
                     design.fusionUnitsManager.defaultLengthUnits,
                     cast(Literal[0, 1, 2, 3, 4], design.fusionUnitsManager.distanceDisplayUnits),
                 ),
-                "feature_index": [],
+                "features": [],
                 "references": [],
             }
         },
@@ -89,14 +86,16 @@ def read_timeline_data(design=design):
             feature = cast(
                 adsk.fusion.Feature, entity
             )  # If I try to cast using fusion api it deletes parentComponent for some reason
-            data["timeline"].append(get_timeline_feature(timeline_item))
-            data["components"][feature.parentComponent.id]["feature_index"].append(index)
+            feature_info = get_timeline_feature(timeline_item)
+            data["timeline"].append(feature_info)
+            data["components"][feature.parentComponent.id]["features"].append(feature_info)
         elif hasattr(
             entity, "sourceComponent"
         ):  # This is an occurrence - Reasons for an occurence - 1. creation of a component - 2. reference of a component (copy and paste) - 3. reference of a component (linked)
             occurrence = adsk.fusion.Occurrence.cast(entity)
 
-            data["timeline"].append(get_timeline_feature(timeline_item))
+            feature_info = get_timeline_feature(timeline_item)
+            data["timeline"].append(feature_info)
 
             # This is for the creation of a component
             if occurrence.component.id not in data["components"]:
@@ -106,15 +105,15 @@ def read_timeline_data(design=design):
                     "path": (
                         os.path.join(parent_path, get_component_name(occurrence))
                         if not occurrence.isReferencedComponent
-                        else os.path.join("linked_components", get_component_name(occurrence, index))
+                        else os.path.join(
+                            data["components"][design.rootComponent.id]["path"],
+                            "linked_components",
+                            get_component_name(occurrence, index),
+                        )
                     ),
                     "is_linked": occurrence.isReferencedComponent,
                     "name": design.rootComponent.name,
-                    "units": create_readable_value(
-                        design.fusionUnitsManager.defaultLengthUnits,
-                        cast(Literal[0, 1, 2, 3, 4], design.fusionUnitsManager.distanceDisplayUnits),
-                    ),
-                    "feature_index": [],
+                    "features": [],
                     "references": [],
                 }
                 if occurrence.isReferencedComponent:
@@ -128,8 +127,11 @@ def read_timeline_data(design=design):
                         }
                     )
                     # I also traverse the assembly within the linked component
-                    data["components"][occurrence.component.id]["assembly"] = read_timeline_data(
-                        occurrence.component.parentDesign
+                    data["components"][occurrence.component.id]["assembly"] = create_no_markdown(
+                        read_timeline_data(
+                            os.path.join("linked_components", get_component_name(occurrence, index)),
+                            occurrence.component.parentDesign,
+                        )
                     )
             else:  # Copy basically
                 parent_path = data["components"][occurrence.sourceComponent.id]["path"]
@@ -140,7 +142,7 @@ def read_timeline_data(design=design):
                     }
                 )
 
-            data["components"][occurrence.sourceComponent.id]["feature_index"].append(index)
+            data["components"][occurrence.sourceComponent.id]["features"].append(feature_info)
     return data
 
 
@@ -152,6 +154,7 @@ def get_timeline_feature(timeline_feature: adsk.fusion.TimelineObject) -> Featur
         if feature_type == adsk.fusion.Sketch.classType():
             extrude = adsk.fusion.Sketch.cast(entity)
             sketch_feature_data: SketchFeature = {
+                "index": timeline_feature.index,
                 "name": extrude.name,
                 "type": create_readable_value("Sketch", cast(Literal["adsk::fusion::Sketch"], feature_type)),
                 "details": get_sketch_data(extrude),
@@ -160,6 +163,7 @@ def get_timeline_feature(timeline_feature: adsk.fusion.TimelineObject) -> Featur
         elif feature_type == adsk.fusion.ExtrudeFeature.classType():
             sketch = adsk.fusion.ExtrudeFeature.cast(entity)
             extrude_feature_data: ExtrudeFeature = {
+                "index": timeline_feature.index,
                 "name": sketch.name,
                 "type": create_readable_value("Extrude", cast(Literal["adsk::fusion::ExtrudeFeature"], feature_type)),
                 "details": get_extrude_data(sketch),
@@ -169,6 +173,7 @@ def get_timeline_feature(timeline_feature: adsk.fusion.TimelineObject) -> Featur
             occurrence = adsk.fusion.Occurrence.cast(entity)
             component = occurrence.component
             component_feature_data: ComponentFeature = {
+                "index": timeline_feature.index,
                 "name": occurrence.name,
                 "type": create_readable_value(
                     "Component Occurence", cast(Literal["adsk::fusion::Occurrence"], feature_type)

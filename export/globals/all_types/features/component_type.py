@@ -7,6 +7,7 @@ class ComponentDetails(TypedDict):
 
 
 class ComponentFeature(TypedDict):
+    index: int
     name: str
     type: ReadableValue[Literal["adsk::fusion::Occurrence"]]
     details: ComponentDetails | Error

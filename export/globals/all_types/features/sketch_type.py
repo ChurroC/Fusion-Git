@@ -40,6 +40,7 @@ class SketchDetails(TypedDict):
 
 
 class SketchFeature(TypedDict):
+    index: int
     name: str
     type: ReadableValue[Literal["adsk::fusion::Sketch"]]
     details: SketchDetails | Error

@@ -6,7 +6,7 @@ import base64
 import zlib
 
 from .globals import units_manager
-from .types import Point3D, ReadableValue
+from .types import Point3D, ReadableValue, NoMarkdown
 
 
 def format_value(value_input, include_units: bool = False):
@@ -76,6 +76,10 @@ Value = TypeVar("Value")
 
 def create_readable_value(md: str, value: Value) -> ReadableValue[Value]:
     return {"md": md, "value": value}
+
+
+def create_no_markdown(value: Value) -> NoMarkdown[Value]:
+    return {"display": False, "value": value}
 
 
 def compress_json(data):

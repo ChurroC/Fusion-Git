@@ -1,0 +1,362 @@
+{
+  "timeline": [
+    {
+      "index": 0,
+      "name": "Sketch1",
+      "type": {
+        "md": "Sketch",
+        "value": "adsk::fusion::Sketch"
+      },
+      "details": {
+        "curves": [
+          {
+            "type": {
+              "md": "Sketch line",
+              "value": "adsk::fusion::SketchLine"
+            },
+            "start_point": {
+              "md": "(0.00, 1.00, 0.00)",
+              "value": {
+                "x": "0.00",
+                "y": "1.00",
+                "z": "0.00"
+              }
+            },
+            "end_point": {
+              "md": "(-0.866, 0.50, 0.00)",
+              "value": {
+                "x": "-0.866",
+                "y": "0.50",
+                "z": "0.00"
+              }
+            }
+          },
+          {
+            "type": {
+              "md": "Sketch line",
+              "value": "adsk::fusion::SketchLine"
+            },
+            "start_point": {
+              "md": "(-0.866, 0.50, 0.00)",
+              "value": {
+                "x": "-0.866",
+                "y": "0.50",
+                "z": "0.00"
+              }
+            },
+            "end_point": {
+              "md": "(-0.866, -0.50, 0.00)",
+              "value": {
+                "x": "-0.866",
+                "y": "-0.50",
+                "z": "0.00"
+              }
+            }
+          },
+          {
+            "type": {
+              "md": "Sketch line",
+              "value": "adsk::fusion::SketchLine"
+            },
+            "start_point": {
+              "md": "(-0.866, -0.50, 0.00)",
+              "value": {
+                "x": "-0.866",
+                "y": "-0.50",
+                "z": "0.00"
+              }
+            },
+            "end_point": {
+              "md": "(0.00, -1.00, 0.00)",
+              "value": {
+                "x": "0.00",
+                "y": "-1.00",
+                "z": "0.00"
+              }
+            }
+          },
+          {
+            "type": {
+              "md": "Sketch line",
+              "value": "adsk::fusion::SketchLine"
+            },
+            "start_point": {
+              "md": "(0.00, -1.00, 0.00)",
+              "value": {
+                "x": "0.00",
+                "y": "-1.00",
+                "z": "0.00"
+              }
+            },
+            "end_point": {
+              "md": "(0.866, -0.50, 0.00)",
+              "value": {
+                "x": "0.866",
+                "y": "-0.50",
+                "z": "0.00"
+              }
+            }
+          },
+          {
+            "type": {
+              "md": "Sketch line",
+              "value": "adsk::fusion::SketchLine"
+            },
+            "start_point": {
+              "md": "(0.866, -0.50, 0.00)",
+              "value": {
+                "x": "0.866",
+                "y": "-0.50",
+                "z": "0.00"
+              }
+            },
+            "end_point": {
+              "md": "(0.866, 0.50, 0.00)",
+              "value": {
+                "x": "0.866",
+                "y": "0.50",
+                "z": "0.00"
+              }
+            }
+          },
+          {
+            "type": {
+              "md": "Sketch line",
+              "value": "adsk::fusion::SketchLine"
+            },
+            "start_point": {
+              "md": "(0.866, 0.50, 0.00)",
+              "value": {
+                "x": "0.866",
+                "y": "0.50",
+                "z": "0.00"
+              }
+            },
+            "end_point": {
+              "md": "(0.00, 1.00, 0.00)",
+              "value": {
+                "x": "0.00",
+                "y": "1.00",
+                "z": "0.00"
+              }
+            }
+          }
+        ],
+        "plane": {
+          "type": {
+            "md": "Base Plane",
+            "value": "base_plane"
+          },
+          "name": "XY"
+        }
+      }
+    },
+    {
+      "index": 1,
+      "name": "Extrude1",
+      "type": {
+        "md": "Extrude",
+        "value": "adsk::fusion::ExtrudeFeature"
+      },
+      "details": {
+        "operation": {
+          "md": "New Body",
+          "value": 3
+        },
+        "extent": {
+          "type": {
+            "md": "One Side Extent",
+            "value": 0
+          },
+          "side_one": "1 in"
+        }
+      }
+    }
+  ],
+  "components": {
+    "1c9bc1e6-9e1b-44e9-99f1-d8d28a280116": {
+      "path": "linked_components\\6Linked Component v1-1c9bc",
+      "is_linked": false,
+      "name": "Linked Component v1",
+      "units": {
+        "md": "in",
+        "value": 3
+      },
+      "features": [
+        {
+          "index": 0,
+          "name": "Sketch1",
+          "type": {
+            "md": "Sketch",
+            "value": "adsk::fusion::Sketch"
+          },
+          "details": {
+            "curves": [
+              {
+                "type": {
+                  "md": "Sketch line",
+                  "value": "adsk::fusion::SketchLine"
+                },
+                "start_point": {
+                  "md": "(0.00, 1.00, 0.00)",
+                  "value": {
+                    "x": "0.00",
+                    "y": "1.00",
+                    "z": "0.00"
+                  }
+                },
+                "end_point": {
+                  "md": "(-0.866, 0.50, 0.00)",
+                  "value": {
+                    "x": "-0.866",
+                    "y": "0.50",
+                    "z": "0.00"
+                  }
+                }
+              },
+              {
+                "type": {
+                  "md": "Sketch line",
+                  "value": "adsk::fusion::SketchLine"
+                },
+                "start_point": {
+                  "md": "(-0.866, 0.50, 0.00)",
+                  "value": {
+                    "x": "-0.866",
+                    "y": "0.50",
+                    "z": "0.00"
+                  }
+                },
+                "end_point": {
+                  "md": "(-0.866, -0.50, 0.00)",
+                  "value": {
+                    "x": "-0.866",
+                    "y": "-0.50",
+                    "z": "0.00"
+                  }
+                }
+              },
+              {
+                "type": {
+                  "md": "Sketch line",
+                  "value": "adsk::fusion::SketchLine"
+                },
+                "start_point": {
+                  "md": "(-0.866, -0.50, 0.00)",
+                  "value": {
+                    "x": "-0.866",
+                    "y": "-0.50",
+                    "z": "0.00"
+                  }
+                },
+                "end_point": {
+                  "md": "(0.00, -1.00, 0.00)",
+                  "value": {
+                    "x": "0.00",
+                    "y": "-1.00",
+                    "z": "0.00"
+                  }
+                }
+              },
+              {
+                "type": {
+                  "md": "Sketch line",
+                  "value": "adsk::fusion::SketchLine"
+                },
+                "start_point": {
+                  "md": "(0.00, -1.00, 0.00)",
+                  "value": {
+                    "x": "0.00",
+                    "y": "-1.00",
+                    "z": "0.00"
+                  }
+                },
+                "end_point": {
+                  "md": "(0.866, -0.50, 0.00)",
+                  "value": {
+                    "x": "0.866",
+                    "y": "-0.50",
+                    "z": "0.00"
+                  }
+                }
+              },
+              {
+                "type": {
+                  "md": "Sketch line",
+                  "value": "adsk::fusion::SketchLine"
+                },
+                "start_point": {
+                  "md": "(0.866, -0.50, 0.00)",
+                  "value": {
+                    "x": "0.866",
+                    "y": "-0.50",
+                    "z": "0.00"
+                  }
+                },
+                "end_point": {
+                  "md": "(0.866, 0.50, 0.00)",
+                  "value": {
+                    "x": "0.866",
+                    "y": "0.50",
+                    "z": "0.00"
+                  }
+                }
+              },
+              {
+                "type": {
+                  "md": "Sketch line",
+                  "value": "adsk::fusion::SketchLine"
+                },
+                "start_point": {
+                  "md": "(0.866, 0.50, 0.00)",
+                  "value": {
+                    "x": "0.866",
+                    "y": "0.50",
+                    "z": "0.00"
+                  }
+                },
+                "end_point": {
+                  "md": "(0.00, 1.00, 0.00)",
+                  "value": {
+                    "x": "0.00",
+                    "y": "1.00",
+                    "z": "0.00"
+                  }
+                }
+              }
+            ],
+            "plane": {
+              "type": {
+                "md": "Base Plane",
+                "value": "base_plane"
+              },
+              "name": "XY"
+            }
+          }
+        },
+        {
+          "index": 1,
+          "name": "Extrude1",
+          "type": {
+            "md": "Extrude",
+            "value": "adsk::fusion::ExtrudeFeature"
+          },
+          "details": {
+            "operation": {
+              "md": "New Body",
+              "value": 3
+            },
+            "extent": {
+              "type": {
+                "md": "One Side Extent",
+                "value": 0
+              },
+              "side_one": "1 in"
+            }
+          }
+        }
+      ],
+      "references": []
+    }
+  }
+}

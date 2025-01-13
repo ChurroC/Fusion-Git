@@ -9,7 +9,7 @@ Value = TypeVar("Value")
 
 
 class NoMarkdown(TypedDict, Generic[Value]):
-    display: Literal[True]
+    display: Literal[False]
     value: Value
 
 

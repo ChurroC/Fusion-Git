@@ -28,6 +28,7 @@ class ExtrudeDetails(TypedDict):
 
 
 class ExtrudeFeature(TypedDict):
+    index: int
     name: str
     type: ReadableValue[Literal["adsk::fusion::ExtrudeFeature"]]
     details: ExtrudeDetails | Error

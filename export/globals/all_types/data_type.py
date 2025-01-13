@@ -5,7 +5,7 @@ from typing import Literal, NotRequired, TypedDict
 from .features.sketch_type import SketchFeature
 from .features.extrude_type import ExtrudeFeature
 from .features.component_type import ComponentFeature
-from .utils_type import Error, ReadableValue
+from .utils_type import Error, NoMarkdown, ReadableValue
 
 Feature = SketchFeature | ExtrudeFeature | ComponentFeature
 
@@ -20,11 +20,14 @@ class ComponentInfo(TypedDict):
     is_linked: bool
     name: str
     units: NotRequired[ReadableValue[Literal[0, 1, 2, 3, 4]]]
-    feature_index: list[int]
+    features: list[Feature | Error]
     references: list[ComponentReferences]
-    assembly: NotRequired[Data]
+    assembly: NotRequired[NoMarkdown[Data]]
+
+
+Timeline = list[Feature | Error]
 
 
 class Data(TypedDict):
-    timeline: list[Feature | Error]
+    timeline: Timeline
     components: dict[str, ComponentInfo]

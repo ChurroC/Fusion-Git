@@ -1,10 +1,16 @@
-**Document Name**: Component Test v18
+**Path**: 
+
+**Is Linked**: False
+
+**Name**: Component Test v19
 
 **Units**: in
 
 **Features**:
 
 &emsp;&emsp;1:
+
+&emsp;&emsp;&emsp;&emsp;**Index**: 0
 
 &emsp;&emsp;&emsp;&emsp;**Name**: Cube:1
 
@@ -16,6 +22,8 @@
 
 &emsp;&emsp;2:
 
+&emsp;&emsp;&emsp;&emsp;**Index**: 3
+
 &emsp;&emsp;&emsp;&emsp;**Name**: Cylinder:1
 
 &emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
@@ -26,7 +34,9 @@
 
 &emsp;&emsp;3:
 
-&emsp;&emsp;&emsp;&emsp;**Name**: Linked Component Test v1:1
+&emsp;&emsp;&emsp;&emsp;**Index**: 6
+
+&emsp;&emsp;&emsp;&emsp;**Name**: Linked Component v1:1
 
 &emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
 
@@ -35,6 +45,8 @@
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Id**: 1c9bc1e6-9e1b-44e9-99f1-d8d28a280116
 
 &emsp;&emsp;4:
+
+&emsp;&emsp;&emsp;&emsp;**Index**: 7
 
 &emsp;&emsp;&emsp;&emsp;**Name**: Cube:2
 
@@ -46,6 +58,8 @@
 
 &emsp;&emsp;5:
 
+&emsp;&emsp;&emsp;&emsp;**Index**: 13
+
 &emsp;&emsp;&emsp;&emsp;**Name**: Component4:1
 
 &emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
@@ -56,13 +70,13 @@
 
 &emsp;&emsp;6:
 
-&emsp;&emsp;&emsp;&emsp;**Name**: Linked Component Test v1:2
+&emsp;&emsp;&emsp;&emsp;**Index**: 17
+
+&emsp;&emsp;&emsp;&emsp;**Name**: Linked Component v1:2
 
 &emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
 
 &emsp;&emsp;&emsp;&emsp;**Details**:
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Id**: 1c9bc1e6-9e1b-44e9-99f1-d8d28a280116
-
-**Json**: eNrNkcFqwzAQRH8l6ByBV5ZsSddeC730VkqRdldgEsshtgMh+N+rpKQh9NJLaK/L25lh5iRowLnnPH3k0LPw4mnod0Muh9Urj9PqAFasxZy7aRT+JHoqSJfL6RC2c+HrZS0Sh2necwHeTuIqM0f2ULjpuOPvz5v4C2J5ycg3KRFo3Hif5rEbsvcX4gspHsRT6LaXDN1ZCQl1SJhkC6GSOhgjg0YjtUaXqli1jE4sy/oW6LjtMvH+kaEqNJpqVhJSQKkrB9IRkVTQsFMtJA14F+q5yxum1Y/OHxkS0EUEbqRjiKUvdtK5BJIsKRuUrQCa++bOU6r/NOXVWj+yJ2OMVk0dZayb0hORk5atLbNCBNRtahv1uzHVn4/5vnwCWGk/5w==
 
