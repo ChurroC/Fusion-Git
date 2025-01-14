@@ -2,36 +2,7 @@ IDEAS:
 Create a Tester?
 Add Numpy for speed?
 
-For idea 2 check which io function is faster
-
-
-1: - Just reallized this might be better if I could use threads
-This is the way I'm doing it currently
-I have one intial iteration over the entire timeline
-Then I add attributes to find the source component
-Then I recursively read through each occurence
-For each once I create a timeline file
-2:
-This other idea is to hold all the data in one huge object
-I have one intial iteration over the entire timeline
-Then I add attributes to find the source component
-But as I do this for each feature I find I add them directly to the object
-Then I iterate through the object to save to file system
-3:
-This idea still has an error
-I start out with recursively reading through each occurence
-The problem however is that there is a chance I find the reference or copy
-Before I find the intial creation component
-Which means I won't be able to have the path to the intial component
-I read through the feature and sketch properties of the component
-Then just write to file
-4: COMBINE 1 and 2 - goated idea
-Basically iterate through array like 2 but split each occurence
-Into its own thread
-Which shoudl
-5:
-We coudl also iterate stragiht through every occurence with no recursively
-Then for each reahhhh this is same as 1
+One thing I could do is instead of using a reference file I could use a symlink but it doesn't hold info specific to a compoennt liek if it's activated hidden or something.
 
 Still need to get recursively reading diles working for linked components
 

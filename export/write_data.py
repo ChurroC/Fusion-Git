@@ -75,37 +75,32 @@ def write_to_file(file_path, json_data: list | Mapping, write_in_md=True):
 
 
 # Still got to do references
-# Still got to do nested data - assemblies
 # If Cube is refernece in linked_component for another component liked lined component but should I ned up having 2 folder for it
 # ALso all names in data josn same
 def write_nested_data(src_file_path, json_data: Data, write_in_md=True, write_data_file=True):
     ordered_json = order_dict(json_data, Data)
     components = ordered_json["components"]
 
-    print_fusion(os.path.join(src_file_path, components[next(iter(components))]["path"], "data.json"))
+    # print_fusion(os.path.join(src_file_path, components[next(iter(components))]["path"], "data.json"))
     if write_data_file:
         write_to_file(
             os.path.join(src_file_path, components[next(iter(components))]["path"], "data.json"), ordered_json, False
         )
 
     for component in components.values():
-        path = os.path.join(src_file_path, component["path"])
-        component_data = component
-        # for feature in component["references"]:
-        #     write_to_file(
-        #         os.path.join(path, "timeline.json"),
-        #         component_data,
-        #         write_in_md,
-        #     )
         if component["is_linked"] and "assembly" in component:
-            # print_fusion("Writing nested data")
-            # print_fusion(path)
-
-            write_nested_data(src_file_path, component["assembly"]["value"], write_in_md, True)
-            continue
+            write_nested_data(src_file_path, component["assembly"]["value"], write_in_md, False)
         else:
             write_to_file(
-                os.path.join(path, "timeline.json"),
-                component_data,
+                os.path.join(src_file_path, component["path"], "timeline.json"),
+                component,
                 write_in_md,
             )
+
+        if component["references"]:
+            for reference in component["references"]:
+                write_to_file(
+                    os.path.join(src_file_path, reference["path"], "timeline.json"),
+                    reference,
+                    write_in_md,
+                )

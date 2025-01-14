@@ -1,3 +1,5 @@
+**Index**: 0
+
 **Path**: linked_components\6Linked Component v1-1c9bc
 
 **Is Linked**: False

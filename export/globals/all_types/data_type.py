@@ -10,24 +10,25 @@ from .utils_type import Error, NoMarkdown, ReadableValue
 Feature = SketchFeature | ExtrudeFeature | ComponentFeature
 
 
+# Later I could add a info tab
 class ComponentReferences(TypedDict):
-    name: str
     path: str
+    name: str
+    link_to_component: str
+    link_to_reference: str
 
 
 class ComponentInfo(TypedDict):
+    index: int
     path: str
-    is_linked: bool
     name: str
+    is_linked: bool
     units: NotRequired[ReadableValue[Literal[0, 1, 2, 3, 4]]]
     features: list[Feature | Error]
     references: list[ComponentReferences]
     assembly: NotRequired[NoMarkdown[Data]]
 
 
-Timeline = list[Feature | Error]
-
-
 class Data(TypedDict):
-    timeline: Timeline
+    timeline: list[Feature | Error]
     components: dict[str, ComponentInfo]

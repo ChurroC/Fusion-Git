@@ -39,7 +39,9 @@ def run(context):
 
         src_folder_path = folderDialog.folder
 
-        data = read_timeline_data()
+        folder_path_in_git = os.path.basename(os.path.normpath(src_folder_path))
+
+        data = read_timeline_data(folder_path_in_git)
         write_nested_data(src_folder_path, data)
 
         print_fusion("Timeline successfully exported")
@@ -47,6 +49,7 @@ def run(context):
         error("Failed to export timeline", e)
 
 
+# Chnage to occurence name
 def get_component_name(occurrence: adsk.fusion.Occurrence, index: None | int = None) -> str:
     if index is None:
         if occurrence.isReferencedComponent:
@@ -58,6 +61,7 @@ def get_component_name(occurrence: adsk.fusion.Occurrence, index: None | int = N
 
 
 def read_timeline_data(
+    folder_path_in_git: str = "",
     path: str = "",
     design=design,
 ):
@@ -66,6 +70,7 @@ def read_timeline_data(
         "timeline": [],
         "components": {
             design.rootComponent.id: {
+                "index": 0,
                 "path": path,
                 "is_linked": False,
                 "name": design.rootComponent.name,
@@ -100,16 +105,18 @@ def read_timeline_data(
             # This is for the creation of a component
             if occurrence.component.id not in data["components"]:
                 parent_path = data["components"][occurrence.sourceComponent.id]["path"]
+                linked_path = os.path.join(
+                    data["components"][design.rootComponent.id]["path"],
+                    "linked_components",
+                    get_component_name(occurrence, index),
+                )
 
                 data["components"][occurrence.component.id] = {
+                    "index": index,
                     "path": (
                         os.path.join(parent_path, get_component_name(occurrence))
                         if not occurrence.isReferencedComponent
-                        else os.path.join(
-                            data["components"][design.rootComponent.id]["path"],
-                            "linked_components",
-                            get_component_name(occurrence, index),
-                        )
+                        else linked_path
                     ),
                     "is_linked": occurrence.isReferencedComponent,
                     "name": design.rootComponent.name,
@@ -120,25 +127,40 @@ def read_timeline_data(
                     # Since I have the orgininal component path in linked_component
                     # I can just add the reference to the linked component
                     parent_path = data["components"][occurrence.sourceComponent.id]["path"]
+                    original_component_path = os.path.join(
+                        folder_path_in_git, data["components"][occurrence.component.id]["path"]
+                    )
+                    component_path = os.path.join(
+                        folder_path_in_git, parent_path, get_component_name(occurrence, index)
+                    )
                     data["components"][occurrence.component.id]["references"].append(
                         {
                             "name": occurrence.name,
                             "path": os.path.join(parent_path, get_component_name(occurrence, index)),
+                            "link_to_reference": f"[{occurrence.name}](/{component_path.replace(' ', '%20').replace('\\', '/')}/timeline.md)",
+                            "link_to_component": f"[{occurrence.component.name}](/{original_component_path.replace(' ', '%20').replace('\\', '/')}/timeline.md)",
                         }
                     )
                     # I also traverse the assembly within the linked component
                     data["components"][occurrence.component.id]["assembly"] = create_no_markdown(
                         read_timeline_data(
-                            os.path.join("linked_components", get_component_name(occurrence, index)),
+                            folder_path_in_git,
+                            linked_path,
                             occurrence.component.parentDesign,
                         )
                     )
             else:  # Copy basically
                 parent_path = data["components"][occurrence.sourceComponent.id]["path"]
+                original_component_path = os.path.join(
+                    folder_path_in_git, data["components"][occurrence.component.id]["path"]
+                )
+                component_path = os.path.join(folder_path_in_git, parent_path, get_component_name(occurrence, index))
                 data["components"][occurrence.component.id]["references"].append(
                     {
                         "name": occurrence.name,
                         "path": os.path.join(parent_path, get_component_name(occurrence, index)),
+                        "link_to_reference": f"[{occurrence.name}](/{component_path.replace(' ', '%20').replace('\\', '/')}/timeline.md)",
+                        "link_to_component": f"[{occurrence.component.name}](/{original_component_path.replace(' ', '%20').replace('\\', '/')}/timeline.md)",
                     }
                 )
 

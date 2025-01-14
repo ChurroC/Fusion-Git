@@ -1,4 +1,6 @@
-**Path**: linked_components\2Linked Component v1-1c9bc
+**Index**: 0
+
+**Path**: linked_components\22Cube v7-d2941\linked_components\2Linked Component v1-1c9bc
 
 **Is Linked**: False
 

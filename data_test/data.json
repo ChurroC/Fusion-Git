@@ -600,9 +600,10 @@
   ],
   "components": {
     "37ab388c-2cda-4779-8c8b-f31e18d190cb": {
+      "index": 0,
       "path": "",
       "is_linked": false,
-      "name": "Component Test v19",
+      "name": "Component Test v20",
       "units": {
         "md": "in",
         "value": 3
@@ -678,9 +679,10 @@
       "references": []
     },
     "cdc4afcf-71a0-4a55-a4c5-44c9f0b07ec9": {
+      "index": 0,
       "path": "0Cube-cdc4a",
       "is_linked": false,
-      "name": "Component Test v19",
+      "name": "Component Test v20",
       "features": [
         {
           "index": 1,
@@ -913,18 +915,23 @@
       "references": [
         {
           "name": "Cube:2",
-          "path": "7Cube-cdc4a"
+          "path": "7Cube-cdc4a",
+          "link_to_reference": "[Cube:2](/data_test/7Cube-cdc4a/timeline.md)",
+          "link_to_component": "[Cube](/data_test/0Cube-cdc4a/timeline.md)"
         },
         {
           "name": "Cube:3",
-          "path": "3Cylinder-0c54d\\12Cube-cdc4a"
+          "path": "3Cylinder-0c54d\\12Cube-cdc4a",
+          "link_to_reference": "[Cube:3](/data_test/3Cylinder-0c54d/12Cube-cdc4a/timeline.md)",
+          "link_to_component": "[Cube](/data_test/0Cube-cdc4a/timeline.md)"
         }
       ]
     },
     "0c54d3e2-1fac-4091-9ddd-216e9271f41c": {
+      "index": 3,
       "path": "3Cylinder-0c54d",
       "is_linked": false,
-      "name": "Component Test v19",
+      "name": "Component Test v20",
       "features": [
         {
           "index": 4,
@@ -1040,18 +1047,23 @@
       "references": []
     },
     "1c9bc1e6-9e1b-44e9-99f1-d8d28a280116": {
+      "index": 6,
       "path": "linked_components\\6Linked Component v1-1c9bc",
       "is_linked": true,
-      "name": "Component Test v19",
+      "name": "Component Test v20",
       "features": [],
       "references": [
         {
           "name": "Linked Component v1:1",
-          "path": "6Linked Component v1-1c9bc"
+          "path": "6Linked Component v1-1c9bc",
+          "link_to_reference": "[Linked Component v1:1](/data_test/6Linked%20Component%20v1-1c9bc/timeline.md)",
+          "link_to_component": "[Linked Component v1](/data_test/linked_components/6Linked%20Component%20v1-1c9bc/timeline.md)"
         },
         {
           "name": "Linked Component v1:2",
-          "path": "17Linked Component v1-1c9bc"
+          "path": "17Linked Component v1-1c9bc",
+          "link_to_reference": "[Linked Component v1:2](/data_test/17Linked%20Component%20v1-1c9bc/timeline.md)",
+          "link_to_component": "[Linked Component v1](/data_test/linked_components/6Linked%20Component%20v1-1c9bc/timeline.md)"
         }
       ],
       "assembly": {
@@ -1233,6 +1245,7 @@
           ],
           "components": {
             "1c9bc1e6-9e1b-44e9-99f1-d8d28a280116": {
+              "index": 0,
               "path": "linked_components\\6Linked Component v1-1c9bc",
               "is_linked": false,
               "name": "Linked Component v1",
@@ -1421,9 +1434,10 @@
       }
     },
     "681ace57-2ba4-4461-bdb0-ab608436010d": {
+      "index": 8,
       "path": "3Cylinder-0c54d\\8Triangle-681ac",
       "is_linked": false,
-      "name": "Component Test v19",
+      "name": "Component Test v20",
       "features": [
         {
           "index": 9,
@@ -1535,14 +1549,17 @@
       "references": [
         {
           "name": "Triangle:2",
-          "path": "13Component4-55542\\16Triangle-681ac"
+          "path": "13Component4-55542\\16Triangle-681ac",
+          "link_to_reference": "[Triangle:2](/data_test/13Component4-55542/16Triangle-681ac/timeline.md)",
+          "link_to_component": "[Triangle](/data_test/3Cylinder-0c54d/8Triangle-681ac/timeline.md)"
         }
       ]
     },
     "5554263b-b36b-4dd9-8e88-401b1c47f762": {
+      "index": 13,
       "path": "13Component4-55542",
       "is_linked": false,
-      "name": "Component Test v19",
+      "name": "Component Test v20",
       "features": [
         {
           "index": 16,
@@ -1581,9 +1598,10 @@
       "references": []
     },
     "0905bff1-4ea6-4081-9315-5229bb4144b5": {
+      "index": 18,
       "path": "13Component4-55542\\18WOw-0905b",
       "is_linked": false,
-      "name": "Component Test v19",
+      "name": "Component Test v20",
       "features": [
         {
           "index": 19,
@@ -1644,23 +1662,30 @@
       "references": [
         {
           "name": "WOw:2",
-          "path": "3Cylinder-0c54d\\21WOw-0905b"
+          "path": "3Cylinder-0c54d\\21WOw-0905b",
+          "link_to_reference": "[WOw:2](/data_test/3Cylinder-0c54d/21WOw-0905b/timeline.md)",
+          "link_to_component": "[WOw](/data_test/13Component4-55542/18WOw-0905b/timeline.md)"
         }
       ]
     },
     "d2941cdb-7f96-4cdc-bbe1-c2459a8142f6": {
+      "index": 22,
       "path": "linked_components\\22Cube v7-d2941",
       "is_linked": true,
-      "name": "Component Test v19",
+      "name": "Component Test v20",
       "features": [],
       "references": [
         {
           "name": "Cube v7:1",
-          "path": "3Cylinder-0c54d\\22Cube v7-d2941"
+          "path": "3Cylinder-0c54d\\22Cube v7-d2941",
+          "link_to_reference": "[Cube v7:1](/data_test/3Cylinder-0c54d/22Cube%20v7-d2941/timeline.md)",
+          "link_to_component": "[Cube v7](/data_test/linked_components/22Cube%20v7-d2941/timeline.md)"
         },
         {
           "name": "Cube v7:2",
-          "path": "13Component4-55542\\24Cube v7-d2941"
+          "path": "13Component4-55542\\24Cube v7-d2941",
+          "link_to_reference": "[Cube v7:2](/data_test/13Component4-55542/24Cube%20v7-d2941/timeline.md)",
+          "link_to_component": "[Cube v7](/data_test/linked_components/22Cube%20v7-d2941/timeline.md)"
         }
       ],
       "assembly": {
@@ -1809,6 +1834,7 @@
           ],
           "components": {
             "d2941cdb-7f96-4cdc-bbe1-c2459a8142f6": {
+              "index": 0,
               "path": "linked_components\\22Cube v7-d2941",
               "is_linked": false,
               "name": "Cube v7",
@@ -1960,6 +1986,7 @@
               "references": []
             },
             "1c9bc1e6-9e1b-44e9-99f1-d8d28a280116": {
+              "index": 2,
               "path": "linked_components\\22Cube v7-d2941\\linked_components\\2Linked Component v1-1c9bc",
               "is_linked": true,
               "name": "Cube v7",
@@ -1967,7 +1994,9 @@
               "references": [
                 {
                   "name": "Linked Component v1:1",
-                  "path": "linked_components\\22Cube v7-d2941\\2Linked Component v1-1c9bc"
+                  "path": "linked_components\\22Cube v7-d2941\\2Linked Component v1-1c9bc",
+                  "link_to_reference": "[Linked Component v1:1](/data_test/linked_components/22Cube%20v7-d2941/2Linked%20Component%20v1-1c9bc/timeline.md)",
+                  "link_to_component": "[Linked Component v1](/data_test/linked_components/22Cube%20v7-d2941/linked_components/2Linked%20Component%20v1-1c9bc/timeline.md)"
                 }
               ],
               "assembly": {
@@ -2149,7 +2178,8 @@
                   ],
                   "components": {
                     "1c9bc1e6-9e1b-44e9-99f1-d8d28a280116": {
-                      "path": "linked_components\\2Linked Component v1-1c9bc",
+                      "index": 0,
+                      "path": "linked_components\\22Cube v7-d2941\\linked_components\\2Linked Component v1-1c9bc",
                       "is_linked": false,
                       "name": "Linked Component v1",
                       "units": {
@@ -2341,14 +2371,17 @@
       }
     },
     "2f9074f0-5609-4d34-8383-1a92ad7ae3dc": {
+      "index": 23,
       "path": "linked_components\\23Multi Level Components v6-2f907",
       "is_linked": true,
-      "name": "Component Test v19",
+      "name": "Component Test v20",
       "features": [],
       "references": [
         {
           "name": "Multi Level Components v6:1",
-          "path": "3Cylinder-0c54d\\23Multi Level Components v6-2f907"
+          "path": "3Cylinder-0c54d\\23Multi Level Components v6-2f907",
+          "link_to_reference": "[Multi Level Components v6:1](/data_test/3Cylinder-0c54d/23Multi%20Level%20Components%20v6-2f907/timeline.md)",
+          "link_to_component": "[Multi Level Components v6](/data_test/linked_components/23Multi%20Level%20Components%20v6-2f907/timeline.md)"
         }
       ],
       "assembly": {
@@ -2812,6 +2845,7 @@
           ],
           "components": {
             "2f9074f0-5609-4d34-8383-1a92ad7ae3dc": {
+              "index": 0,
               "path": "linked_components\\23Multi Level Components v6-2f907",
               "is_linked": false,
               "name": "Multi Level Components v6",
@@ -3007,6 +3041,7 @@
               "references": []
             },
             "7aae3a8b-7005-450f-98e2-f97c6278f099": {
+              "index": 2,
               "path": "linked_components\\23Multi Level Components v6-2f907\\2Component1-7aae3",
               "is_linked": false,
               "name": "Multi Level Components v6",
@@ -3092,6 +3127,7 @@
               "references": []
             },
             "436095bc-eed0-4979-8fed-38e8ef85c7dc": {
+              "index": 5,
               "path": "linked_components\\23Multi Level Components v6-2f907\\2Component1-7aae3\\5Component2-43609",
               "is_linked": false,
               "name": "Multi Level Components v6",
@@ -3166,6 +3202,7 @@
               "references": []
             },
             "71f8af70-ef31-4fd0-846a-c63b17693941": {
+              "index": 8,
               "path": "linked_components\\23Multi Level Components v6-2f907\\2Component1-7aae3\\5Component2-43609\\8Component3-71f8a",
               "is_linked": false,
               "name": "Multi Level Components v6",
@@ -3302,7 +3339,9 @@
               "references": [
                 {
                   "name": "Component3:2",
-                  "path": "linked_components\\23Multi Level Components v6-2f907\\2Component1-7aae3\\11Component3-71f8a"
+                  "path": "linked_components\\23Multi Level Components v6-2f907\\2Component1-7aae3\\11Component3-71f8a",
+                  "link_to_reference": "[Component3:2](/data_test/linked_components/23Multi%20Level%20Components%20v6-2f907/2Component1-7aae3/11Component3-71f8a/timeline.md)",
+                  "link_to_component": "[Component3](/data_test/linked_components/23Multi%20Level%20Components%20v6-2f907/2Component1-7aae3/5Component2-43609/8Component3-71f8a/timeline.md)"
                 }
               ]
             }
