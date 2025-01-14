@@ -53,11 +53,11 @@ def run(context):
 def get_component_name(occurrence: adsk.fusion.Occurrence, index: None | int = None) -> str:
     if index is None:
         if occurrence.isReferencedComponent:
-            return f"{occurrence.component.name}-{occurrence.component.id[:5]}"
+            return f"{occurrence.name}-{occurrence.component.id[:5]}"
         else:
-            return f"{occurrence.timelineObject.index}{occurrence.component.name}-{occurrence.component.id[:5]}"
+            return f"{occurrence.timelineObject.index}{occurrence.name.replace(":", "-")}"
     else:
-        return f"{index}{occurrence.component.name}-{occurrence.component.id[:5]}"
+        return f"{index}{occurrence.name.replace(":", "-")}"
 
 
 def read_timeline_data(

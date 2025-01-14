@@ -81,7 +81,6 @@ def write_nested_data(src_file_path, json_data: Data, write_in_md=True, write_da
     ordered_json = order_dict(json_data, Data)
     components = ordered_json["components"]
 
-    # print_fusion(os.path.join(src_file_path, components[next(iter(components))]["path"], "data.json"))
     if write_data_file:
         write_to_file(
             os.path.join(src_file_path, components[next(iter(components))]["path"], "data.json"), ordered_json, False
@@ -89,7 +88,20 @@ def write_nested_data(src_file_path, json_data: Data, write_in_md=True, write_da
 
     for component in components.values():
         if component["is_linked"] and "assembly" in component:
+            assembly = {
+                **component["assembly"]["value"]["components"][
+                    next(iter(component["assembly"]["value"]["components"]))
+                ],
+                **component,
+                "assembly": None,
+            }
+
             write_nested_data(src_file_path, component["assembly"]["value"], write_in_md, False)
+            write_to_file(
+                os.path.join(src_file_path, component["path"], "timeline2.json"),
+                assembly,
+                write_in_md,
+            )
         else:
             write_to_file(
                 os.path.join(src_file_path, component["path"], "timeline.json"),
