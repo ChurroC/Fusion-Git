@@ -82,25 +82,21 @@ def write_nested_data(src_file_path, json_data: Data, write_in_md=True, write_da
     components = ordered_json["components"]
 
     if write_data_file:
-        write_to_file(
-            os.path.join(src_file_path, components[next(iter(components))]["path"], "data.json"), ordered_json, False
-        )
+        write_to_file(os.path.join(src_file_path, components["root"]["path"], "data.json"), ordered_json, False)
 
     for component in components.values():
         if component["is_linked"] and "assembly" in component:
-            assembly = {
-                **component["assembly"]["value"]["components"][
-                    next(iter(component["assembly"]["value"]["components"]))
-                ],
-                **component,
-                "assembly": None,
+            assembly_data = component["assembly"]["value"]
+            assembly_data["components"]["root"] = {
+                **assembly_data["components"]["root"],
+                "index": component["index"] if "index" in component else 0,
+                "references": component["references"],
             }
-
-            write_nested_data(src_file_path, component["assembly"]["value"], write_in_md, False)
-            write_to_file(
-                os.path.join(src_file_path, component["path"], "timeline2.json"),
-                assembly,
+            write_nested_data(
+                src_file_path,
+                assembly_data,
                 write_in_md,
+                False,
             )
         else:
             write_to_file(
@@ -108,11 +104,10 @@ def write_nested_data(src_file_path, json_data: Data, write_in_md=True, write_da
                 component,
                 write_in_md,
             )
-
-        if component["references"]:
-            for reference in component["references"]:
-                write_to_file(
-                    os.path.join(src_file_path, reference["path"], "timeline.json"),
-                    reference,
-                    write_in_md,
-                )
+            if component["references"]:
+                for reference in component["references"]:
+                    write_to_file(
+                        os.path.join(src_file_path, reference["path"], "timeline.json"),
+                        reference,
+                        write_in_md,
+                    )

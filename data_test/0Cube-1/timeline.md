@@ -4,7 +4,9 @@
 
 **Is Linked**: False
 
-**Name**: Component Test v20
+**Name**: Cube
+
+**Id**: cdc4afcf-71a0-4a55-a4c5-44c9f0b07ec9
 
 **Features**:
 

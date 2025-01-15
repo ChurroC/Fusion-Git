@@ -69,11 +69,11 @@ def read_timeline_data(
     data: Data = {
         "timeline": [],
         "components": {
-            design.rootComponent.id: {
-                "index": 0,
+            "root": {
                 "path": path,
                 "is_linked": False,
                 "name": design.rootComponent.name,
+                "id": design.rootComponent.id,
                 "units": create_readable_value(
                     design.fusionUnitsManager.defaultLengthUnits,
                     cast(Literal[0, 1, 2, 3, 4], design.fusionUnitsManager.distanceDisplayUnits),
@@ -86,57 +86,58 @@ def read_timeline_data(
 
     for index, timeline_item in enumerate(design.timeline):
         entity = timeline_item.entity
-
         if hasattr(entity, "parentComponent"):  # This is a feature
             feature = cast(
                 adsk.fusion.Feature, entity
             )  # If I try to cast using fusion api it deletes parentComponent for some reason
             feature_info = get_timeline_feature(timeline_item)
             data["timeline"].append(feature_info)
-            data["components"][feature.parentComponent.id]["features"].append(feature_info)
+
+            source_component_id = (
+                feature.parentComponent.id if feature.parentComponent != design.rootComponent else "root"
+            )
+            data["components"][source_component_id]["features"].append(feature_info)
         elif hasattr(
             entity, "sourceComponent"
         ):  # This is an occurrence - Reasons for an occurence - 1. creation of a component - 2. reference of a component (copy and paste) - 3. reference of a component (linked)
             occurrence = adsk.fusion.Occurrence.cast(entity)
+
+            source_component_id = (
+                occurrence.sourceComponent.id if occurrence.sourceComponent != design.rootComponent else "root"
+            )
 
             feature_info = get_timeline_feature(timeline_item)
             data["timeline"].append(feature_info)
 
             # This is for the creation of a component
             if occurrence.component.id not in data["components"]:
-                parent_path = data["components"][occurrence.sourceComponent.id]["path"]
+                parent_path = data["components"][source_component_id]["path"]
+                file_path = os.path.join(parent_path, get_component_name(occurrence, index))
                 linked_path = os.path.join(
-                    data["components"][design.rootComponent.id]["path"],
+                    data["components"]["root"]["path"],
                     "linked_components",
-                    get_component_name(occurrence, index),
+                    occurrence.component.name,
                 )
 
                 data["components"][occurrence.component.id] = {
                     "index": index,
-                    "path": (
-                        os.path.join(parent_path, get_component_name(occurrence))
-                        if not occurrence.isReferencedComponent
-                        else linked_path
-                    ),
+                    "path": (file_path if not occurrence.isReferencedComponent else linked_path),
                     "is_linked": occurrence.isReferencedComponent,
-                    "name": design.rootComponent.name,
+                    "name": occurrence.component.name,
+                    "id": occurrence.component.id,
                     "features": [],
                     "references": [],
                 }
                 if occurrence.isReferencedComponent:
                     # Since I have the orgininal component path in linked_component
                     # I can just add the reference to the linked component
-                    parent_path = data["components"][occurrence.sourceComponent.id]["path"]
-                    original_component_path = os.path.join(
-                        folder_path_in_git, data["components"][occurrence.component.id]["path"]
-                    )
-                    component_path = os.path.join(
-                        folder_path_in_git, parent_path, get_component_name(occurrence, index)
-                    )
+                    original_component_path = os.path.join(folder_path_in_git, linked_path)
+                    component_path = os.path.join(folder_path_in_git, file_path)
+                    # We count the component creation as a reference
                     data["components"][occurrence.component.id]["references"].append(
                         {
                             "name": occurrence.name,
-                            "path": os.path.join(parent_path, get_component_name(occurrence, index)),
+                            "path": file_path,
                             "link_to_reference": f"[{occurrence.name}](/{component_path.replace(' ', '%20').replace('\\', '/')}/timeline.md)",
                             "link_to_component": f"[{occurrence.component.name}](/{original_component_path.replace(' ', '%20').replace('\\', '/')}/timeline.md)",
                         }
@@ -150,7 +151,7 @@ def read_timeline_data(
                         )
                     )
             else:  # Copy basically
-                parent_path = data["components"][occurrence.sourceComponent.id]["path"]
+                parent_path = data["components"][source_component_id]["path"]
                 original_component_path = os.path.join(
                     folder_path_in_git, data["components"][occurrence.component.id]["path"]
                 )
@@ -164,7 +165,7 @@ def read_timeline_data(
                     }
                 )
 
-            data["components"][occurrence.sourceComponent.id]["features"].append(feature_info)
+            data["components"][source_component_id]["features"].append(feature_info)
     return data
 
 

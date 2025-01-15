@@ -19,9 +19,10 @@ class ComponentReferences(TypedDict):
 
 
 class ComponentInfo(TypedDict):
-    index: int
     path: str
     name: str
+    id: str
+    index: NotRequired[int]
     is_linked: bool
     units: NotRequired[ReadableValue[Literal[0, 1, 2, 3, 4]]]
     features: list[Feature | Error]

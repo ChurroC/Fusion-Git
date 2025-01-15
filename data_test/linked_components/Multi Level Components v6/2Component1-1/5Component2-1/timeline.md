@@ -1,18 +1,20 @@
-**Index**: 2
+**Index**: 5
 
-**Path**: linked_components\23Multi Level Components v6-1\2Component1-1
+**Path**: linked_components\Multi Level Components v6\2Component1-1\5Component2-1
 
 **Is Linked**: False
 
-**Name**: Multi Level Components v6
+**Name**: Component2
+
+**Id**: 436095bc-eed0-4979-8fed-38e8ef85c7dc
 
 **Features**:
 
 &emsp;&emsp;1:
 
-&emsp;&emsp;&emsp;&emsp;**Index**: 3
+&emsp;&emsp;&emsp;&emsp;**Index**: 6
 
-&emsp;&emsp;&emsp;&emsp;**Name**: Sketch2
+&emsp;&emsp;&emsp;&emsp;**Name**: Sketch1
 
 &emsp;&emsp;&emsp;&emsp;**Type**: Sketch
 
@@ -24,21 +26,21 @@
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Type**: Sketch Circle
 
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Center Point**: (-3.50, 0.00, 0.00)
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Center Point**: (0.00, 0.00, 0.00)
 
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Radius**: 0.40
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Radius**: 0.358
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Plane**:
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Type**: Base Plane
 
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Name**: XY
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Name**: YZ
 
 &emsp;&emsp;2:
 
-&emsp;&emsp;&emsp;&emsp;**Index**: 4
+&emsp;&emsp;&emsp;&emsp;**Index**: 7
 
-&emsp;&emsp;&emsp;&emsp;**Name**: Extrude2
+&emsp;&emsp;&emsp;&emsp;**Name**: Extrude1
 
 &emsp;&emsp;&emsp;&emsp;**Type**: Extrude
 
@@ -54,21 +56,9 @@
 
 &emsp;&emsp;3:
 
-&emsp;&emsp;&emsp;&emsp;**Index**: 5
+&emsp;&emsp;&emsp;&emsp;**Index**: 8
 
-&emsp;&emsp;&emsp;&emsp;**Name**: Component2:1
-
-&emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
-
-&emsp;&emsp;&emsp;&emsp;**Details**:
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Id**: 436095bc-eed0-4979-8fed-38e8ef85c7dc
-
-&emsp;&emsp;4:
-
-&emsp;&emsp;&emsp;&emsp;**Index**: 11
-
-&emsp;&emsp;&emsp;&emsp;**Name**: Component3:2
+&emsp;&emsp;&emsp;&emsp;**Name**: Component3:1
 
 &emsp;&emsp;&emsp;&emsp;**Type**: Component Occurence
 

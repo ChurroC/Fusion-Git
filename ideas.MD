@@ -16,12 +16,15 @@ So It wouldn't be connected to fusion and work on anythign
 
 Also no need to compress json file if I just set it up to not diff in git attribute and just commit
 
+Also for linked component do I store data or nah??
 
 TODO:
+Order JSON DATA
+
+For import use f3d file
+
 Do Joints
 Do Planes
-
-Do Linked Components - TBH no clue what to do with them right now
 
 Use adsk.core.Camera to take pictures of sketches and cv2 to show the diff by highlgihting in green or red
 Do the same for extrudes but instead straight up change the color of the feature then take a picture
@@ -32,8 +35,6 @@ Threads to fasten the build process
 AHHH I ust realized I could use attributes to store info about each timeline
 
 ISSUE:
-Need to find a better way to get path to the original component creation rather than just adding it a attribute.
-
 Also do I even need the component_timeline since I could use a component's .features and .sketch instead - but would I have proper indexing? Or I could do all items then order json by that index.
 
 

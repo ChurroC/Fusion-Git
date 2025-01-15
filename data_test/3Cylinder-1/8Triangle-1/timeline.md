@@ -4,7 +4,9 @@
 
 **Is Linked**: False
 
-**Name**: Component Test v20
+**Name**: Triangle
+
+**Id**: 681ace57-2ba4-4461-bdb0-ab608436010d
 
 **Features**:
 
