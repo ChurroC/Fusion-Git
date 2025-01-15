@@ -76,7 +76,7 @@
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Type**: One Side Extent
 
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Side One**: 1 in
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;**Side One**: 1.5 in
 
 &emsp;&emsp;3:
 

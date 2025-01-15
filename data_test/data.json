@@ -1823,7 +1823,7 @@
                     "md": "One Side Extent",
                     "value": 0
                   },
-                  "side_one": "1 in"
+                  "side_one": "1.5 in"
                 }
               }
             },
@@ -1974,7 +1974,7 @@
                         "md": "One Side Extent",
                         "value": 0
                       },
-                      "side_one": "1 in"
+                      "side_one": "1.5 in"
                     }
                   }
                 },
