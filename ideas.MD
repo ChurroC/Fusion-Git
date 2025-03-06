@@ -10,6 +10,8 @@ Still need to get recursively reading diles working for linked components
 In options menu show all the linekd assemblies and choose which data you which to keep and which you want to keep as a export stl file or somthing
 
 
+Somehting like https://zoo.dev/diff-viewer but native using opengl or threejs
+
 Maybe use git attributes to make a custom diff tool
 I coudl create a tool to read a step file and turn it into something readable
 So It wouldn't be connected to fusion and work on anythign
