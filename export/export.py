@@ -1,6 +1,6 @@
 # Author - ChurroC
 # Description - Export timeline data to a JSON file
-""" # type: ignore """
+"""# type: ignore"""
 
 from typing import Literal, cast
 import adsk.core, adsk.fusion
@@ -32,7 +32,7 @@ def run(context):
 
         folderDialog = ui.createFolderDialog()
         folderDialog.title = "Save Timeline Export"
-        folderDialog.initialDirectory = "data"  # Hmmm doesn't seem to wrok
+        folderDialog.initialDirectory = "data"  # Hmmm doesn't seem to work
 
         if folderDialog.showDialog() != adsk.core.DialogResults.DialogOK:
             return

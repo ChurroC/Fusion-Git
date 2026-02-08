@@ -6,9 +6,9 @@ from typing import cast
 import json
 
 from .globals.globals import ui, units_manager, active_document, error, print_fusion
-from .globals.types.types import Timeline, Feature, Error
+from .globals.types import Data, Feature, Error
 
-from .features.features import set_sketch_data, set_extrude_data
+from .features.features import FEATURE_HANDLER
 
 
 def run(context):
@@ -20,33 +20,57 @@ def run(context):
         if fileDialog.showOpen() != adsk.core.DialogResults.DialogOK:
             return
 
-        timeline_data: Timeline
         with open(fileDialog.filename, "r") as f:
-            timeline_data = json.load(f)
+            timeline_data: Data = json.load(f)
 
-        active_document.name = timeline_data["document_name"]
-        units_manager.distanceDisplayUnits = timeline_data["units"]
+        active_document.name = timeline_data["components"]["root"]["name"]
+        # units_manager.distanceDisplayUnits = timeline_data["components"]["root"]["units"]
 
-        for feature in timeline_data["features"]:
-            set_feature_data(feature)
+        stats = process_timeline(timeline_data["timeline"])
 
-        print_fusion("Timeline successfully imported")
+        print_fusion(
+            f"Timeline import completed: "
+            f"{stats['success']} succeeded, "
+            f"{stats['failed']} failed, "
+            f"{stats['skipped']} skipped"
+        )
     except Exception as e:
         error("Failed to import timeline", e)
 
 
-def set_feature_data(feature: Feature | Error):
+def process_timeline(timeline: list[Feature | Error]) -> dict[str, int]:
+    stats = {"success": 0, "failed": 0, "skipped": 0}
+    total = len(timeline)
+
+    for index, feature in enumerate(timeline, 1):
+        feature_name = feature.get("name", "unknown")
+        print_fusion(f"[{index}/{total}] Processing: {feature_name}")
+
+        result = set_feature_data(feature)
+        stats[result] += 1
+
+    return stats
+
+
+def set_feature_data(feature: Feature | Error) -> str:
     try:
         if "error" in feature:
-            raise Exception("Failed to read feature error data")
+            print_fusion(f"Skipped feature with error: {feature.get('error')}")
+            return "skipped"
 
-        if feature["type"] == "adsk::fusion::Sketch":  # adsk.fusion.Sketch.classType()
-            print_fusion(f"Processing sketch: {feature['name']}")
-            set_sketch_data(feature["details"])
-        elif feature["type"] == "adsk::fusion::ExtrudeFeature":  # adsk.fusion.ExtrudeFeature.classType()
-            print_fusion(f"Processing extrude: {feature['name']}")
-            set_extrude_data(feature["details"])
-        else:
-            raise Exception("Unknown feature type")
+        feature_type = feature["type"]["value"]  # Get the actual type string from ReadableValue
+        feature_name = feature["name"]
+
+        if feature_type not in FEATURE_HANDLER:
+            print_fusion(f"  ⊗ Unsupported feature type: {feature_type}")
+            return "skipped"
+
+        # Execute the handler
+        handler = FEATURE_HANDLER[feature_type]
+        handler(feature["details"])
+
+        print_fusion(f"Made: {feature_name}")
+        return "success"
     except Exception as e:
         error("Failed to process feature", e)
+        return "failed"

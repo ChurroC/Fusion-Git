@@ -63,11 +63,11 @@ def read_dict_md(dictionary: Mapping, tab_index: int = 0) -> str:
 def write_to_file(file_path, json_data: list | Mapping, write_in_md=True):
     path = file_path.rsplit(".", 1)[0] + (".json" if not write_in_md else ".md")
     path = os.path.abspath(path)
-    
+
     # Only add Windows UNC prefix on Windows for long paths
-    if platform.system() == 'Windows' and len(path) > 260:
+    if platform.system() == "Windows" and len(path) > 260:
         path = r"\\?\\" + path
-    
+
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         if write_in_md:
